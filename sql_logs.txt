@@ -1,0 +1,2745 @@
+SQL: SELECT 1
+KEYS: []
+CONFIG: "SELECT 1"
+PARAMS: []
+
+SQL: SELECT 1
+KEYS: []
+CONFIG: "SELECT 1"
+PARAMS: []
+
+SQL: SELECT 1
+KEYS: []
+CONFIG: "SELECT 1"
+PARAMS: []
+
+SQL: SELECT 1
+KEYS: []
+CONFIG: "SELECT 1"
+PARAMS: []
+
+SQL: SELECT 1
+KEYS: []
+CONFIG: "SELECT 1"
+PARAMS: []
+
+SQL: SELECT 1
+KEYS: []
+CONFIG: "SELECT 1"
+PARAMS: []
+
+SQL: SELECT 1
+KEYS: []
+CONFIG: "SELECT 1"
+PARAMS: []
+
+SQL: SELECT 1
+KEYS: []
+CONFIG: "SELECT 1"
+PARAMS: []
+
+SQL: SELECT 1
+KEYS: []
+CONFIG: "SELECT 1"
+PARAMS: []
+
+SQL: SELECT 1
+KEYS: []
+CONFIG: "SELECT 1"
+PARAMS: []
+
+SQL: SELECT 1
+KEYS: []
+CONFIG: "SELECT 1"
+PARAMS: []
+
+SQL: SELECT 1
+KEYS: []
+CONFIG: "SELECT 1"
+PARAMS: []
+
+SQL: SELECT 1
+KEYS: []
+CONFIG: "SELECT 1"
+PARAMS: []
+
+SQL: SELECT 1
+KEYS: []
+CONFIG: "SELECT 1"
+PARAMS: []
+
+SQL: SELECT 1
+KEYS: []
+CONFIG: "SELECT 1"
+PARAMS: []
+
+SQL: SELECT 1
+KEYS: []
+CONFIG: "SELECT 1"
+PARAMS: []
+
+SQL: SELECT 1
+KEYS: []
+CONFIG: "SELECT 1"
+PARAMS: []
+
+SQL: SELECT 1
+KEYS: []
+CONFIG: "SELECT 1"
+PARAMS: []
+
+SQL: SELECT 1
+KEYS: []
+CONFIG: "SELECT 1"
+PARAMS: []
+
+SQL: SELECT 1
+KEYS: []
+CONFIG: "SELECT 1"
+PARAMS: []
+
+SQL: SELECT 1
+KEYS: []
+CONFIG: "SELECT 1"
+PARAMS: []
+
+SQL: SELECT 1
+KEYS: []
+CONFIG: "SELECT 1"
+PARAMS: []
+
+SQL: SELECT 1
+KEYS: []
+CONFIG: "SELECT 1"
+PARAMS: []
+
+SQL: SELECT 1
+KEYS: []
+CONFIG: "SELECT 1"
+PARAMS: []
+
+SQL: SELECT 1
+KEYS: []
+CONFIG: "SELECT 1"
+PARAMS: []
+
+SQL: SELECT 1
+KEYS: []
+CONFIG: "SELECT 1"
+PARAMS: []
+
+SQL: SELECT 1
+KEYS: []
+CONFIG: "SELECT 1"
+PARAMS: []
+
+SQL: SELECT 1
+KEYS: []
+CONFIG: "SELECT 1"
+PARAMS: []
+
+SQL: SELECT 1
+KEYS: []
+CONFIG: "SELECT 1"
+PARAMS: []
+
+SQL: SELECT 1
+KEYS: []
+CONFIG: "SELECT 1"
+PARAMS: []
+
+SQL: SELECT 1
+KEYS: []
+CONFIG: "SELECT 1"
+PARAMS: []
+
+SQL: SELECT 1
+KEYS: []
+CONFIG: "SELECT 1"
+PARAMS: []
+
+SQL: SELECT 1
+KEYS: []
+CONFIG: "SELECT 1"
+PARAMS: []
+
+SQL: SELECT 1
+KEYS: []
+CONFIG: "SELECT 1"
+PARAMS: []
+
+SQL: SELECT 1
+KEYS: []
+CONFIG: "SELECT 1"
+PARAMS: []
+
+SQL: SELECT 1
+KEYS: []
+CONFIG: "SELECT 1"
+PARAMS: []
+
+SQL: SELECT 1
+KEYS: []
+CONFIG: "SELECT 1"
+PARAMS: []
+
+SQL: SELECT 1
+KEYS: []
+CONFIG: "SELECT 1"
+PARAMS: []
+
+SQL: SELECT 1
+KEYS: []
+CONFIG: "SELECT 1"
+PARAMS: []
+
+SQL: SELECT 1
+KEYS: []
+CONFIG: "SELECT 1"
+PARAMS: []
+
+SQL: SELECT 1
+KEYS: []
+CONFIG: "SELECT 1"
+PARAMS: []
+
+SQL: SELECT 1
+KEYS: []
+CONFIG: "SELECT 1"
+PARAMS: []
+
+SQL: SELECT 1
+KEYS: []
+CONFIG: "SELECT 1"
+PARAMS: []
+
+SQL: SELECT 1
+KEYS: []
+CONFIG: "SELECT 1"
+PARAMS: []
+
+SQL: SELECT 1
+KEYS: []
+CONFIG: "SELECT 1"
+PARAMS: []
+
+SQL: SELECT 1
+KEYS: []
+CONFIG: "SELECT 1"
+PARAMS: []
+
+SQL: SELECT 1
+KEYS: []
+CONFIG: "SELECT 1"
+PARAMS: []
+
+SQL: SELECT 1
+KEYS: []
+CONFIG: "SELECT 1"
+PARAMS: []
+
+SQL: SELECT 1
+KEYS: []
+CONFIG: "SELECT 1"
+PARAMS: []
+
+SQL: SELECT 1
+KEYS: []
+CONFIG: "SELECT 1"
+PARAMS: []
+
+SQL: select "id", "domain", "name", "schema", "status", "created_at", "updated_at" from "tenants" where "tenants"."domain" = $1 limit $2
+KEYS: ["name","text","rowMode","types"]
+CONFIG: {"text":"select \"id\", \"domain\", \"name\", \"schema\", \"status\", \"created_at\", \"updated_at\" from \"tenants\" where \"tenants\".\"domain\" = $1 limit $2","rowMode":"array","types":{}}
+PARAMS: ["test-corp-7283",1]
+
+SQL: CREATE SCHEMA IF NOT EXISTS "tenant_test_corp_7283"
+KEYS: ["name","text","types"]
+CONFIG: {"text":"CREATE SCHEMA IF NOT EXISTS \"tenant_test_corp_7283\"","types":{}}
+PARAMS: []
+
+SQL: 
+        CREATE TABLE IF NOT EXISTS "tenant_test_corp_7283"."users" (
+          "id" uuid PRIMARY KEY DEFAULT gen_random_uuid(),
+          "email" varchar(256) NOT NULL UNIQUE,
+          "password_hash" text NOT NULL,
+          "name" varchar(256) NOT NULL,
+          "role" varchar(64) NOT NULL DEFAULT 'member',
+          "status" varchar(32) NOT NULL DEFAULT 'active',
+          "is_verified" boolean NOT NULL DEFAULT false,
+          "verification_token" varchar(256),
+          "reset_token" varchar(256),
+          "reset_token_expires_at" timestamp,
+          "created_at" timestamp NOT NULL DEFAULT now(),
+          "updated_at" timestamp NOT NULL DEFAULT now()
+        );
+      
+KEYS: ["name","text","types"]
+CONFIG: {"text":"\n        CREATE TABLE IF NOT EXISTS \"tenant_test_corp_7283\".\"users\" (\n          \"id\" uuid PRIMARY KEY DEFAULT gen_random_uuid(),\n          \"email\" varchar(256) NOT NULL UNIQUE,\n          \"password_hash\" text NOT NULL,\n          \"name\" varchar(256) NOT NULL,\n          \"role\" varchar(64) NOT NULL DEFAULT 'member',\n          \"status\" varchar(32) NOT NULL DEFAULT 'active',\n          \"is_verified\" boolean NOT NULL DEFAULT false,\n          \"verification_token\" varchar(256),\n          \"reset_token\" varchar(256),\n          \"reset_token_expires_at\" timestamp,\n          \"created_at\" timestamp NOT NULL DEFAULT now(),\n          \"updated_at\" timestamp NOT NULL DEFAULT now()\n        );\n      ","types":{}}
+PARAMS: []
+
+SQL: 
+        CREATE TABLE IF NOT EXISTS "tenant_test_corp_7283"."sessions" (
+          "id" uuid PRIMARY KEY DEFAULT gen_random_uuid(),
+          "user_id" uuid NOT NULL REFERENCES "tenant_test_corp_7283"."users"("id") ON DELETE CASCADE,
+          "token" varchar(512) NOT NULL UNIQUE,
+          "expires_at" timestamp NOT NULL,
+          "created_at" timestamp NOT NULL DEFAULT now()
+        );
+      
+KEYS: ["name","text","types"]
+CONFIG: {"text":"\n        CREATE TABLE IF NOT EXISTS \"tenant_test_corp_7283\".\"sessions\" (\n          \"id\" uuid PRIMARY KEY DEFAULT gen_random_uuid(),\n          \"user_id\" uuid NOT NULL REFERENCES \"tenant_test_corp_7283\".\"users\"(\"id\") ON DELETE CASCADE,\n          \"token\" varchar(512) NOT NULL UNIQUE,\n          \"expires_at\" timestamp NOT NULL,\n          \"created_at\" timestamp NOT NULL DEFAULT now()\n        );\n      ","types":{}}
+PARAMS: []
+
+SQL: insert into "tenants" ("id", "domain", "name", "schema", "status", "created_at", "updated_at") values (default, $1, $2, $3, $4, default, default) returning "id", "domain", "name", "schema", "status", "created_at", "updated_at"
+KEYS: ["name","text","rowMode","types"]
+CONFIG: {"text":"insert into \"tenants\" (\"id\", \"domain\", \"name\", \"schema\", \"status\", \"created_at\", \"updated_at\") values (default, $1, $2, $3, $4, default, default) returning \"id\", \"domain\", \"name\", \"schema\", \"status\", \"created_at\", \"updated_at\"","rowMode":"array","types":{}}
+PARAMS: ["test-corp-7283","Acme Test Corp","tenant_test_corp_7283","active"]
+
+SQL: 
+        INSERT INTO "tenant_test_corp_7283"."users" (email, password_hash, name, role, is_verified, verification_token)
+        VALUES ('ceo@acme-test.com', '17d68b1751cfe3ca0ec62584d5a86b10:8ad856984b0687645b6c792bf2c33db3f17c2e50c80e39b1245f00ec15f55040657dbe3e6d4ea8cea39a2da0997451b92dfe80018b86b3c68d3b72a50b0a8957', 'Acme CEO', 'owner', false, '68cd907590b2179d4a79bb6beba9dbd023996a3a1494364804d8dbffc0e8d23b')
+      
+KEYS: ["name","text","types"]
+CONFIG: {"text":"\n        INSERT INTO \"tenant_test_corp_7283\".\"users\" (email, password_hash, name, role, is_verified, verification_token)\n        VALUES ('ceo@acme-test.com', '17d68b1751cfe3ca0ec62584d5a86b10:8ad856984b0687645b6c792bf2c33db3f17c2e50c80e39b1245f00ec15f55040657dbe3e6d4ea8cea39a2da0997451b92dfe80018b86b3c68d3b72a50b0a8957', 'Acme CEO', 'owner', false, '68cd907590b2179d4a79bb6beba9dbd023996a3a1494364804d8dbffc0e8d23b')\n      ","types":{}}
+PARAMS: []
+
+SQL: 
+        SELECT id, email, name, role, is_verified, verification_token FROM "tenant_test_corp_7283"."users" WHERE email = 'ceo@acme-test.com' LIMIT 1
+      
+KEYS: ["name","text","types"]
+CONFIG: {"text":"\n        SELECT id, email, name, role, is_verified, verification_token FROM \"tenant_test_corp_7283\".\"users\" WHERE email = 'ceo@acme-test.com' LIMIT 1\n      ","types":{}}
+PARAMS: []
+
+SQL: SET search_path TO "tenant_test_corp_7283", public
+KEYS: []
+CONFIG: "SET search_path TO \"tenant_test_corp_7283\", public"
+PARAMS: []
+
+SQL: SET search_path TO "tenant_test_corp_7283", public
+KEYS: []
+CONFIG: "SET search_path TO \"tenant_test_corp_7283\", public"
+PARAMS: []
+
+SQL: select "id", "domain", "name", "schema", "status", "created_at", "updated_at" from "tenants" where "tenants"."domain" = $1
+KEYS: ["name","text","rowMode","types"]
+CONFIG: {"text":"select \"id\", \"domain\", \"name\", \"schema\", \"status\", \"created_at\", \"updated_at\" from \"tenants\" where \"tenants\".\"domain\" = $1","rowMode":"array","types":{}}
+PARAMS: ["test-corp-7283"]
+
+SQL: select "id", "email", "password_hash", "name", "role", "status", "is_verified", "verification_token", "reset_token", "reset_token_expires_at", "created_at", "updated_at" from "users" where "users"."email" = $1 limit $2
+KEYS: ["name","text","rowMode","types"]
+CONFIG: {"text":"select \"id\", \"email\", \"password_hash\", \"name\", \"role\", \"status\", \"is_verified\", \"verification_token\", \"reset_token\", \"reset_token_expires_at\", \"created_at\", \"updated_at\" from \"users\" where \"users\".\"email\" = $1 limit $2","rowMode":"array","types":{}}
+PARAMS: ["ceo@acme-test.com",1]
+
+SQL: SET search_path TO "tenant_test_corp_7283", public
+KEYS: []
+CONFIG: "SET search_path TO \"tenant_test_corp_7283\", public"
+PARAMS: []
+
+SQL: select "id", "domain", "name", "schema", "status", "created_at", "updated_at" from "tenants" where "tenants"."domain" = $1
+KEYS: ["name","text","rowMode","types"]
+CONFIG: {"text":"select \"id\", \"domain\", \"name\", \"schema\", \"status\", \"created_at\", \"updated_at\" from \"tenants\" where \"tenants\".\"domain\" = $1","rowMode":"array","types":{}}
+PARAMS: ["test-corp-7283"]
+
+SQL: SET search_path TO "tenant_test_corp_7283", public
+KEYS: []
+CONFIG: "SET search_path TO \"tenant_test_corp_7283\", public"
+PARAMS: []
+
+SQL: select "id", "domain", "name", "schema", "status", "created_at", "updated_at" from "tenants" where "tenants"."domain" = $1
+KEYS: ["name","text","rowMode","types"]
+CONFIG: {"text":"select \"id\", \"domain\", \"name\", \"schema\", \"status\", \"created_at\", \"updated_at\" from \"tenants\" where \"tenants\".\"domain\" = $1","rowMode":"array","types":{}}
+PARAMS: ["test-corp-7283"]
+
+SQL: SET search_path TO "tenant_test_corp_7283", public
+KEYS: []
+CONFIG: "SET search_path TO \"tenant_test_corp_7283\", public"
+PARAMS: []
+
+SQL: select "id", "email", "password_hash", "name", "role", "status", "is_verified", "verification_token", "reset_token", "reset_token_expires_at", "created_at", "updated_at" from "users" where "users"."email" = $1 limit $2
+KEYS: ["name","text","rowMode","types"]
+CONFIG: {"text":"select \"id\", \"email\", \"password_hash\", \"name\", \"role\", \"status\", \"is_verified\", \"verification_token\", \"reset_token\", \"reset_token_expires_at\", \"created_at\", \"updated_at\" from \"users\" where \"users\".\"email\" = $1 limit $2","rowMode":"array","types":{}}
+PARAMS: ["ceo@acme-test.com",1]
+
+SQL: update "users" set "reset_token" = $1, "reset_token_expires_at" = $2 where "users"."id" = $3
+KEYS: ["name","text","types"]
+CONFIG: {"text":"update \"users\" set \"reset_token\" = $1, \"reset_token_expires_at\" = $2 where \"users\".\"id\" = $3","types":{}}
+PARAMS: ["eeac8e75d10590eca03be4f0735fd4b4c21eb5953ca4b34e0381f11b69672651","2026-08-02T04:15:29.545Z","d27bd329-952d-4756-ba30-532bee6ff74e"]
+
+SQL: SET search_path TO "tenant_test_corp_7283", public
+KEYS: []
+CONFIG: "SET search_path TO \"tenant_test_corp_7283\", public"
+PARAMS: []
+
+SQL: select "id", "email", "password_hash", "name", "role", "status", "is_verified", "verification_token", "reset_token", "reset_token_expires_at", "created_at", "updated_at" from "users" where "users"."reset_token" = $1 limit $2
+KEYS: ["name","text","rowMode","types"]
+CONFIG: {"text":"select \"id\", \"email\", \"password_hash\", \"name\", \"role\", \"status\", \"is_verified\", \"verification_token\", \"reset_token\", \"reset_token_expires_at\", \"created_at\", \"updated_at\" from \"users\" where \"users\".\"reset_token\" = $1 limit $2","rowMode":"array","types":{}}
+PARAMS: ["eeac8e75d10590eca03be4f0735fd4b4c21eb5953ca4b34e0381f11b69672651",1]
+
+SQL: update "users" set "password_hash" = $1, "reset_token" = $2, "reset_token_expires_at" = $3 where "users"."id" = $4
+KEYS: ["name","text","types"]
+CONFIG: {"text":"update \"users\" set \"password_hash\" = $1, \"reset_token\" = $2, \"reset_token_expires_at\" = $3 where \"users\".\"id\" = $4","types":{}}
+PARAMS: ["655d3e7ae0039605085895f380514de0:dc10ddcb0ac31d5385e77bca684d138ae15ca86d521ccc3fb5e88c7ec58bb5935b08b2809aacbf5b27cbbd9a440099778357841dbcc9d2504c259a0a32df1d14",null,null,"d27bd329-952d-4756-ba30-532bee6ff74e"]
+
+SQL: delete from "sessions" where "sessions"."user_id" = $1
+KEYS: ["name","text","types"]
+CONFIG: {"text":"delete from \"sessions\" where \"sessions\".\"user_id\" = $1","types":{}}
+PARAMS: ["d27bd329-952d-4756-ba30-532bee6ff74e"]
+
+SQL: SET search_path TO "tenant_test_corp_7283", public
+KEYS: []
+CONFIG: "SET search_path TO \"tenant_test_corp_7283\", public"
+PARAMS: []
+
+SQL: select "id", "domain", "name", "schema", "status", "created_at", "updated_at" from "tenants" where "tenants"."domain" = $1
+KEYS: ["name","text","rowMode","types"]
+CONFIG: {"text":"select \"id\", \"domain\", \"name\", \"schema\", \"status\", \"created_at\", \"updated_at\" from \"tenants\" where \"tenants\".\"domain\" = $1","rowMode":"array","types":{}}
+PARAMS: ["test-corp-7283"]
+
+SQL: select "id", "email", "password_hash", "name", "role", "status", "is_verified", "verification_token", "reset_token", "reset_token_expires_at", "created_at", "updated_at" from "users" where "users"."email" = $1 limit $2
+KEYS: ["name","text","rowMode","types"]
+CONFIG: {"text":"select \"id\", \"email\", \"password_hash\", \"name\", \"role\", \"status\", \"is_verified\", \"verification_token\", \"reset_token\", \"reset_token_expires_at\", \"created_at\", \"updated_at\" from \"users\" where \"users\".\"email\" = $1 limit $2","rowMode":"array","types":{}}
+PARAMS: ["ceo@acme-test.com",1]
+
+SQL: SELECT 1
+KEYS: []
+CONFIG: "SELECT 1"
+PARAMS: []
+
+SQL: select "id", "domain", "name", "schema", "status", "created_at", "updated_at" from "tenants" where "tenants"."domain" = $1 limit $2
+KEYS: ["name","text","rowMode","types"]
+CONFIG: {"text":"select \"id\", \"domain\", \"name\", \"schema\", \"status\", \"created_at\", \"updated_at\" from \"tenants\" where \"tenants\".\"domain\" = $1 limit $2","rowMode":"array","types":{}}
+PARAMS: ["test-corp-5451",1]
+
+SQL: CREATE SCHEMA IF NOT EXISTS "tenant_test_corp_5451"
+KEYS: ["name","text","types"]
+CONFIG: {"text":"CREATE SCHEMA IF NOT EXISTS \"tenant_test_corp_5451\"","types":{}}
+PARAMS: []
+
+SQL: 
+        CREATE TABLE IF NOT EXISTS "tenant_test_corp_5451"."users" (
+          "id" uuid PRIMARY KEY DEFAULT gen_random_uuid(),
+          "email" varchar(256) NOT NULL UNIQUE,
+          "password_hash" text NOT NULL,
+          "name" varchar(256) NOT NULL,
+          "role" varchar(64) NOT NULL DEFAULT 'member',
+          "status" varchar(32) NOT NULL DEFAULT 'active',
+          "is_verified" boolean NOT NULL DEFAULT false,
+          "verification_token" varchar(256),
+          "reset_token" varchar(256),
+          "reset_token_expires_at" timestamp,
+          "created_at" timestamp NOT NULL DEFAULT now(),
+          "updated_at" timestamp NOT NULL DEFAULT now()
+        );
+      
+KEYS: ["name","text","types"]
+CONFIG: {"text":"\n        CREATE TABLE IF NOT EXISTS \"tenant_test_corp_5451\".\"users\" (\n          \"id\" uuid PRIMARY KEY DEFAULT gen_random_uuid(),\n          \"email\" varchar(256) NOT NULL UNIQUE,\n          \"password_hash\" text NOT NULL,\n          \"name\" varchar(256) NOT NULL,\n          \"role\" varchar(64) NOT NULL DEFAULT 'member',\n          \"status\" varchar(32) NOT NULL DEFAULT 'active',\n          \"is_verified\" boolean NOT NULL DEFAULT false,\n          \"verification_token\" varchar(256),\n          \"reset_token\" varchar(256),\n          \"reset_token_expires_at\" timestamp,\n          \"created_at\" timestamp NOT NULL DEFAULT now(),\n          \"updated_at\" timestamp NOT NULL DEFAULT now()\n        );\n      ","types":{}}
+PARAMS: []
+
+SQL: 
+        CREATE TABLE IF NOT EXISTS "tenant_test_corp_5451"."sessions" (
+          "id" uuid PRIMARY KEY DEFAULT gen_random_uuid(),
+          "user_id" uuid NOT NULL REFERENCES "tenant_test_corp_5451"."users"("id") ON DELETE CASCADE,
+          "token" varchar(512) NOT NULL UNIQUE,
+          "expires_at" timestamp NOT NULL,
+          "created_at" timestamp NOT NULL DEFAULT now()
+        );
+      
+KEYS: ["name","text","types"]
+CONFIG: {"text":"\n        CREATE TABLE IF NOT EXISTS \"tenant_test_corp_5451\".\"sessions\" (\n          \"id\" uuid PRIMARY KEY DEFAULT gen_random_uuid(),\n          \"user_id\" uuid NOT NULL REFERENCES \"tenant_test_corp_5451\".\"users\"(\"id\") ON DELETE CASCADE,\n          \"token\" varchar(512) NOT NULL UNIQUE,\n          \"expires_at\" timestamp NOT NULL,\n          \"created_at\" timestamp NOT NULL DEFAULT now()\n        );\n      ","types":{}}
+PARAMS: []
+
+SQL: insert into "tenants" ("id", "domain", "name", "schema", "status", "created_at", "updated_at") values (default, $1, $2, $3, $4, default, default) returning "id", "domain", "name", "schema", "status", "created_at", "updated_at"
+KEYS: ["name","text","rowMode","types"]
+CONFIG: {"text":"insert into \"tenants\" (\"id\", \"domain\", \"name\", \"schema\", \"status\", \"created_at\", \"updated_at\") values (default, $1, $2, $3, $4, default, default) returning \"id\", \"domain\", \"name\", \"schema\", \"status\", \"created_at\", \"updated_at\"","rowMode":"array","types":{}}
+PARAMS: ["test-corp-5451","Acme Test Corp","tenant_test_corp_5451","active"]
+
+SQL: 
+        INSERT INTO "tenant_test_corp_5451"."users" (email, password_hash, name, role, is_verified, verification_token)
+        VALUES ('ceo@acme-test.com', '341e7abbf3458f36c3a7999c3f4e5d84:431ccd59d48a412db17e59520c714d90fbca51741a787e886d017c7f207a84d1b25434539653f3ac31e68ad7f6341029ea740df0165b51021442c71d3b39e564', 'Acme CEO', 'owner', false, 'b6f1ff51511fbe5831378bfd2ee9eea4d6c32af9deecddc9bece5b3af66d1a2d')
+      
+KEYS: ["name","text","types"]
+CONFIG: {"text":"\n        INSERT INTO \"tenant_test_corp_5451\".\"users\" (email, password_hash, name, role, is_verified, verification_token)\n        VALUES ('ceo@acme-test.com', '341e7abbf3458f36c3a7999c3f4e5d84:431ccd59d48a412db17e59520c714d90fbca51741a787e886d017c7f207a84d1b25434539653f3ac31e68ad7f6341029ea740df0165b51021442c71d3b39e564', 'Acme CEO', 'owner', false, 'b6f1ff51511fbe5831378bfd2ee9eea4d6c32af9deecddc9bece5b3af66d1a2d')\n      ","types":{}}
+PARAMS: []
+
+SQL: 
+        SELECT id, email, name, role, is_verified, verification_token FROM "tenant_test_corp_5451"."users" WHERE email = 'ceo@acme-test.com' LIMIT 1
+      
+KEYS: ["name","text","types"]
+CONFIG: {"text":"\n        SELECT id, email, name, role, is_verified, verification_token FROM \"tenant_test_corp_5451\".\"users\" WHERE email = 'ceo@acme-test.com' LIMIT 1\n      ","types":{}}
+PARAMS: []
+
+SQL: SET search_path TO "tenant_test_corp_5451", public
+KEYS: []
+CONFIG: "SET search_path TO \"tenant_test_corp_5451\", public"
+PARAMS: []
+
+SQL: SET search_path TO "tenant_test_corp_5451", public
+KEYS: []
+CONFIG: "SET search_path TO \"tenant_test_corp_5451\", public"
+PARAMS: []
+
+SQL: select "id", "domain", "name", "schema", "status", "created_at", "updated_at" from "tenants" where "tenants"."domain" = $1
+KEYS: ["name","text","rowMode","types"]
+CONFIG: {"text":"select \"id\", \"domain\", \"name\", \"schema\", \"status\", \"created_at\", \"updated_at\" from \"tenants\" where \"tenants\".\"domain\" = $1","rowMode":"array","types":{}}
+PARAMS: ["test-corp-5451"]
+
+SQL: select "id", "email", "password_hash", "name", "role", "status", "is_verified", "verification_token", "reset_token", "reset_token_expires_at", "created_at", "updated_at" from "users" where "users"."email" = $1 limit $2
+KEYS: ["name","text","rowMode","types"]
+CONFIG: {"text":"select \"id\", \"email\", \"password_hash\", \"name\", \"role\", \"status\", \"is_verified\", \"verification_token\", \"reset_token\", \"reset_token_expires_at\", \"created_at\", \"updated_at\" from \"users\" where \"users\".\"email\" = $1 limit $2","rowMode":"array","types":{}}
+PARAMS: ["ceo@acme-test.com",1]
+
+SQL: SET search_path TO "tenant_test_corp_5451", public
+KEYS: []
+CONFIG: "SET search_path TO \"tenant_test_corp_5451\", public"
+PARAMS: []
+
+SQL: select "id", "domain", "name", "schema", "status", "created_at", "updated_at" from "tenants" where "tenants"."domain" = $1
+KEYS: ["name","text","rowMode","types"]
+CONFIG: {"text":"select \"id\", \"domain\", \"name\", \"schema\", \"status\", \"created_at\", \"updated_at\" from \"tenants\" where \"tenants\".\"domain\" = $1","rowMode":"array","types":{}}
+PARAMS: ["test-corp-5451"]
+
+SQL: SET search_path TO "tenant_test_corp_5451", public
+KEYS: []
+CONFIG: "SET search_path TO \"tenant_test_corp_5451\", public"
+PARAMS: []
+
+SQL: select "id", "domain", "name", "schema", "status", "created_at", "updated_at" from "tenants" where "tenants"."domain" = $1
+KEYS: ["name","text","rowMode","types"]
+CONFIG: {"text":"select \"id\", \"domain\", \"name\", \"schema\", \"status\", \"created_at\", \"updated_at\" from \"tenants\" where \"tenants\".\"domain\" = $1","rowMode":"array","types":{}}
+PARAMS: ["test-corp-5451"]
+
+SQL: SET search_path TO "tenant_test_corp_5451", public
+KEYS: []
+CONFIG: "SET search_path TO \"tenant_test_corp_5451\", public"
+PARAMS: []
+
+SQL: select "id", "email", "password_hash", "name", "role", "status", "is_verified", "verification_token", "reset_token", "reset_token_expires_at", "created_at", "updated_at" from "users" where "users"."email" = $1 limit $2
+KEYS: ["name","text","rowMode","types"]
+CONFIG: {"text":"select \"id\", \"email\", \"password_hash\", \"name\", \"role\", \"status\", \"is_verified\", \"verification_token\", \"reset_token\", \"reset_token_expires_at\", \"created_at\", \"updated_at\" from \"users\" where \"users\".\"email\" = $1 limit $2","rowMode":"array","types":{}}
+PARAMS: ["ceo@acme-test.com",1]
+
+SQL: update "users" set "reset_token" = $1, "reset_token_expires_at" = $2 where "users"."id" = $3
+KEYS: ["name","text","types"]
+CONFIG: {"text":"update \"users\" set \"reset_token\" = $1, \"reset_token_expires_at\" = $2 where \"users\".\"id\" = $3","types":{}}
+PARAMS: ["d938386794664c62f252187c846857ccb881298891304ba9b3fdcab3f7c0290d","2026-08-02T04:15:39.963Z","bdd51df6-6835-4fbf-b712-94f4409598a4"]
+
+SQL: SET search_path TO "tenant_test_corp_5451", public
+KEYS: []
+CONFIG: "SET search_path TO \"tenant_test_corp_5451\", public"
+PARAMS: []
+
+SQL: select "id", "email", "password_hash", "name", "role", "status", "is_verified", "verification_token", "reset_token", "reset_token_expires_at", "created_at", "updated_at" from "users" where "users"."reset_token" = $1 limit $2
+KEYS: ["name","text","rowMode","types"]
+CONFIG: {"text":"select \"id\", \"email\", \"password_hash\", \"name\", \"role\", \"status\", \"is_verified\", \"verification_token\", \"reset_token\", \"reset_token_expires_at\", \"created_at\", \"updated_at\" from \"users\" where \"users\".\"reset_token\" = $1 limit $2","rowMode":"array","types":{}}
+PARAMS: ["d938386794664c62f252187c846857ccb881298891304ba9b3fdcab3f7c0290d",1]
+
+SQL: update "users" set "password_hash" = $1, "reset_token" = $2, "reset_token_expires_at" = $3 where "users"."id" = $4
+KEYS: ["name","text","types"]
+CONFIG: {"text":"update \"users\" set \"password_hash\" = $1, \"reset_token\" = $2, \"reset_token_expires_at\" = $3 where \"users\".\"id\" = $4","types":{}}
+PARAMS: ["032910c0b37a09b98013493b22416883:7e273e909eecdbac1da95e71cf05c783a9d7d45a55f1599acaa8403bf20dafa87be75cbe59d6434f3191537669d83138d91800aac616b8840ee34012d1cea46d",null,null,"bdd51df6-6835-4fbf-b712-94f4409598a4"]
+
+SQL: delete from "sessions" where "sessions"."user_id" = $1
+KEYS: ["name","text","types"]
+CONFIG: {"text":"delete from \"sessions\" where \"sessions\".\"user_id\" = $1","types":{}}
+PARAMS: ["bdd51df6-6835-4fbf-b712-94f4409598a4"]
+
+SQL: SET search_path TO "tenant_test_corp_5451", public
+KEYS: []
+CONFIG: "SET search_path TO \"tenant_test_corp_5451\", public"
+PARAMS: []
+
+SQL: select "id", "domain", "name", "schema", "status", "created_at", "updated_at" from "tenants" where "tenants"."domain" = $1
+KEYS: ["name","text","rowMode","types"]
+CONFIG: {"text":"select \"id\", \"domain\", \"name\", \"schema\", \"status\", \"created_at\", \"updated_at\" from \"tenants\" where \"tenants\".\"domain\" = $1","rowMode":"array","types":{}}
+PARAMS: ["test-corp-5451"]
+
+SQL: select "id", "email", "password_hash", "name", "role", "status", "is_verified", "verification_token", "reset_token", "reset_token_expires_at", "created_at", "updated_at" from "users" where "users"."email" = $1 limit $2
+KEYS: ["name","text","rowMode","types"]
+CONFIG: {"text":"select \"id\", \"email\", \"password_hash\", \"name\", \"role\", \"status\", \"is_verified\", \"verification_token\", \"reset_token\", \"reset_token_expires_at\", \"created_at\", \"updated_at\" from \"users\" where \"users\".\"email\" = $1 limit $2","rowMode":"array","types":{}}
+PARAMS: ["ceo@acme-test.com",1]
+
+SQL: SELECT 1
+KEYS: []
+CONFIG: "SELECT 1"
+PARAMS: []
+
+SQL: SELECT 1
+KEYS: []
+CONFIG: "SELECT 1"
+PARAMS: []
+
+SQL: SELECT 1
+KEYS: []
+CONFIG: "SELECT 1"
+PARAMS: []
+
+SQL: SELECT 1
+KEYS: []
+CONFIG: "SELECT 1"
+PARAMS: []
+
+SQL: select "id", "domain", "name", "schema", "status", "created_at", "updated_at" from "tenants" where "tenants"."domain" = $1 limit $2
+KEYS: ["name","text","rowMode","types"]
+CONFIG: {"text":"select \"id\", \"domain\", \"name\", \"schema\", \"status\", \"created_at\", \"updated_at\" from \"tenants\" where \"tenants\".\"domain\" = $1 limit $2","rowMode":"array","types":{}}
+PARAMS: ["test-corp-2689",1]
+
+SQL: CREATE SCHEMA IF NOT EXISTS "tenant_test_corp_2689"
+KEYS: ["name","text","types"]
+CONFIG: {"text":"CREATE SCHEMA IF NOT EXISTS \"tenant_test_corp_2689\"","types":{}}
+PARAMS: []
+
+SQL: 
+        CREATE TABLE IF NOT EXISTS "tenant_test_corp_2689"."users" (
+          "id" uuid PRIMARY KEY DEFAULT gen_random_uuid(),
+          "email" varchar(256) NOT NULL UNIQUE,
+          "password_hash" text NOT NULL,
+          "name" varchar(256) NOT NULL,
+          "role" varchar(64) NOT NULL DEFAULT 'member',
+          "status" varchar(32) NOT NULL DEFAULT 'active',
+          "is_verified" boolean NOT NULL DEFAULT false,
+          "verification_token" varchar(256),
+          "reset_token" varchar(256),
+          "reset_token_expires_at" timestamp,
+          "created_at" timestamp NOT NULL DEFAULT now(),
+          "updated_at" timestamp NOT NULL DEFAULT now()
+        );
+      
+KEYS: ["name","text","types"]
+CONFIG: {"text":"\n        CREATE TABLE IF NOT EXISTS \"tenant_test_corp_2689\".\"users\" (\n          \"id\" uuid PRIMARY KEY DEFAULT gen_random_uuid(),\n          \"email\" varchar(256) NOT NULL UNIQUE,\n          \"password_hash\" text NOT NULL,\n          \"name\" varchar(256) NOT NULL,\n          \"role\" varchar(64) NOT NULL DEFAULT 'member',\n          \"status\" varchar(32) NOT NULL DEFAULT 'active',\n          \"is_verified\" boolean NOT NULL DEFAULT false,\n          \"verification_token\" varchar(256),\n          \"reset_token\" varchar(256),\n          \"reset_token_expires_at\" timestamp,\n          \"created_at\" timestamp NOT NULL DEFAULT now(),\n          \"updated_at\" timestamp NOT NULL DEFAULT now()\n        );\n      ","types":{}}
+PARAMS: []
+
+SQL: 
+        CREATE TABLE IF NOT EXISTS "tenant_test_corp_2689"."sessions" (
+          "id" uuid PRIMARY KEY DEFAULT gen_random_uuid(),
+          "user_id" uuid NOT NULL REFERENCES "tenant_test_corp_2689"."users"("id") ON DELETE CASCADE,
+          "token" varchar(512) NOT NULL UNIQUE,
+          "expires_at" timestamp NOT NULL,
+          "created_at" timestamp NOT NULL DEFAULT now()
+        );
+      
+KEYS: ["name","text","types"]
+CONFIG: {"text":"\n        CREATE TABLE IF NOT EXISTS \"tenant_test_corp_2689\".\"sessions\" (\n          \"id\" uuid PRIMARY KEY DEFAULT gen_random_uuid(),\n          \"user_id\" uuid NOT NULL REFERENCES \"tenant_test_corp_2689\".\"users\"(\"id\") ON DELETE CASCADE,\n          \"token\" varchar(512) NOT NULL UNIQUE,\n          \"expires_at\" timestamp NOT NULL,\n          \"created_at\" timestamp NOT NULL DEFAULT now()\n        );\n      ","types":{}}
+PARAMS: []
+
+SQL: insert into "tenants" ("id", "domain", "name", "schema", "status", "created_at", "updated_at") values (default, $1, $2, $3, $4, default, default) returning "id", "domain", "name", "schema", "status", "created_at", "updated_at"
+KEYS: ["name","text","rowMode","types"]
+CONFIG: {"text":"insert into \"tenants\" (\"id\", \"domain\", \"name\", \"schema\", \"status\", \"created_at\", \"updated_at\") values (default, $1, $2, $3, $4, default, default) returning \"id\", \"domain\", \"name\", \"schema\", \"status\", \"created_at\", \"updated_at\"","rowMode":"array","types":{}}
+PARAMS: ["test-corp-2689","Acme Test Corp","tenant_test_corp_2689","active"]
+
+SQL: 
+        INSERT INTO "tenant_test_corp_2689"."users" (email, password_hash, name, role, is_verified, verification_token)
+        VALUES ('ceo@acme-test.com', '28686880f51367743d7a0cdcd1325d32:c7c18ec47ac071be88c45508f40e6f1c25b492e073900199f520ebfd25c336fefddd2fa896f63a758231946041500a45075cfa3113f59cfbc8634ce541c9c3bd', 'Acme CEO', 'owner', false, '691bbe36271a21e292b62b44440924833f538a1344c98d8cfe8c6d9c5b5c1a1d')
+      
+KEYS: ["name","text","types"]
+CONFIG: {"text":"\n        INSERT INTO \"tenant_test_corp_2689\".\"users\" (email, password_hash, name, role, is_verified, verification_token)\n        VALUES ('ceo@acme-test.com', '28686880f51367743d7a0cdcd1325d32:c7c18ec47ac071be88c45508f40e6f1c25b492e073900199f520ebfd25c336fefddd2fa896f63a758231946041500a45075cfa3113f59cfbc8634ce541c9c3bd', 'Acme CEO', 'owner', false, '691bbe36271a21e292b62b44440924833f538a1344c98d8cfe8c6d9c5b5c1a1d')\n      ","types":{}}
+PARAMS: []
+
+SQL: 
+        SELECT id, email, name, role, is_verified, verification_token FROM "tenant_test_corp_2689"."users" WHERE email = 'ceo@acme-test.com' LIMIT 1
+      
+KEYS: ["name","text","types"]
+CONFIG: {"text":"\n        SELECT id, email, name, role, is_verified, verification_token FROM \"tenant_test_corp_2689\".\"users\" WHERE email = 'ceo@acme-test.com' LIMIT 1\n      ","types":{}}
+PARAMS: []
+
+SQL: SET search_path TO "tenant_test_corp_2689", public
+KEYS: []
+CONFIG: "SET search_path TO \"tenant_test_corp_2689\", public"
+PARAMS: []
+
+SQL: insert into "sessions" ("id", "user_id", "token", "expires_at", "created_at") values (default, $1, $2, $3, default)
+KEYS: ["name","text","types"]
+CONFIG: {"text":"insert into \"sessions\" (\"id\", \"user_id\", \"token\", \"expires_at\", \"created_at\") values (default, $1, $2, $3, default)","types":{}}
+PARAMS: ["f3a8dc26-a873-44ea-8cd2-9b766266956e","eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImYzYThkYzI2LWE4NzMtNDRlYS04Y2QyLTliNzY2MjY2OTU2ZSIsImVtYWlsIjoiY2VvQGFjbWUtdGVzdC5jb20iLCJyb2xlIjoib3duZXIiLCJ0ZW5hbnRJZCI6IjA2MzlmZDE1LTc1MGMtNDU5YS04OTU5LTk1MWYyMGVhMzg5NiIsImlhdCI6MTc4NTY0MDU3OSwiZXhwIjoxNzg2MjQ1Mzc5fQ.eGtObwa9nCBAew-NPPd4pDvz8pNO3DxBzMA4tGDnXLs","2026-08-09T03:16:19.239Z"]
+
+SQL: select "id", "domain", "name", "schema", "status", "created_at", "updated_at" from "tenants" where "tenants"."domain" = $1
+KEYS: ["name","text","rowMode","types"]
+CONFIG: {"text":"select \"id\", \"domain\", \"name\", \"schema\", \"status\", \"created_at\", \"updated_at\" from \"tenants\" where \"tenants\".\"domain\" = $1","rowMode":"array","types":{}}
+PARAMS: ["test-corp-2689"]
+
+SQL: SET search_path TO "tenant_test_corp_2689", public
+KEYS: []
+CONFIG: "SET search_path TO \"tenant_test_corp_2689\", public"
+PARAMS: []
+
+SQL: select "id", "email", "password_hash", "name", "role", "status", "is_verified", "verification_token", "reset_token", "reset_token_expires_at", "created_at", "updated_at" from "users" where "users"."verification_token" = $1 limit $2
+KEYS: ["name","text","rowMode","types"]
+CONFIG: {"text":"select \"id\", \"email\", \"password_hash\", \"name\", \"role\", \"status\", \"is_verified\", \"verification_token\", \"reset_token\", \"reset_token_expires_at\", \"created_at\", \"updated_at\" from \"users\" where \"users\".\"verification_token\" = $1 limit $2","rowMode":"array","types":{}}
+PARAMS: ["691bbe36271a21e292b62b44440924833f538a1344c98d8cfe8c6d9c5b5c1a1d",1]
+
+SQL: update "users" set "is_verified" = $1, "verification_token" = $2 where "users"."id" = $3
+KEYS: ["name","text","types"]
+CONFIG: {"text":"update \"users\" set \"is_verified\" = $1, \"verification_token\" = $2 where \"users\".\"id\" = $3","types":{}}
+PARAMS: [true,null,"f3a8dc26-a873-44ea-8cd2-9b766266956e"]
+
+SQL: SET search_path TO "tenant_test_corp_2689", public
+KEYS: []
+CONFIG: "SET search_path TO \"tenant_test_corp_2689\", public"
+PARAMS: []
+
+SQL: select "id", "email", "password_hash", "name", "role", "status", "is_verified", "verification_token", "reset_token", "reset_token_expires_at", "created_at", "updated_at" from "users" where "users"."id" = $1
+KEYS: ["name","text","rowMode","types"]
+CONFIG: {"text":"select \"id\", \"email\", \"password_hash\", \"name\", \"role\", \"status\", \"is_verified\", \"verification_token\", \"reset_token\", \"reset_token_expires_at\", \"created_at\", \"updated_at\" from \"users\" where \"users\".\"id\" = $1","rowMode":"array","types":{}}
+PARAMS: ["f3a8dc26-a873-44ea-8cd2-9b766266956e"]
+
+SQL: SET search_path TO "tenant_test_corp_2689", public
+KEYS: []
+CONFIG: "SET search_path TO \"tenant_test_corp_2689\", public"
+PARAMS: []
+
+SQL: select "id", "domain", "name", "schema", "status", "created_at", "updated_at" from "tenants" where "tenants"."domain" = $1
+KEYS: ["name","text","rowMode","types"]
+CONFIG: {"text":"select \"id\", \"domain\", \"name\", \"schema\", \"status\", \"created_at\", \"updated_at\" from \"tenants\" where \"tenants\".\"domain\" = $1","rowMode":"array","types":{}}
+PARAMS: ["test-corp-2689"]
+
+SQL: select "id", "email", "password_hash", "name", "role", "status", "is_verified", "verification_token", "reset_token", "reset_token_expires_at", "created_at", "updated_at" from "users" where "users"."email" = $1 limit $2
+KEYS: ["name","text","rowMode","types"]
+CONFIG: {"text":"select \"id\", \"email\", \"password_hash\", \"name\", \"role\", \"status\", \"is_verified\", \"verification_token\", \"reset_token\", \"reset_token_expires_at\", \"created_at\", \"updated_at\" from \"users\" where \"users\".\"email\" = $1 limit $2","rowMode":"array","types":{}}
+PARAMS: ["ceo@acme-test.com",1]
+
+SQL: insert into "sessions" ("id", "user_id", "token", "expires_at", "created_at") values (default, $1, $2, $3, default)
+KEYS: ["name","text","types"]
+CONFIG: {"text":"insert into \"sessions\" (\"id\", \"user_id\", \"token\", \"expires_at\", \"created_at\") values (default, $1, $2, $3, default)","types":{}}
+PARAMS: ["f3a8dc26-a873-44ea-8cd2-9b766266956e","eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImYzYThkYzI2LWE4NzMtNDRlYS04Y2QyLTliNzY2MjY2OTU2ZSIsImVtYWlsIjoiY2VvQGFjbWUtdGVzdC5jb20iLCJyb2xlIjoib3duZXIiLCJ0ZW5hbnRJZCI6IjA2MzlmZDE1LTc1MGMtNDU5YS04OTU5LTk1MWYyMGVhMzg5NiIsImlhdCI6MTc4NTY0MDU3OSwiZXhwIjoxNzg2MjQ1Mzc5fQ.eGtObwa9nCBAew-NPPd4pDvz8pNO3DxBzMA4tGDnXLs","2026-08-09T03:16:19.317Z"]
+
+SQL: SET search_path TO "tenant_test_corp_2689", public
+KEYS: []
+CONFIG: "SET search_path TO \"tenant_test_corp_2689\", public"
+PARAMS: []
+
+SQL: select "id", "domain", "name", "schema", "status", "created_at", "updated_at" from "tenants" where "tenants"."domain" = $1
+KEYS: ["name","text","rowMode","types"]
+CONFIG: {"text":"select \"id\", \"domain\", \"name\", \"schema\", \"status\", \"created_at\", \"updated_at\" from \"tenants\" where \"tenants\".\"domain\" = $1","rowMode":"array","types":{}}
+PARAMS: ["test-corp-2689"]
+
+SQL: select "id", "user_id", "token", "expires_at", "created_at" from "sessions" where "sessions"."token" = $1 limit $2
+KEYS: ["name","text","rowMode","types"]
+CONFIG: {"text":"select \"id\", \"user_id\", \"token\", \"expires_at\", \"created_at\" from \"sessions\" where \"sessions\".\"token\" = $1 limit $2","rowMode":"array","types":{}}
+PARAMS: ["eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImYzYThkYzI2LWE4NzMtNDRlYS04Y2QyLTliNzY2MjY2OTU2ZSIsImVtYWlsIjoiY2VvQGFjbWUtdGVzdC5jb20iLCJyb2xlIjoib3duZXIiLCJ0ZW5hbnRJZCI6IjA2MzlmZDE1LTc1MGMtNDU5YS04OTU5LTk1MWYyMGVhMzg5NiIsImlhdCI6MTc4NTY0MDU3OSwiZXhwIjoxNzg2MjQ1Mzc5fQ.eGtObwa9nCBAew-NPPd4pDvz8pNO3DxBzMA4tGDnXLs",1]
+
+SQL: delete from "sessions" where "sessions"."token" = $1
+KEYS: ["name","text","types"]
+CONFIG: {"text":"delete from \"sessions\" where \"sessions\".\"token\" = $1","types":{}}
+PARAMS: ["eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImYzYThkYzI2LWE4NzMtNDRlYS04Y2QyLTliNzY2MjY2OTU2ZSIsImVtYWlsIjoiY2VvQGFjbWUtdGVzdC5jb20iLCJyb2xlIjoib3duZXIiLCJ0ZW5hbnRJZCI6IjA2MzlmZDE1LTc1MGMtNDU5YS04OTU5LTk1MWYyMGVhMzg5NiIsImlhdCI6MTc4NTY0MDU3OSwiZXhwIjoxNzg2MjQ1Mzc5fQ.eGtObwa9nCBAew-NPPd4pDvz8pNO3DxBzMA4tGDnXLs"]
+
+SQL: insert into "sessions" ("id", "user_id", "token", "expires_at", "created_at") values (default, $1, $2, $3, default)
+KEYS: ["name","text","types"]
+CONFIG: {"text":"insert into \"sessions\" (\"id\", \"user_id\", \"token\", \"expires_at\", \"created_at\") values (default, $1, $2, $3, default)","types":{}}
+PARAMS: ["f3a8dc26-a873-44ea-8cd2-9b766266956e","eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImYzYThkYzI2LWE4NzMtNDRlYS04Y2QyLTliNzY2MjY2OTU2ZSIsImVtYWlsIjoiY2VvQGFjbWUtdGVzdC5jb20iLCJyb2xlIjoib3duZXIiLCJ0ZW5hbnRJZCI6IjA2MzlmZDE1LTc1MGMtNDU5YS04OTU5LTk1MWYyMGVhMzg5NiIsImlhdCI6MTc4NTY0MDU3OSwiZXhwIjoxNzg2MjQ1Mzc5fQ.eGtObwa9nCBAew-NPPd4pDvz8pNO3DxBzMA4tGDnXLs","2026-08-09T03:16:19.323Z"]
+
+SQL: SET search_path TO "tenant_test_corp_2689", public
+KEYS: []
+CONFIG: "SET search_path TO \"tenant_test_corp_2689\", public"
+PARAMS: []
+
+SQL: select "id", "domain", "name", "schema", "status", "created_at", "updated_at" from "tenants" where "tenants"."domain" = $1
+KEYS: ["name","text","rowMode","types"]
+CONFIG: {"text":"select \"id\", \"domain\", \"name\", \"schema\", \"status\", \"created_at\", \"updated_at\" from \"tenants\" where \"tenants\".\"domain\" = $1","rowMode":"array","types":{}}
+PARAMS: ["test-corp-2689"]
+
+SQL: select "id", "user_id", "token", "expires_at", "created_at" from "sessions" where "sessions"."token" = $1 limit $2
+KEYS: ["name","text","rowMode","types"]
+CONFIG: {"text":"select \"id\", \"user_id\", \"token\", \"expires_at\", \"created_at\" from \"sessions\" where \"sessions\".\"token\" = $1 limit $2","rowMode":"array","types":{}}
+PARAMS: ["eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImYzYThkYzI2LWE4NzMtNDRlYS04Y2QyLTliNzY2MjY2OTU2ZSIsImVtYWlsIjoiY2VvQGFjbWUtdGVzdC5jb20iLCJyb2xlIjoib3duZXIiLCJ0ZW5hbnRJZCI6IjA2MzlmZDE1LTc1MGMtNDU5YS04OTU5LTk1MWYyMGVhMzg5NiIsImlhdCI6MTc4NTY0MDU3OSwiZXhwIjoxNzg2MjQ1Mzc5fQ.eGtObwa9nCBAew-NPPd4pDvz8pNO3DxBzMA4tGDnXLs",1]
+
+SQL: delete from "sessions" where "sessions"."token" = $1
+KEYS: ["name","text","types"]
+CONFIG: {"text":"delete from \"sessions\" where \"sessions\".\"token\" = $1","types":{}}
+PARAMS: ["eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImYzYThkYzI2LWE4NzMtNDRlYS04Y2QyLTliNzY2MjY2OTU2ZSIsImVtYWlsIjoiY2VvQGFjbWUtdGVzdC5jb20iLCJyb2xlIjoib3duZXIiLCJ0ZW5hbnRJZCI6IjA2MzlmZDE1LTc1MGMtNDU5YS04OTU5LTk1MWYyMGVhMzg5NiIsImlhdCI6MTc4NTY0MDU3OSwiZXhwIjoxNzg2MjQ1Mzc5fQ.eGtObwa9nCBAew-NPPd4pDvz8pNO3DxBzMA4tGDnXLs"]
+
+SQL: insert into "sessions" ("id", "user_id", "token", "expires_at", "created_at") values (default, $1, $2, $3, default)
+KEYS: ["name","text","types"]
+CONFIG: {"text":"insert into \"sessions\" (\"id\", \"user_id\", \"token\", \"expires_at\", \"created_at\") values (default, $1, $2, $3, default)","types":{}}
+PARAMS: ["f3a8dc26-a873-44ea-8cd2-9b766266956e","eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImYzYThkYzI2LWE4NzMtNDRlYS04Y2QyLTliNzY2MjY2OTU2ZSIsImVtYWlsIjoiY2VvQGFjbWUtdGVzdC5jb20iLCJyb2xlIjoib3duZXIiLCJ0ZW5hbnRJZCI6IjA2MzlmZDE1LTc1MGMtNDU5YS04OTU5LTk1MWYyMGVhMzg5NiIsImlhdCI6MTc4NTY0MDU3OSwiZXhwIjoxNzg2MjQ1Mzc5fQ.eGtObwa9nCBAew-NPPd4pDvz8pNO3DxBzMA4tGDnXLs","2026-08-09T03:16:19.330Z"]
+
+SQL: SET search_path TO "tenant_test_corp_2689", public
+KEYS: []
+CONFIG: "SET search_path TO \"tenant_test_corp_2689\", public"
+PARAMS: []
+
+SQL: select "id", "email", "password_hash", "name", "role", "status", "is_verified", "verification_token", "reset_token", "reset_token_expires_at", "created_at", "updated_at" from "users" where "users"."email" = $1 limit $2
+KEYS: ["name","text","rowMode","types"]
+CONFIG: {"text":"select \"id\", \"email\", \"password_hash\", \"name\", \"role\", \"status\", \"is_verified\", \"verification_token\", \"reset_token\", \"reset_token_expires_at\", \"created_at\", \"updated_at\" from \"users\" where \"users\".\"email\" = $1 limit $2","rowMode":"array","types":{}}
+PARAMS: ["ceo@acme-test.com",1]
+
+SQL: update "users" set "reset_token" = $1, "reset_token_expires_at" = $2 where "users"."id" = $3
+KEYS: ["name","text","types"]
+CONFIG: {"text":"update \"users\" set \"reset_token\" = $1, \"reset_token_expires_at\" = $2 where \"users\".\"id\" = $3","types":{}}
+PARAMS: ["939af91be68962503fac32e313d5d07f4071fcbbdfa06d8c64e16e84854030a9","2026-08-02T04:16:19.335Z","f3a8dc26-a873-44ea-8cd2-9b766266956e"]
+
+SQL: SET search_path TO "tenant_test_corp_2689", public
+KEYS: []
+CONFIG: "SET search_path TO \"tenant_test_corp_2689\", public"
+PARAMS: []
+
+SQL: select "id", "email", "password_hash", "name", "role", "status", "is_verified", "verification_token", "reset_token", "reset_token_expires_at", "created_at", "updated_at" from "users" where "users"."reset_token" = $1 limit $2
+KEYS: ["name","text","rowMode","types"]
+CONFIG: {"text":"select \"id\", \"email\", \"password_hash\", \"name\", \"role\", \"status\", \"is_verified\", \"verification_token\", \"reset_token\", \"reset_token_expires_at\", \"created_at\", \"updated_at\" from \"users\" where \"users\".\"reset_token\" = $1 limit $2","rowMode":"array","types":{}}
+PARAMS: ["939af91be68962503fac32e313d5d07f4071fcbbdfa06d8c64e16e84854030a9",1]
+
+SQL: update "users" set "password_hash" = $1, "reset_token" = $2, "reset_token_expires_at" = $3 where "users"."id" = $4
+KEYS: ["name","text","types"]
+CONFIG: {"text":"update \"users\" set \"password_hash\" = $1, \"reset_token\" = $2, \"reset_token_expires_at\" = $3 where \"users\".\"id\" = $4","types":{}}
+PARAMS: ["0305df4c4c561100dd6eebbfda17198c:0ee3c3dd692bab20a45ea29e45d00f69626a18f466c81718589bfa4c4c0263d7a9e6603556e975984b62424b6252593d837366aeedc10c8d6df1a054cc06c087",null,null,"f3a8dc26-a873-44ea-8cd2-9b766266956e"]
+
+SQL: delete from "sessions" where "sessions"."user_id" = $1
+KEYS: ["name","text","types"]
+CONFIG: {"text":"delete from \"sessions\" where \"sessions\".\"user_id\" = $1","types":{}}
+PARAMS: ["f3a8dc26-a873-44ea-8cd2-9b766266956e"]
+
+SQL: SET search_path TO "tenant_test_corp_2689", public
+KEYS: []
+CONFIG: "SET search_path TO \"tenant_test_corp_2689\", public"
+PARAMS: []
+
+SQL: select "id", "domain", "name", "schema", "status", "created_at", "updated_at" from "tenants" where "tenants"."domain" = $1
+KEYS: ["name","text","rowMode","types"]
+CONFIG: {"text":"select \"id\", \"domain\", \"name\", \"schema\", \"status\", \"created_at\", \"updated_at\" from \"tenants\" where \"tenants\".\"domain\" = $1","rowMode":"array","types":{}}
+PARAMS: ["test-corp-2689"]
+
+SQL: select "id", "email", "password_hash", "name", "role", "status", "is_verified", "verification_token", "reset_token", "reset_token_expires_at", "created_at", "updated_at" from "users" where "users"."email" = $1 limit $2
+KEYS: ["name","text","rowMode","types"]
+CONFIG: {"text":"select \"id\", \"email\", \"password_hash\", \"name\", \"role\", \"status\", \"is_verified\", \"verification_token\", \"reset_token\", \"reset_token_expires_at\", \"created_at\", \"updated_at\" from \"users\" where \"users\".\"email\" = $1 limit $2","rowMode":"array","types":{}}
+PARAMS: ["ceo@acme-test.com",1]
+
+SQL: insert into "sessions" ("id", "user_id", "token", "expires_at", "created_at") values (default, $1, $2, $3, default)
+KEYS: ["name","text","types"]
+CONFIG: {"text":"insert into \"sessions\" (\"id\", \"user_id\", \"token\", \"expires_at\", \"created_at\") values (default, $1, $2, $3, default)","types":{}}
+PARAMS: ["f3a8dc26-a873-44ea-8cd2-9b766266956e","eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImYzYThkYzI2LWE4NzMtNDRlYS04Y2QyLTliNzY2MjY2OTU2ZSIsImVtYWlsIjoiY2VvQGFjbWUtdGVzdC5jb20iLCJyb2xlIjoib3duZXIiLCJ0ZW5hbnRJZCI6IjA2MzlmZDE1LTc1MGMtNDU5YS04OTU5LTk1MWYyMGVhMzg5NiIsImlhdCI6MTc4NTY0MDU3OSwiZXhwIjoxNzg2MjQ1Mzc5fQ.eGtObwa9nCBAew-NPPd4pDvz8pNO3DxBzMA4tGDnXLs","2026-08-09T03:16:19.445Z"]
+
+SQL: SELECT 1
+KEYS: []
+CONFIG: "SELECT 1"
+PARAMS: []
+
+SQL: SELECT 1
+KEYS: []
+CONFIG: "SELECT 1"
+PARAMS: []
+
+SQL: SELECT 1
+KEYS: []
+CONFIG: "SELECT 1"
+PARAMS: []
+
+SQL: SELECT 1
+KEYS: []
+CONFIG: "SELECT 1"
+PARAMS: []
+
+SQL: SELECT 1
+KEYS: []
+CONFIG: "SELECT 1"
+PARAMS: []
+
+SQL: SELECT 1
+KEYS: []
+CONFIG: "SELECT 1"
+PARAMS: []
+
+SQL: select "id", "domain", "name", "schema", "status", "created_at", "updated_at" from "tenants" where "tenants"."domain" = $1 limit $2
+KEYS: ["name","text","rowMode","types"]
+CONFIG: {"text":"select \"id\", \"domain\", \"name\", \"schema\", \"status\", \"created_at\", \"updated_at\" from \"tenants\" where \"tenants\".\"domain\" = $1 limit $2","rowMode":"array","types":{}}
+PARAMS: ["test-corp-3434",1]
+
+SQL: CREATE SCHEMA IF NOT EXISTS "tenant_test_corp_3434"
+KEYS: ["name","text","types"]
+CONFIG: {"text":"CREATE SCHEMA IF NOT EXISTS \"tenant_test_corp_3434\"","types":{}}
+PARAMS: []
+
+SQL: 
+        CREATE TABLE IF NOT EXISTS "tenant_test_corp_3434"."users" (
+          "id" uuid PRIMARY KEY DEFAULT gen_random_uuid(),
+          "email" varchar(256) NOT NULL UNIQUE,
+          "password_hash" text NOT NULL,
+          "name" varchar(256) NOT NULL,
+          "role" varchar(64) NOT NULL DEFAULT 'member',
+          "status" varchar(32) NOT NULL DEFAULT 'active',
+          "is_verified" boolean NOT NULL DEFAULT false,
+          "verification_token" varchar(256),
+          "reset_token" varchar(256),
+          "reset_token_expires_at" timestamp,
+          "created_at" timestamp NOT NULL DEFAULT now(),
+          "updated_at" timestamp NOT NULL DEFAULT now()
+        );
+      
+KEYS: ["name","text","types"]
+CONFIG: {"text":"\n        CREATE TABLE IF NOT EXISTS \"tenant_test_corp_3434\".\"users\" (\n          \"id\" uuid PRIMARY KEY DEFAULT gen_random_uuid(),\n          \"email\" varchar(256) NOT NULL UNIQUE,\n          \"password_hash\" text NOT NULL,\n          \"name\" varchar(256) NOT NULL,\n          \"role\" varchar(64) NOT NULL DEFAULT 'member',\n          \"status\" varchar(32) NOT NULL DEFAULT 'active',\n          \"is_verified\" boolean NOT NULL DEFAULT false,\n          \"verification_token\" varchar(256),\n          \"reset_token\" varchar(256),\n          \"reset_token_expires_at\" timestamp,\n          \"created_at\" timestamp NOT NULL DEFAULT now(),\n          \"updated_at\" timestamp NOT NULL DEFAULT now()\n        );\n      ","types":{}}
+PARAMS: []
+
+SQL: 
+        CREATE TABLE IF NOT EXISTS "tenant_test_corp_3434"."sessions" (
+          "id" uuid PRIMARY KEY DEFAULT gen_random_uuid(),
+          "user_id" uuid NOT NULL REFERENCES "tenant_test_corp_3434"."users"("id") ON DELETE CASCADE,
+          "token" varchar(512) NOT NULL UNIQUE,
+          "expires_at" timestamp NOT NULL,
+          "created_at" timestamp NOT NULL DEFAULT now()
+        );
+      
+KEYS: ["name","text","types"]
+CONFIG: {"text":"\n        CREATE TABLE IF NOT EXISTS \"tenant_test_corp_3434\".\"sessions\" (\n          \"id\" uuid PRIMARY KEY DEFAULT gen_random_uuid(),\n          \"user_id\" uuid NOT NULL REFERENCES \"tenant_test_corp_3434\".\"users\"(\"id\") ON DELETE CASCADE,\n          \"token\" varchar(512) NOT NULL UNIQUE,\n          \"expires_at\" timestamp NOT NULL,\n          \"created_at\" timestamp NOT NULL DEFAULT now()\n        );\n      ","types":{}}
+PARAMS: []
+
+SQL: insert into "tenants" ("id", "domain", "name", "schema", "status", "created_at", "updated_at") values (default, $1, $2, $3, $4, default, default) returning "id", "domain", "name", "schema", "status", "created_at", "updated_at"
+KEYS: ["name","text","rowMode","types"]
+CONFIG: {"text":"insert into \"tenants\" (\"id\", \"domain\", \"name\", \"schema\", \"status\", \"created_at\", \"updated_at\") values (default, $1, $2, $3, $4, default, default) returning \"id\", \"domain\", \"name\", \"schema\", \"status\", \"created_at\", \"updated_at\"","rowMode":"array","types":{}}
+PARAMS: ["test-corp-3434","Acme Test Corp","tenant_test_corp_3434","active"]
+
+SQL: 
+        INSERT INTO "tenant_test_corp_3434"."users" (email, password_hash, name, role, is_verified, verification_token)
+        VALUES ('ceo@acme-test.com', 'ac395828632dbe68bbc4a0d762d3286e:09b84faa17635947a8f5f0dae6dbef95fb0f97209dad398485d29f461ac5ead13b746ebeab52a95542b2f87c343141e4c69e9b6c9b6fd7a586c30a7d9a618d69', 'Acme CEO', 'owner', false, 'a9ae991aead8322cc75d1e87e303fb1f2bf52c48b444bfa6f89d323672241fa7')
+      
+KEYS: ["name","text","types"]
+CONFIG: {"text":"\n        INSERT INTO \"tenant_test_corp_3434\".\"users\" (email, password_hash, name, role, is_verified, verification_token)\n        VALUES ('ceo@acme-test.com', 'ac395828632dbe68bbc4a0d762d3286e:09b84faa17635947a8f5f0dae6dbef95fb0f97209dad398485d29f461ac5ead13b746ebeab52a95542b2f87c343141e4c69e9b6c9b6fd7a586c30a7d9a618d69', 'Acme CEO', 'owner', false, 'a9ae991aead8322cc75d1e87e303fb1f2bf52c48b444bfa6f89d323672241fa7')\n      ","types":{}}
+PARAMS: []
+
+SQL: 
+        SELECT id, email, name, role, is_verified, verification_token FROM "tenant_test_corp_3434"."users" WHERE email = 'ceo@acme-test.com' LIMIT 1
+      
+KEYS: ["name","text","types"]
+CONFIG: {"text":"\n        SELECT id, email, name, role, is_verified, verification_token FROM \"tenant_test_corp_3434\".\"users\" WHERE email = 'ceo@acme-test.com' LIMIT 1\n      ","types":{}}
+PARAMS: []
+
+SQL: SET search_path TO "tenant_test_corp_3434", public
+KEYS: []
+CONFIG: "SET search_path TO \"tenant_test_corp_3434\", public"
+PARAMS: []
+
+SQL: insert into "sessions" ("id", "user_id", "token", "expires_at", "created_at") values (default, $1, $2, $3, default)
+KEYS: ["name","text","types"]
+CONFIG: {"text":"insert into \"sessions\" (\"id\", \"user_id\", \"token\", \"expires_at\", \"created_at\") values (default, $1, $2, $3, default)","types":{}}
+PARAMS: ["b3681b62-c4b8-439f-bc61-7c0e7cfe9b15","eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImIzNjgxYjYyLWM0YjgtNDM5Zi1iYzYxLTdjMGU3Y2ZlOWIxNSIsImVtYWlsIjoiY2VvQGFjbWUtdGVzdC5jb20iLCJyb2xlIjoib3duZXIiLCJ0ZW5hbnRJZCI6IjRkOWNjNWVkLTg1OTYtNGZlYS1hMmNhLTZiMjJhN2M1YzBmNyIsImp0aSI6IjM0MTRlMDk5LWM2NzUtNGE1MS04ZTU1LWM3YTY4ODFjZmY3YyIsImlhdCI6MTc4NTY0MDYzOCwiZXhwIjoxNzg2MjQ1NDM4fQ.yFS0o_jbHSSOReu1L6YyoTF2ECR1Y8zzqG3QC-BnRRo","2026-08-09T03:17:18.060Z"]
+
+SQL: select "id", "domain", "name", "schema", "status", "created_at", "updated_at" from "tenants" where "tenants"."domain" = $1
+KEYS: ["name","text","rowMode","types"]
+CONFIG: {"text":"select \"id\", \"domain\", \"name\", \"schema\", \"status\", \"created_at\", \"updated_at\" from \"tenants\" where \"tenants\".\"domain\" = $1","rowMode":"array","types":{}}
+PARAMS: ["test-corp-3434"]
+
+SQL: SET search_path TO "tenant_test_corp_3434", public
+KEYS: []
+CONFIG: "SET search_path TO \"tenant_test_corp_3434\", public"
+PARAMS: []
+
+SQL: select "id", "email", "password_hash", "name", "role", "status", "is_verified", "verification_token", "reset_token", "reset_token_expires_at", "created_at", "updated_at" from "users" where "users"."verification_token" = $1 limit $2
+KEYS: ["name","text","rowMode","types"]
+CONFIG: {"text":"select \"id\", \"email\", \"password_hash\", \"name\", \"role\", \"status\", \"is_verified\", \"verification_token\", \"reset_token\", \"reset_token_expires_at\", \"created_at\", \"updated_at\" from \"users\" where \"users\".\"verification_token\" = $1 limit $2","rowMode":"array","types":{}}
+PARAMS: ["a9ae991aead8322cc75d1e87e303fb1f2bf52c48b444bfa6f89d323672241fa7",1]
+
+SQL: update "users" set "is_verified" = $1, "verification_token" = $2 where "users"."id" = $3
+KEYS: ["name","text","types"]
+CONFIG: {"text":"update \"users\" set \"is_verified\" = $1, \"verification_token\" = $2 where \"users\".\"id\" = $3","types":{}}
+PARAMS: [true,null,"b3681b62-c4b8-439f-bc61-7c0e7cfe9b15"]
+
+SQL: SET search_path TO "tenant_test_corp_3434", public
+KEYS: []
+CONFIG: "SET search_path TO \"tenant_test_corp_3434\", public"
+PARAMS: []
+
+SQL: select "id", "email", "password_hash", "name", "role", "status", "is_verified", "verification_token", "reset_token", "reset_token_expires_at", "created_at", "updated_at" from "users" where "users"."id" = $1
+KEYS: ["name","text","rowMode","types"]
+CONFIG: {"text":"select \"id\", \"email\", \"password_hash\", \"name\", \"role\", \"status\", \"is_verified\", \"verification_token\", \"reset_token\", \"reset_token_expires_at\", \"created_at\", \"updated_at\" from \"users\" where \"users\".\"id\" = $1","rowMode":"array","types":{}}
+PARAMS: ["b3681b62-c4b8-439f-bc61-7c0e7cfe9b15"]
+
+SQL: SET search_path TO "tenant_test_corp_3434", public
+KEYS: []
+CONFIG: "SET search_path TO \"tenant_test_corp_3434\", public"
+PARAMS: []
+
+SQL: select "id", "domain", "name", "schema", "status", "created_at", "updated_at" from "tenants" where "tenants"."domain" = $1
+KEYS: ["name","text","rowMode","types"]
+CONFIG: {"text":"select \"id\", \"domain\", \"name\", \"schema\", \"status\", \"created_at\", \"updated_at\" from \"tenants\" where \"tenants\".\"domain\" = $1","rowMode":"array","types":{}}
+PARAMS: ["test-corp-3434"]
+
+SQL: select "id", "email", "password_hash", "name", "role", "status", "is_verified", "verification_token", "reset_token", "reset_token_expires_at", "created_at", "updated_at" from "users" where "users"."email" = $1 limit $2
+KEYS: ["name","text","rowMode","types"]
+CONFIG: {"text":"select \"id\", \"email\", \"password_hash\", \"name\", \"role\", \"status\", \"is_verified\", \"verification_token\", \"reset_token\", \"reset_token_expires_at\", \"created_at\", \"updated_at\" from \"users\" where \"users\".\"email\" = $1 limit $2","rowMode":"array","types":{}}
+PARAMS: ["ceo@acme-test.com",1]
+
+SQL: insert into "sessions" ("id", "user_id", "token", "expires_at", "created_at") values (default, $1, $2, $3, default)
+KEYS: ["name","text","types"]
+CONFIG: {"text":"insert into \"sessions\" (\"id\", \"user_id\", \"token\", \"expires_at\", \"created_at\") values (default, $1, $2, $3, default)","types":{}}
+PARAMS: ["b3681b62-c4b8-439f-bc61-7c0e7cfe9b15","eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImIzNjgxYjYyLWM0YjgtNDM5Zi1iYzYxLTdjMGU3Y2ZlOWIxNSIsImVtYWlsIjoiY2VvQGFjbWUtdGVzdC5jb20iLCJyb2xlIjoib3duZXIiLCJ0ZW5hbnRJZCI6IjRkOWNjNWVkLTg1OTYtNGZlYS1hMmNhLTZiMjJhN2M1YzBmNyIsImp0aSI6ImMyNDNlODBmLWFjOGEtNDRhMi05YWNkLTVhZTFkYmRhOTVkYiIsImlhdCI6MTc4NTY0MDYzOCwiZXhwIjoxNzg2MjQ1NDM4fQ.u2ewKwSE7fPCDkl_Z6pgzUlBEHGW1TZsYTMsUzJdCdQ","2026-08-09T03:17:18.143Z"]
+
+SQL: SET search_path TO "tenant_test_corp_3434", public
+KEYS: []
+CONFIG: "SET search_path TO \"tenant_test_corp_3434\", public"
+PARAMS: []
+
+SQL: select "id", "domain", "name", "schema", "status", "created_at", "updated_at" from "tenants" where "tenants"."domain" = $1
+KEYS: ["name","text","rowMode","types"]
+CONFIG: {"text":"select \"id\", \"domain\", \"name\", \"schema\", \"status\", \"created_at\", \"updated_at\" from \"tenants\" where \"tenants\".\"domain\" = $1","rowMode":"array","types":{}}
+PARAMS: ["test-corp-3434"]
+
+SQL: select "id", "user_id", "token", "expires_at", "created_at" from "sessions" where "sessions"."token" = $1 limit $2
+KEYS: ["name","text","rowMode","types"]
+CONFIG: {"text":"select \"id\", \"user_id\", \"token\", \"expires_at\", \"created_at\" from \"sessions\" where \"sessions\".\"token\" = $1 limit $2","rowMode":"array","types":{}}
+PARAMS: ["eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImIzNjgxYjYyLWM0YjgtNDM5Zi1iYzYxLTdjMGU3Y2ZlOWIxNSIsImVtYWlsIjoiY2VvQGFjbWUtdGVzdC5jb20iLCJyb2xlIjoib3duZXIiLCJ0ZW5hbnRJZCI6IjRkOWNjNWVkLTg1OTYtNGZlYS1hMmNhLTZiMjJhN2M1YzBmNyIsImp0aSI6ImMyNDNlODBmLWFjOGEtNDRhMi05YWNkLTVhZTFkYmRhOTVkYiIsImlhdCI6MTc4NTY0MDYzOCwiZXhwIjoxNzg2MjQ1NDM4fQ.u2ewKwSE7fPCDkl_Z6pgzUlBEHGW1TZsYTMsUzJdCdQ",1]
+
+SQL: delete from "sessions" where "sessions"."token" = $1
+KEYS: ["name","text","types"]
+CONFIG: {"text":"delete from \"sessions\" where \"sessions\".\"token\" = $1","types":{}}
+PARAMS: ["eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImIzNjgxYjYyLWM0YjgtNDM5Zi1iYzYxLTdjMGU3Y2ZlOWIxNSIsImVtYWlsIjoiY2VvQGFjbWUtdGVzdC5jb20iLCJyb2xlIjoib3duZXIiLCJ0ZW5hbnRJZCI6IjRkOWNjNWVkLTg1OTYtNGZlYS1hMmNhLTZiMjJhN2M1YzBmNyIsImp0aSI6ImMyNDNlODBmLWFjOGEtNDRhMi05YWNkLTVhZTFkYmRhOTVkYiIsImlhdCI6MTc4NTY0MDYzOCwiZXhwIjoxNzg2MjQ1NDM4fQ.u2ewKwSE7fPCDkl_Z6pgzUlBEHGW1TZsYTMsUzJdCdQ"]
+
+SQL: insert into "sessions" ("id", "user_id", "token", "expires_at", "created_at") values (default, $1, $2, $3, default)
+KEYS: ["name","text","types"]
+CONFIG: {"text":"insert into \"sessions\" (\"id\", \"user_id\", \"token\", \"expires_at\", \"created_at\") values (default, $1, $2, $3, default)","types":{}}
+PARAMS: ["b3681b62-c4b8-439f-bc61-7c0e7cfe9b15","eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImIzNjgxYjYyLWM0YjgtNDM5Zi1iYzYxLTdjMGU3Y2ZlOWIxNSIsImVtYWlsIjoiY2VvQGFjbWUtdGVzdC5jb20iLCJyb2xlIjoib3duZXIiLCJ0ZW5hbnRJZCI6IjRkOWNjNWVkLTg1OTYtNGZlYS1hMmNhLTZiMjJhN2M1YzBmNyIsImp0aSI6IjVlMDMwZmE2LTgwZGMtNGU2ZS1iNmJmLTY3ZWVkZDdhZTk0ZSIsImlhdCI6MTc4NTY0MDYzOCwiZXhwIjoxNzg2MjQ1NDM4fQ.ma1tofRsjGJXuV0xoWDYhktgOWvmkkj6ac_DIUqrid8","2026-08-09T03:17:18.148Z"]
+
+SQL: SET search_path TO "tenant_test_corp_3434", public
+KEYS: []
+CONFIG: "SET search_path TO \"tenant_test_corp_3434\", public"
+PARAMS: []
+
+SQL: select "id", "domain", "name", "schema", "status", "created_at", "updated_at" from "tenants" where "tenants"."domain" = $1
+KEYS: ["name","text","rowMode","types"]
+CONFIG: {"text":"select \"id\", \"domain\", \"name\", \"schema\", \"status\", \"created_at\", \"updated_at\" from \"tenants\" where \"tenants\".\"domain\" = $1","rowMode":"array","types":{}}
+PARAMS: ["test-corp-3434"]
+
+SQL: select "id", "user_id", "token", "expires_at", "created_at" from "sessions" where "sessions"."token" = $1 limit $2
+KEYS: ["name","text","rowMode","types"]
+CONFIG: {"text":"select \"id\", \"user_id\", \"token\", \"expires_at\", \"created_at\" from \"sessions\" where \"sessions\".\"token\" = $1 limit $2","rowMode":"array","types":{}}
+PARAMS: ["eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImIzNjgxYjYyLWM0YjgtNDM5Zi1iYzYxLTdjMGU3Y2ZlOWIxNSIsImVtYWlsIjoiY2VvQGFjbWUtdGVzdC5jb20iLCJyb2xlIjoib3duZXIiLCJ0ZW5hbnRJZCI6IjRkOWNjNWVkLTg1OTYtNGZlYS1hMmNhLTZiMjJhN2M1YzBmNyIsImp0aSI6ImMyNDNlODBmLWFjOGEtNDRhMi05YWNkLTVhZTFkYmRhOTVkYiIsImlhdCI6MTc4NTY0MDYzOCwiZXhwIjoxNzg2MjQ1NDM4fQ.u2ewKwSE7fPCDkl_Z6pgzUlBEHGW1TZsYTMsUzJdCdQ",1]
+
+SQL: delete from "sessions" where "sessions"."token" = $1
+KEYS: ["name","text","types"]
+CONFIG: {"text":"delete from \"sessions\" where \"sessions\".\"token\" = $1","types":{}}
+PARAMS: ["eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImIzNjgxYjYyLWM0YjgtNDM5Zi1iYzYxLTdjMGU3Y2ZlOWIxNSIsImVtYWlsIjoiY2VvQGFjbWUtdGVzdC5jb20iLCJyb2xlIjoib3duZXIiLCJ0ZW5hbnRJZCI6IjRkOWNjNWVkLTg1OTYtNGZlYS1hMmNhLTZiMjJhN2M1YzBmNyIsImp0aSI6ImMyNDNlODBmLWFjOGEtNDRhMi05YWNkLTVhZTFkYmRhOTVkYiIsImlhdCI6MTc4NTY0MDYzOCwiZXhwIjoxNzg2MjQ1NDM4fQ.u2ewKwSE7fPCDkl_Z6pgzUlBEHGW1TZsYTMsUzJdCdQ"]
+
+SQL: insert into "sessions" ("id", "user_id", "token", "expires_at", "created_at") values (default, $1, $2, $3, default)
+KEYS: ["name","text","types"]
+CONFIG: {"text":"insert into \"sessions\" (\"id\", \"user_id\", \"token\", \"expires_at\", \"created_at\") values (default, $1, $2, $3, default)","types":{}}
+PARAMS: ["b3681b62-c4b8-439f-bc61-7c0e7cfe9b15","eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImIzNjgxYjYyLWM0YjgtNDM5Zi1iYzYxLTdjMGU3Y2ZlOWIxNSIsImVtYWlsIjoiY2VvQGFjbWUtdGVzdC5jb20iLCJyb2xlIjoib3duZXIiLCJ0ZW5hbnRJZCI6IjRkOWNjNWVkLTg1OTYtNGZlYS1hMmNhLTZiMjJhN2M1YzBmNyIsImp0aSI6ImExYWEzZTBmLWY4MWUtNDBlZi05MGNjLTEzM2M1Njk5Y2QyZSIsImlhdCI6MTc4NTY0MDYzOCwiZXhwIjoxNzg2MjQ1NDM4fQ.XcHtVRxAjmtE1dMDTxQ2CyUzlQgvzGfwcsKf4WGKZ5g","2026-08-09T03:17:18.152Z"]
+
+SQL: SET search_path TO "tenant_test_corp_3434", public
+KEYS: []
+CONFIG: "SET search_path TO \"tenant_test_corp_3434\", public"
+PARAMS: []
+
+SQL: select "id", "email", "password_hash", "name", "role", "status", "is_verified", "verification_token", "reset_token", "reset_token_expires_at", "created_at", "updated_at" from "users" where "users"."email" = $1 limit $2
+KEYS: ["name","text","rowMode","types"]
+CONFIG: {"text":"select \"id\", \"email\", \"password_hash\", \"name\", \"role\", \"status\", \"is_verified\", \"verification_token\", \"reset_token\", \"reset_token_expires_at\", \"created_at\", \"updated_at\" from \"users\" where \"users\".\"email\" = $1 limit $2","rowMode":"array","types":{}}
+PARAMS: ["ceo@acme-test.com",1]
+
+SQL: update "users" set "reset_token" = $1, "reset_token_expires_at" = $2 where "users"."id" = $3
+KEYS: ["name","text","types"]
+CONFIG: {"text":"update \"users\" set \"reset_token\" = $1, \"reset_token_expires_at\" = $2 where \"users\".\"id\" = $3","types":{}}
+PARAMS: ["4c613bb88c67e88fd8d148517efcd10a11030ef062356d5d5dce0ba54ed47ce6","2026-08-02T04:17:18.161Z","b3681b62-c4b8-439f-bc61-7c0e7cfe9b15"]
+
+SQL: SET search_path TO "tenant_test_corp_3434", public
+KEYS: []
+CONFIG: "SET search_path TO \"tenant_test_corp_3434\", public"
+PARAMS: []
+
+SQL: select "id", "email", "password_hash", "name", "role", "status", "is_verified", "verification_token", "reset_token", "reset_token_expires_at", "created_at", "updated_at" from "users" where "users"."reset_token" = $1 limit $2
+KEYS: ["name","text","rowMode","types"]
+CONFIG: {"text":"select \"id\", \"email\", \"password_hash\", \"name\", \"role\", \"status\", \"is_verified\", \"verification_token\", \"reset_token\", \"reset_token_expires_at\", \"created_at\", \"updated_at\" from \"users\" where \"users\".\"reset_token\" = $1 limit $2","rowMode":"array","types":{}}
+PARAMS: ["4c613bb88c67e88fd8d148517efcd10a11030ef062356d5d5dce0ba54ed47ce6",1]
+
+SQL: update "users" set "password_hash" = $1, "reset_token" = $2, "reset_token_expires_at" = $3 where "users"."id" = $4
+KEYS: ["name","text","types"]
+CONFIG: {"text":"update \"users\" set \"password_hash\" = $1, \"reset_token\" = $2, \"reset_token_expires_at\" = $3 where \"users\".\"id\" = $4","types":{}}
+PARAMS: ["429a8bbc5987564d0f793580c23202b2:313ecd8ed11f2dd8b47ffee3b5fbd24d69439325d529ed4ce457c831a74edc2cfdba7e489884d8ec056dfd30770542ae141a48490bec378e9f1baf7f26466819",null,null,"b3681b62-c4b8-439f-bc61-7c0e7cfe9b15"]
+
+SQL: delete from "sessions" where "sessions"."user_id" = $1
+KEYS: ["name","text","types"]
+CONFIG: {"text":"delete from \"sessions\" where \"sessions\".\"user_id\" = $1","types":{}}
+PARAMS: ["b3681b62-c4b8-439f-bc61-7c0e7cfe9b15"]
+
+SQL: SET search_path TO "tenant_test_corp_3434", public
+KEYS: []
+CONFIG: "SET search_path TO \"tenant_test_corp_3434\", public"
+PARAMS: []
+
+SQL: select "id", "domain", "name", "schema", "status", "created_at", "updated_at" from "tenants" where "tenants"."domain" = $1
+KEYS: ["name","text","rowMode","types"]
+CONFIG: {"text":"select \"id\", \"domain\", \"name\", \"schema\", \"status\", \"created_at\", \"updated_at\" from \"tenants\" where \"tenants\".\"domain\" = $1","rowMode":"array","types":{}}
+PARAMS: ["test-corp-3434"]
+
+SQL: select "id", "email", "password_hash", "name", "role", "status", "is_verified", "verification_token", "reset_token", "reset_token_expires_at", "created_at", "updated_at" from "users" where "users"."email" = $1 limit $2
+KEYS: ["name","text","rowMode","types"]
+CONFIG: {"text":"select \"id\", \"email\", \"password_hash\", \"name\", \"role\", \"status\", \"is_verified\", \"verification_token\", \"reset_token\", \"reset_token_expires_at\", \"created_at\", \"updated_at\" from \"users\" where \"users\".\"email\" = $1 limit $2","rowMode":"array","types":{}}
+PARAMS: ["ceo@acme-test.com",1]
+
+SQL: insert into "sessions" ("id", "user_id", "token", "expires_at", "created_at") values (default, $1, $2, $3, default)
+KEYS: ["name","text","types"]
+CONFIG: {"text":"insert into \"sessions\" (\"id\", \"user_id\", \"token\", \"expires_at\", \"created_at\") values (default, $1, $2, $3, default)","types":{}}
+PARAMS: ["b3681b62-c4b8-439f-bc61-7c0e7cfe9b15","eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImIzNjgxYjYyLWM0YjgtNDM5Zi1iYzYxLTdjMGU3Y2ZlOWIxNSIsImVtYWlsIjoiY2VvQGFjbWUtdGVzdC5jb20iLCJyb2xlIjoib3duZXIiLCJ0ZW5hbnRJZCI6IjRkOWNjNWVkLTg1OTYtNGZlYS1hMmNhLTZiMjJhN2M1YzBmNyIsImp0aSI6IjNlNmI1YzBlLWQ4ODctNDhlNy1iNWY3LWNiYWVlMmMyNWZhNCIsImlhdCI6MTc4NTY0MDYzOCwiZXhwIjoxNzg2MjQ1NDM4fQ.i9_m6nazzH4SKWX4BdytxLPTqAWF9tKZmY7DGIsHs6A","2026-08-09T03:17:18.266Z"]
+
+SQL: SELECT 1
+KEYS: []
+CONFIG: "SELECT 1"
+PARAMS: []
+
+SQL: SELECT 1
+KEYS: []
+CONFIG: "SELECT 1"
+PARAMS: []
+
+SQL: SELECT 1
+KEYS: []
+CONFIG: "SELECT 1"
+PARAMS: []
+
+SQL: SELECT 1
+KEYS: []
+CONFIG: "SELECT 1"
+PARAMS: []
+
+SQL: select "id", "domain", "name", "schema", "status", "created_at", "updated_at" from "tenants" where "tenants"."domain" = $1 limit $2
+KEYS: ["name","text","rowMode","types"]
+CONFIG: {"text":"select \"id\", \"domain\", \"name\", \"schema\", \"status\", \"created_at\", \"updated_at\" from \"tenants\" where \"tenants\".\"domain\" = $1 limit $2","rowMode":"array","types":{}}
+PARAMS: ["test-corp-9403",1]
+
+SQL: CREATE SCHEMA IF NOT EXISTS "tenant_test_corp_9403"
+KEYS: ["name","text","types"]
+CONFIG: {"text":"CREATE SCHEMA IF NOT EXISTS \"tenant_test_corp_9403\"","types":{}}
+PARAMS: []
+
+SQL: 
+        CREATE TABLE IF NOT EXISTS "tenant_test_corp_9403"."users" (
+          "id" uuid PRIMARY KEY DEFAULT gen_random_uuid(),
+          "email" varchar(256) NOT NULL UNIQUE,
+          "password_hash" text NOT NULL,
+          "name" varchar(256) NOT NULL,
+          "role" varchar(64) NOT NULL DEFAULT 'member',
+          "status" varchar(32) NOT NULL DEFAULT 'active',
+          "is_verified" boolean NOT NULL DEFAULT false,
+          "verification_token" varchar(256),
+          "reset_token" varchar(256),
+          "reset_token_expires_at" timestamp,
+          "created_at" timestamp NOT NULL DEFAULT now(),
+          "updated_at" timestamp NOT NULL DEFAULT now()
+        );
+      
+KEYS: ["name","text","types"]
+CONFIG: {"text":"\n        CREATE TABLE IF NOT EXISTS \"tenant_test_corp_9403\".\"users\" (\n          \"id\" uuid PRIMARY KEY DEFAULT gen_random_uuid(),\n          \"email\" varchar(256) NOT NULL UNIQUE,\n          \"password_hash\" text NOT NULL,\n          \"name\" varchar(256) NOT NULL,\n          \"role\" varchar(64) NOT NULL DEFAULT 'member',\n          \"status\" varchar(32) NOT NULL DEFAULT 'active',\n          \"is_verified\" boolean NOT NULL DEFAULT false,\n          \"verification_token\" varchar(256),\n          \"reset_token\" varchar(256),\n          \"reset_token_expires_at\" timestamp,\n          \"created_at\" timestamp NOT NULL DEFAULT now(),\n          \"updated_at\" timestamp NOT NULL DEFAULT now()\n        );\n      ","types":{}}
+PARAMS: []
+
+SQL: 
+        CREATE TABLE IF NOT EXISTS "tenant_test_corp_9403"."sessions" (
+          "id" uuid PRIMARY KEY DEFAULT gen_random_uuid(),
+          "user_id" uuid NOT NULL REFERENCES "tenant_test_corp_9403"."users"("id") ON DELETE CASCADE,
+          "token" varchar(512) NOT NULL UNIQUE,
+          "expires_at" timestamp NOT NULL,
+          "created_at" timestamp NOT NULL DEFAULT now()
+        );
+      
+KEYS: ["name","text","types"]
+CONFIG: {"text":"\n        CREATE TABLE IF NOT EXISTS \"tenant_test_corp_9403\".\"sessions\" (\n          \"id\" uuid PRIMARY KEY DEFAULT gen_random_uuid(),\n          \"user_id\" uuid NOT NULL REFERENCES \"tenant_test_corp_9403\".\"users\"(\"id\") ON DELETE CASCADE,\n          \"token\" varchar(512) NOT NULL UNIQUE,\n          \"expires_at\" timestamp NOT NULL,\n          \"created_at\" timestamp NOT NULL DEFAULT now()\n        );\n      ","types":{}}
+PARAMS: []
+
+SQL: insert into "tenants" ("id", "domain", "name", "schema", "status", "created_at", "updated_at") values (default, $1, $2, $3, $4, default, default) returning "id", "domain", "name", "schema", "status", "created_at", "updated_at"
+KEYS: ["name","text","rowMode","types"]
+CONFIG: {"text":"insert into \"tenants\" (\"id\", \"domain\", \"name\", \"schema\", \"status\", \"created_at\", \"updated_at\") values (default, $1, $2, $3, $4, default, default) returning \"id\", \"domain\", \"name\", \"schema\", \"status\", \"created_at\", \"updated_at\"","rowMode":"array","types":{}}
+PARAMS: ["test-corp-9403","Acme Test Corp","tenant_test_corp_9403","active"]
+
+SQL: 
+        INSERT INTO "tenant_test_corp_9403"."users" (email, password_hash, name, role, is_verified, verification_token)
+        VALUES ('ceo@acme-test.com', 'cc9721e14ea97bd9e8e62423ef21ed44:209ccbb18e0a0bdd5d26937b222607ba27dad439f595267180ca48445768c962e9429f35662ab901e62fa2cf1b2fb05f519379264e6057642aeab917d1637c93', 'Acme CEO', 'owner', false, '0252b1d53e1e3c3eb2c579a415431aa20e1edb2105bd1a4368a2015d10cf628c')
+      
+KEYS: ["name","text","types"]
+CONFIG: {"text":"\n        INSERT INTO \"tenant_test_corp_9403\".\"users\" (email, password_hash, name, role, is_verified, verification_token)\n        VALUES ('ceo@acme-test.com', 'cc9721e14ea97bd9e8e62423ef21ed44:209ccbb18e0a0bdd5d26937b222607ba27dad439f595267180ca48445768c962e9429f35662ab901e62fa2cf1b2fb05f519379264e6057642aeab917d1637c93', 'Acme CEO', 'owner', false, '0252b1d53e1e3c3eb2c579a415431aa20e1edb2105bd1a4368a2015d10cf628c')\n      ","types":{}}
+PARAMS: []
+
+SQL: 
+        SELECT id, email, name, role, is_verified, verification_token FROM "tenant_test_corp_9403"."users" WHERE email = 'ceo@acme-test.com' LIMIT 1
+      
+KEYS: ["name","text","types"]
+CONFIG: {"text":"\n        SELECT id, email, name, role, is_verified, verification_token FROM \"tenant_test_corp_9403\".\"users\" WHERE email = 'ceo@acme-test.com' LIMIT 1\n      ","types":{}}
+PARAMS: []
+
+SQL: SET search_path TO "tenant_test_corp_9403", public
+KEYS: []
+CONFIG: "SET search_path TO \"tenant_test_corp_9403\", public"
+PARAMS: []
+
+SQL: insert into "sessions" ("id", "user_id", "token", "expires_at", "created_at") values (default, $1, $2, $3, default)
+KEYS: ["name","text","types"]
+CONFIG: {"text":"insert into \"sessions\" (\"id\", \"user_id\", \"token\", \"expires_at\", \"created_at\") values (default, $1, $2, $3, default)","types":{}}
+PARAMS: ["af359a48-3da1-443f-8192-3506e07ec2d9","eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImFmMzU5YTQ4LTNkYTEtNDQzZi04MTkyLTM1MDZlMDdlYzJkOSIsImVtYWlsIjoiY2VvQGFjbWUtdGVzdC5jb20iLCJyb2xlIjoib3duZXIiLCJ0ZW5hbnRJZCI6ImVhZDVlZmY0LThhOTAtNGEyNC1iMjQ4LTg1NDdlM2NmODhjZCIsImp0aSI6IjdhMDcxMDFjLTVmMTUtNDRiOS04YzljLWZjNTRiMjkwZTI0ZCIsImlhdCI6MTc4NTY0MDY3OSwiZXhwIjoxNzg2MjQ1NDc5fQ.ob_jpw4XgsPgVObqAdyFcqsnukVuF3J3uApq2zNNBs8","2026-08-09T03:17:59.284Z"]
+
+SQL: select "id", "domain", "name", "schema", "status", "created_at", "updated_at" from "tenants" where "tenants"."domain" = $1
+KEYS: ["name","text","rowMode","types"]
+CONFIG: {"text":"select \"id\", \"domain\", \"name\", \"schema\", \"status\", \"created_at\", \"updated_at\" from \"tenants\" where \"tenants\".\"domain\" = $1","rowMode":"array","types":{}}
+PARAMS: ["test-corp-9403"]
+
+SQL: SET search_path TO "tenant_test_corp_9403", public
+KEYS: []
+CONFIG: "SET search_path TO \"tenant_test_corp_9403\", public"
+PARAMS: []
+
+SQL: select "id", "email", "password_hash", "name", "role", "status", "is_verified", "verification_token", "reset_token", "reset_token_expires_at", "created_at", "updated_at" from "users" where "users"."verification_token" = $1 limit $2
+KEYS: ["name","text","rowMode","types"]
+CONFIG: {"text":"select \"id\", \"email\", \"password_hash\", \"name\", \"role\", \"status\", \"is_verified\", \"verification_token\", \"reset_token\", \"reset_token_expires_at\", \"created_at\", \"updated_at\" from \"users\" where \"users\".\"verification_token\" = $1 limit $2","rowMode":"array","types":{}}
+PARAMS: ["0252b1d53e1e3c3eb2c579a415431aa20e1edb2105bd1a4368a2015d10cf628c",1]
+
+SQL: update "users" set "is_verified" = $1, "verification_token" = $2 where "users"."id" = $3
+KEYS: ["name","text","types"]
+CONFIG: {"text":"update \"users\" set \"is_verified\" = $1, \"verification_token\" = $2 where \"users\".\"id\" = $3","types":{}}
+PARAMS: [true,null,"af359a48-3da1-443f-8192-3506e07ec2d9"]
+
+SQL: SET search_path TO "tenant_test_corp_9403", public
+KEYS: []
+CONFIG: "SET search_path TO \"tenant_test_corp_9403\", public"
+PARAMS: []
+
+SQL: select "id", "email", "password_hash", "name", "role", "status", "is_verified", "verification_token", "reset_token", "reset_token_expires_at", "created_at", "updated_at" from "users" where "users"."id" = $1
+KEYS: ["name","text","rowMode","types"]
+CONFIG: {"text":"select \"id\", \"email\", \"password_hash\", \"name\", \"role\", \"status\", \"is_verified\", \"verification_token\", \"reset_token\", \"reset_token_expires_at\", \"created_at\", \"updated_at\" from \"users\" where \"users\".\"id\" = $1","rowMode":"array","types":{}}
+PARAMS: ["af359a48-3da1-443f-8192-3506e07ec2d9"]
+
+SQL: SET search_path TO "tenant_test_corp_9403", public
+KEYS: []
+CONFIG: "SET search_path TO \"tenant_test_corp_9403\", public"
+PARAMS: []
+
+SQL: select "id", "domain", "name", "schema", "status", "created_at", "updated_at" from "tenants" where "tenants"."domain" = $1
+KEYS: ["name","text","rowMode","types"]
+CONFIG: {"text":"select \"id\", \"domain\", \"name\", \"schema\", \"status\", \"created_at\", \"updated_at\" from \"tenants\" where \"tenants\".\"domain\" = $1","rowMode":"array","types":{}}
+PARAMS: ["test-corp-9403"]
+
+SQL: select "id", "email", "password_hash", "name", "role", "status", "is_verified", "verification_token", "reset_token", "reset_token_expires_at", "created_at", "updated_at" from "users" where "users"."email" = $1 limit $2
+KEYS: ["name","text","rowMode","types"]
+CONFIG: {"text":"select \"id\", \"email\", \"password_hash\", \"name\", \"role\", \"status\", \"is_verified\", \"verification_token\", \"reset_token\", \"reset_token_expires_at\", \"created_at\", \"updated_at\" from \"users\" where \"users\".\"email\" = $1 limit $2","rowMode":"array","types":{}}
+PARAMS: ["ceo@acme-test.com",1]
+
+SQL: insert into "sessions" ("id", "user_id", "token", "expires_at", "created_at") values (default, $1, $2, $3, default)
+KEYS: ["name","text","types"]
+CONFIG: {"text":"insert into \"sessions\" (\"id\", \"user_id\", \"token\", \"expires_at\", \"created_at\") values (default, $1, $2, $3, default)","types":{}}
+PARAMS: ["af359a48-3da1-443f-8192-3506e07ec2d9","eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImFmMzU5YTQ4LTNkYTEtNDQzZi04MTkyLTM1MDZlMDdlYzJkOSIsImVtYWlsIjoiY2VvQGFjbWUtdGVzdC5jb20iLCJyb2xlIjoib3duZXIiLCJ0ZW5hbnRJZCI6ImVhZDVlZmY0LThhOTAtNGEyNC1iMjQ4LTg1NDdlM2NmODhjZCIsImp0aSI6IjgwZjcxOTc3LWU0OGMtNDM0MS05OTk1LTc5MjQxYzY0NzdhZSIsImlhdCI6MTc4NTY0MDY3OSwiZXhwIjoxNzg2MjQ1NDc5fQ.pxxuEjyVDXnrbIXwckDr9x1BSOj8kEsHC9KgHmHRtU0","2026-08-09T03:17:59.365Z"]
+
+SQL: SET search_path TO "tenant_test_corp_9403", public
+KEYS: []
+CONFIG: "SET search_path TO \"tenant_test_corp_9403\", public"
+PARAMS: []
+
+SQL: select "id", "domain", "name", "schema", "status", "created_at", "updated_at" from "tenants" where "tenants"."domain" = $1
+KEYS: ["name","text","rowMode","types"]
+CONFIG: {"text":"select \"id\", \"domain\", \"name\", \"schema\", \"status\", \"created_at\", \"updated_at\" from \"tenants\" where \"tenants\".\"domain\" = $1","rowMode":"array","types":{}}
+PARAMS: ["test-corp-9403"]
+
+SQL: select "id", "user_id", "token", "expires_at", "created_at" from "sessions" where "sessions"."token" = $1 limit $2
+KEYS: ["name","text","rowMode","types"]
+CONFIG: {"text":"select \"id\", \"user_id\", \"token\", \"expires_at\", \"created_at\" from \"sessions\" where \"sessions\".\"token\" = $1 limit $2","rowMode":"array","types":{}}
+PARAMS: ["eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImFmMzU5YTQ4LTNkYTEtNDQzZi04MTkyLTM1MDZlMDdlYzJkOSIsImVtYWlsIjoiY2VvQGFjbWUtdGVzdC5jb20iLCJyb2xlIjoib3duZXIiLCJ0ZW5hbnRJZCI6ImVhZDVlZmY0LThhOTAtNGEyNC1iMjQ4LTg1NDdlM2NmODhjZCIsImp0aSI6IjgwZjcxOTc3LWU0OGMtNDM0MS05OTk1LTc5MjQxYzY0NzdhZSIsImlhdCI6MTc4NTY0MDY3OSwiZXhwIjoxNzg2MjQ1NDc5fQ.pxxuEjyVDXnrbIXwckDr9x1BSOj8kEsHC9KgHmHRtU0",1]
+
+SQL: delete from "sessions" where "sessions"."token" = $1
+KEYS: ["name","text","types"]
+CONFIG: {"text":"delete from \"sessions\" where \"sessions\".\"token\" = $1","types":{}}
+PARAMS: ["eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImFmMzU5YTQ4LTNkYTEtNDQzZi04MTkyLTM1MDZlMDdlYzJkOSIsImVtYWlsIjoiY2VvQGFjbWUtdGVzdC5jb20iLCJyb2xlIjoib3duZXIiLCJ0ZW5hbnRJZCI6ImVhZDVlZmY0LThhOTAtNGEyNC1iMjQ4LTg1NDdlM2NmODhjZCIsImp0aSI6IjgwZjcxOTc3LWU0OGMtNDM0MS05OTk1LTc5MjQxYzY0NzdhZSIsImlhdCI6MTc4NTY0MDY3OSwiZXhwIjoxNzg2MjQ1NDc5fQ.pxxuEjyVDXnrbIXwckDr9x1BSOj8kEsHC9KgHmHRtU0"]
+
+SQL: insert into "sessions" ("id", "user_id", "token", "expires_at", "created_at") values (default, $1, $2, $3, default)
+KEYS: ["name","text","types"]
+CONFIG: {"text":"insert into \"sessions\" (\"id\", \"user_id\", \"token\", \"expires_at\", \"created_at\") values (default, $1, $2, $3, default)","types":{}}
+PARAMS: ["af359a48-3da1-443f-8192-3506e07ec2d9","eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImFmMzU5YTQ4LTNkYTEtNDQzZi04MTkyLTM1MDZlMDdlYzJkOSIsImVtYWlsIjoiY2VvQGFjbWUtdGVzdC5jb20iLCJyb2xlIjoib3duZXIiLCJ0ZW5hbnRJZCI6ImVhZDVlZmY0LThhOTAtNGEyNC1iMjQ4LTg1NDdlM2NmODhjZCIsImp0aSI6IjU3ZmMyYTliLTZhY2ItNDJjZS05OWZjLTIxODYwNWFkOGExYSIsImlhdCI6MTc4NTY0MDY3OSwiZXhwIjoxNzg2MjQ1NDc5fQ.1Ye17JRw5SLCXQu3MBXX_2LDi0qBPe9pREtyFTwDq-k","2026-08-09T03:17:59.371Z"]
+
+SQL: SET search_path TO "tenant_test_corp_9403", public
+KEYS: []
+CONFIG: "SET search_path TO \"tenant_test_corp_9403\", public"
+PARAMS: []
+
+SQL: select "id", "domain", "name", "schema", "status", "created_at", "updated_at" from "tenants" where "tenants"."domain" = $1
+KEYS: ["name","text","rowMode","types"]
+CONFIG: {"text":"select \"id\", \"domain\", \"name\", \"schema\", \"status\", \"created_at\", \"updated_at\" from \"tenants\" where \"tenants\".\"domain\" = $1","rowMode":"array","types":{}}
+PARAMS: ["test-corp-9403"]
+
+SQL: select "id", "user_id", "token", "expires_at", "created_at" from "sessions" where "sessions"."token" = $1 limit $2
+KEYS: ["name","text","rowMode","types"]
+CONFIG: {"text":"select \"id\", \"user_id\", \"token\", \"expires_at\", \"created_at\" from \"sessions\" where \"sessions\".\"token\" = $1 limit $2","rowMode":"array","types":{}}
+PARAMS: ["eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImFmMzU5YTQ4LTNkYTEtNDQzZi04MTkyLTM1MDZlMDdlYzJkOSIsImVtYWlsIjoiY2VvQGFjbWUtdGVzdC5jb20iLCJyb2xlIjoib3duZXIiLCJ0ZW5hbnRJZCI6ImVhZDVlZmY0LThhOTAtNGEyNC1iMjQ4LTg1NDdlM2NmODhjZCIsImp0aSI6IjgwZjcxOTc3LWU0OGMtNDM0MS05OTk1LTc5MjQxYzY0NzdhZSIsImlhdCI6MTc4NTY0MDY3OSwiZXhwIjoxNzg2MjQ1NDc5fQ.pxxuEjyVDXnrbIXwckDr9x1BSOj8kEsHC9KgHmHRtU0",1]
+
+SQL: delete from "sessions" where "sessions"."token" = $1
+KEYS: ["name","text","types"]
+CONFIG: {"text":"delete from \"sessions\" where \"sessions\".\"token\" = $1","types":{}}
+PARAMS: ["eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImFmMzU5YTQ4LTNkYTEtNDQzZi04MTkyLTM1MDZlMDdlYzJkOSIsImVtYWlsIjoiY2VvQGFjbWUtdGVzdC5jb20iLCJyb2xlIjoib3duZXIiLCJ0ZW5hbnRJZCI6ImVhZDVlZmY0LThhOTAtNGEyNC1iMjQ4LTg1NDdlM2NmODhjZCIsImp0aSI6IjgwZjcxOTc3LWU0OGMtNDM0MS05OTk1LTc5MjQxYzY0NzdhZSIsImlhdCI6MTc4NTY0MDY3OSwiZXhwIjoxNzg2MjQ1NDc5fQ.pxxuEjyVDXnrbIXwckDr9x1BSOj8kEsHC9KgHmHRtU0"]
+
+SQL: insert into "sessions" ("id", "user_id", "token", "expires_at", "created_at") values (default, $1, $2, $3, default)
+KEYS: ["name","text","types"]
+CONFIG: {"text":"insert into \"sessions\" (\"id\", \"user_id\", \"token\", \"expires_at\", \"created_at\") values (default, $1, $2, $3, default)","types":{}}
+PARAMS: ["af359a48-3da1-443f-8192-3506e07ec2d9","eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImFmMzU5YTQ4LTNkYTEtNDQzZi04MTkyLTM1MDZlMDdlYzJkOSIsImVtYWlsIjoiY2VvQGFjbWUtdGVzdC5jb20iLCJyb2xlIjoib3duZXIiLCJ0ZW5hbnRJZCI6ImVhZDVlZmY0LThhOTAtNGEyNC1iMjQ4LTg1NDdlM2NmODhjZCIsImp0aSI6ImM3Yzc5YzVhLWYxM2MtNDFiOC05YzRhLTVjNTZkODYwMGI3ZCIsImlhdCI6MTc4NTY0MDY3OSwiZXhwIjoxNzg2MjQ1NDc5fQ.GKxl-fRbBAE-KWe99CicYj96OOGT3kqE6RzmXavxFpc","2026-08-09T03:17:59.374Z"]
+
+SQL: SET search_path TO "tenant_test_corp_9403", public
+KEYS: []
+CONFIG: "SET search_path TO \"tenant_test_corp_9403\", public"
+PARAMS: []
+
+SQL: select "id", "email", "password_hash", "name", "role", "status", "is_verified", "verification_token", "reset_token", "reset_token_expires_at", "created_at", "updated_at" from "users" where "users"."email" = $1 limit $2
+KEYS: ["name","text","rowMode","types"]
+CONFIG: {"text":"select \"id\", \"email\", \"password_hash\", \"name\", \"role\", \"status\", \"is_verified\", \"verification_token\", \"reset_token\", \"reset_token_expires_at\", \"created_at\", \"updated_at\" from \"users\" where \"users\".\"email\" = $1 limit $2","rowMode":"array","types":{}}
+PARAMS: ["ceo@acme-test.com",1]
+
+SQL: update "users" set "reset_token" = $1, "reset_token_expires_at" = $2 where "users"."id" = $3
+KEYS: ["name","text","types"]
+CONFIG: {"text":"update \"users\" set \"reset_token\" = $1, \"reset_token_expires_at\" = $2 where \"users\".\"id\" = $3","types":{}}
+PARAMS: ["516a2ef8375376741b6354c994d30378465be821945f49455e9b6a5e6fdcf74c","2026-08-02T04:17:59.381Z","af359a48-3da1-443f-8192-3506e07ec2d9"]
+
+SQL: SET search_path TO "tenant_test_corp_9403", public
+KEYS: []
+CONFIG: "SET search_path TO \"tenant_test_corp_9403\", public"
+PARAMS: []
+
+SQL: select "id", "email", "password_hash", "name", "role", "status", "is_verified", "verification_token", "reset_token", "reset_token_expires_at", "created_at", "updated_at" from "users" where "users"."reset_token" = $1 limit $2
+KEYS: ["name","text","rowMode","types"]
+CONFIG: {"text":"select \"id\", \"email\", \"password_hash\", \"name\", \"role\", \"status\", \"is_verified\", \"verification_token\", \"reset_token\", \"reset_token_expires_at\", \"created_at\", \"updated_at\" from \"users\" where \"users\".\"reset_token\" = $1 limit $2","rowMode":"array","types":{}}
+PARAMS: ["516a2ef8375376741b6354c994d30378465be821945f49455e9b6a5e6fdcf74c",1]
+
+SQL: update "users" set "password_hash" = $1, "reset_token" = $2, "reset_token_expires_at" = $3 where "users"."id" = $4
+KEYS: ["name","text","types"]
+CONFIG: {"text":"update \"users\" set \"password_hash\" = $1, \"reset_token\" = $2, \"reset_token_expires_at\" = $3 where \"users\".\"id\" = $4","types":{}}
+PARAMS: ["de2e3fd08c686c07d9c66bf54c1b6e91:157df8f3ccebf760fc71202bf23c2f4a14727daf1ca5b826b72788cd55ddf99c6ddec26fc052d081a9c8b8a72f7ab03608f728fb4525e4ec150255ca348a514c",null,null,"af359a48-3da1-443f-8192-3506e07ec2d9"]
+
+SQL: delete from "sessions" where "sessions"."user_id" = $1
+KEYS: ["name","text","types"]
+CONFIG: {"text":"delete from \"sessions\" where \"sessions\".\"user_id\" = $1","types":{}}
+PARAMS: ["af359a48-3da1-443f-8192-3506e07ec2d9"]
+
+SQL: SET search_path TO "tenant_test_corp_9403", public
+KEYS: []
+CONFIG: "SET search_path TO \"tenant_test_corp_9403\", public"
+PARAMS: []
+
+SQL: select "id", "domain", "name", "schema", "status", "created_at", "updated_at" from "tenants" where "tenants"."domain" = $1
+KEYS: ["name","text","rowMode","types"]
+CONFIG: {"text":"select \"id\", \"domain\", \"name\", \"schema\", \"status\", \"created_at\", \"updated_at\" from \"tenants\" where \"tenants\".\"domain\" = $1","rowMode":"array","types":{}}
+PARAMS: ["test-corp-9403"]
+
+SQL: select "id", "email", "password_hash", "name", "role", "status", "is_verified", "verification_token", "reset_token", "reset_token_expires_at", "created_at", "updated_at" from "users" where "users"."email" = $1 limit $2
+KEYS: ["name","text","rowMode","types"]
+CONFIG: {"text":"select \"id\", \"email\", \"password_hash\", \"name\", \"role\", \"status\", \"is_verified\", \"verification_token\", \"reset_token\", \"reset_token_expires_at\", \"created_at\", \"updated_at\" from \"users\" where \"users\".\"email\" = $1 limit $2","rowMode":"array","types":{}}
+PARAMS: ["ceo@acme-test.com",1]
+
+SQL: insert into "sessions" ("id", "user_id", "token", "expires_at", "created_at") values (default, $1, $2, $3, default)
+KEYS: ["name","text","types"]
+CONFIG: {"text":"insert into \"sessions\" (\"id\", \"user_id\", \"token\", \"expires_at\", \"created_at\") values (default, $1, $2, $3, default)","types":{}}
+PARAMS: ["af359a48-3da1-443f-8192-3506e07ec2d9","eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImFmMzU5YTQ4LTNkYTEtNDQzZi04MTkyLTM1MDZlMDdlYzJkOSIsImVtYWlsIjoiY2VvQGFjbWUtdGVzdC5jb20iLCJyb2xlIjoib3duZXIiLCJ0ZW5hbnRJZCI6ImVhZDVlZmY0LThhOTAtNGEyNC1iMjQ4LTg1NDdlM2NmODhjZCIsImp0aSI6IjMxY2VlNTc0LWJlYjEtNGExZi04ODQ1LTg4MzQ1NTIwZTI4ZSIsImlhdCI6MTc4NTY0MDY3OSwiZXhwIjoxNzg2MjQ1NDc5fQ.47TX2obkWz_yez95bcNIV-Hj4dF6fD7ekM90lI3-gBo","2026-08-09T03:17:59.490Z"]
+
+SQL: SELECT 1
+KEYS: []
+CONFIG: "SELECT 1"
+PARAMS: []
+
+SQL: select "id", "domain", "name", "schema", "status", "created_at", "updated_at" from "tenants" where "tenants"."domain" = $1 limit $2
+KEYS: ["name","text","rowMode","types"]
+CONFIG: {"text":"select \"id\", \"domain\", \"name\", \"schema\", \"status\", \"created_at\", \"updated_at\" from \"tenants\" where \"tenants\".\"domain\" = $1 limit $2","rowMode":"array","types":{}}
+PARAMS: ["test-corp-9293",1]
+
+SQL: CREATE SCHEMA IF NOT EXISTS "tenant_test_corp_9293"
+KEYS: ["name","text","types"]
+CONFIG: {"text":"CREATE SCHEMA IF NOT EXISTS \"tenant_test_corp_9293\"","types":{}}
+PARAMS: []
+
+SQL: 
+        CREATE TABLE IF NOT EXISTS "tenant_test_corp_9293"."users" (
+          "id" uuid PRIMARY KEY DEFAULT gen_random_uuid(),
+          "email" varchar(256) NOT NULL UNIQUE,
+          "password_hash" text NOT NULL,
+          "name" varchar(256) NOT NULL,
+          "role" varchar(64) NOT NULL DEFAULT 'member',
+          "status" varchar(32) NOT NULL DEFAULT 'active',
+          "is_verified" boolean NOT NULL DEFAULT false,
+          "verification_token" varchar(256),
+          "reset_token" varchar(256),
+          "reset_token_expires_at" timestamp,
+          "created_at" timestamp NOT NULL DEFAULT now(),
+          "updated_at" timestamp NOT NULL DEFAULT now()
+        );
+      
+KEYS: ["name","text","types"]
+CONFIG: {"text":"\n        CREATE TABLE IF NOT EXISTS \"tenant_test_corp_9293\".\"users\" (\n          \"id\" uuid PRIMARY KEY DEFAULT gen_random_uuid(),\n          \"email\" varchar(256) NOT NULL UNIQUE,\n          \"password_hash\" text NOT NULL,\n          \"name\" varchar(256) NOT NULL,\n          \"role\" varchar(64) NOT NULL DEFAULT 'member',\n          \"status\" varchar(32) NOT NULL DEFAULT 'active',\n          \"is_verified\" boolean NOT NULL DEFAULT false,\n          \"verification_token\" varchar(256),\n          \"reset_token\" varchar(256),\n          \"reset_token_expires_at\" timestamp,\n          \"created_at\" timestamp NOT NULL DEFAULT now(),\n          \"updated_at\" timestamp NOT NULL DEFAULT now()\n        );\n      ","types":{}}
+PARAMS: []
+
+SQL: 
+        CREATE TABLE IF NOT EXISTS "tenant_test_corp_9293"."sessions" (
+          "id" uuid PRIMARY KEY DEFAULT gen_random_uuid(),
+          "user_id" uuid NOT NULL REFERENCES "tenant_test_corp_9293"."users"("id") ON DELETE CASCADE,
+          "token" varchar(512) NOT NULL UNIQUE,
+          "expires_at" timestamp NOT NULL,
+          "created_at" timestamp NOT NULL DEFAULT now()
+        );
+      
+KEYS: ["name","text","types"]
+CONFIG: {"text":"\n        CREATE TABLE IF NOT EXISTS \"tenant_test_corp_9293\".\"sessions\" (\n          \"id\" uuid PRIMARY KEY DEFAULT gen_random_uuid(),\n          \"user_id\" uuid NOT NULL REFERENCES \"tenant_test_corp_9293\".\"users\"(\"id\") ON DELETE CASCADE,\n          \"token\" varchar(512) NOT NULL UNIQUE,\n          \"expires_at\" timestamp NOT NULL,\n          \"created_at\" timestamp NOT NULL DEFAULT now()\n        );\n      ","types":{}}
+PARAMS: []
+
+SQL: insert into "tenants" ("id", "domain", "name", "schema", "status", "created_at", "updated_at") values (default, $1, $2, $3, $4, default, default) returning "id", "domain", "name", "schema", "status", "created_at", "updated_at"
+KEYS: ["name","text","rowMode","types"]
+CONFIG: {"text":"insert into \"tenants\" (\"id\", \"domain\", \"name\", \"schema\", \"status\", \"created_at\", \"updated_at\") values (default, $1, $2, $3, $4, default, default) returning \"id\", \"domain\", \"name\", \"schema\", \"status\", \"created_at\", \"updated_at\"","rowMode":"array","types":{}}
+PARAMS: ["test-corp-9293","Acme Test Corp","tenant_test_corp_9293","active"]
+
+SQL: 
+        INSERT INTO "tenant_test_corp_9293"."users" (email, password_hash, name, role, is_verified, verification_token)
+        VALUES ('ceo@acme-test.com', 'b74ad4f052e023a26c0b4e1e33a6727f:b685d422e2c7bbb00f3dcb0d53ab457180f464bb0f3628cb3ae40159ad2ea760f85ca5a6f908edada6704468bdb253e083698a7140e4b5853951ba48fbcadc37', 'Acme CEO', 'owner', false, 'b379d4d1f5b0c7c46a2839f1248553192c37c63fd53acbde52ac869eea94c79a')
+      
+KEYS: ["name","text","types"]
+CONFIG: {"text":"\n        INSERT INTO \"tenant_test_corp_9293\".\"users\" (email, password_hash, name, role, is_verified, verification_token)\n        VALUES ('ceo@acme-test.com', 'b74ad4f052e023a26c0b4e1e33a6727f:b685d422e2c7bbb00f3dcb0d53ab457180f464bb0f3628cb3ae40159ad2ea760f85ca5a6f908edada6704468bdb253e083698a7140e4b5853951ba48fbcadc37', 'Acme CEO', 'owner', false, 'b379d4d1f5b0c7c46a2839f1248553192c37c63fd53acbde52ac869eea94c79a')\n      ","types":{}}
+PARAMS: []
+
+SQL: 
+        SELECT id, email, name, role, is_verified, verification_token FROM "tenant_test_corp_9293"."users" WHERE email = 'ceo@acme-test.com' LIMIT 1
+      
+KEYS: ["name","text","types"]
+CONFIG: {"text":"\n        SELECT id, email, name, role, is_verified, verification_token FROM \"tenant_test_corp_9293\".\"users\" WHERE email = 'ceo@acme-test.com' LIMIT 1\n      ","types":{}}
+PARAMS: []
+
+SQL: SET search_path TO "tenant_test_corp_9293", public
+KEYS: []
+CONFIG: "SET search_path TO \"tenant_test_corp_9293\", public"
+PARAMS: []
+
+SQL: insert into "sessions" ("id", "user_id", "token", "expires_at", "created_at") values (default, $1, $2, $3, default)
+KEYS: ["name","text","types"]
+CONFIG: {"text":"insert into \"sessions\" (\"id\", \"user_id\", \"token\", \"expires_at\", \"created_at\") values (default, $1, $2, $3, default)","types":{}}
+PARAMS: ["e3bf52e3-d4d0-4e1c-9738-68b72b966886","eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImUzYmY1MmUzLWQ0ZDAtNGUxYy05NzM4LTY4YjcyYjk2Njg4NiIsImVtYWlsIjoiY2VvQGFjbWUtdGVzdC5jb20iLCJyb2xlIjoib3duZXIiLCJ0ZW5hbnRJZCI6IjkxYzkxZGE0LTViNmQtNDI2YS1hNTI3LWE3MWRmMzA4NTBlOSIsImp0aSI6IjZhZGVkY2M3LTA0MDItNDI1NC04YTU2LTkwNmM1MmUzN2JkYyIsImlhdCI6MTc4NTY0MDcwNywiZXhwIjoxNzg2MjQ1NTA3fQ.d7yXsszpihIQgDRblMsuAXWInSt1bQPneMc1OZXuiXY","2026-08-09T03:18:27.161Z"]
+
+SQL: select "id", "domain", "name", "schema", "status", "created_at", "updated_at" from "tenants" where "tenants"."domain" = $1
+KEYS: ["name","text","rowMode","types"]
+CONFIG: {"text":"select \"id\", \"domain\", \"name\", \"schema\", \"status\", \"created_at\", \"updated_at\" from \"tenants\" where \"tenants\".\"domain\" = $1","rowMode":"array","types":{}}
+PARAMS: ["test-corp-9293"]
+
+SQL: SET search_path TO "tenant_test_corp_9293", public
+KEYS: []
+CONFIG: "SET search_path TO \"tenant_test_corp_9293\", public"
+PARAMS: []
+
+SQL: select "id", "email", "password_hash", "name", "role", "status", "is_verified", "verification_token", "reset_token", "reset_token_expires_at", "created_at", "updated_at" from "users" where "users"."verification_token" = $1 limit $2
+KEYS: ["name","text","rowMode","types"]
+CONFIG: {"text":"select \"id\", \"email\", \"password_hash\", \"name\", \"role\", \"status\", \"is_verified\", \"verification_token\", \"reset_token\", \"reset_token_expires_at\", \"created_at\", \"updated_at\" from \"users\" where \"users\".\"verification_token\" = $1 limit $2","rowMode":"array","types":{}}
+PARAMS: ["b379d4d1f5b0c7c46a2839f1248553192c37c63fd53acbde52ac869eea94c79a",1]
+
+SQL: update "users" set "is_verified" = $1, "verification_token" = $2 where "users"."id" = $3
+KEYS: ["name","text","types"]
+CONFIG: {"text":"update \"users\" set \"is_verified\" = $1, \"verification_token\" = $2 where \"users\".\"id\" = $3","types":{}}
+PARAMS: [true,null,"e3bf52e3-d4d0-4e1c-9738-68b72b966886"]
+
+SQL: SET search_path TO "tenant_test_corp_9293", public
+KEYS: []
+CONFIG: "SET search_path TO \"tenant_test_corp_9293\", public"
+PARAMS: []
+
+SQL: select "id", "email", "password_hash", "name", "role", "status", "is_verified", "verification_token", "reset_token", "reset_token_expires_at", "created_at", "updated_at" from "users" where "users"."id" = $1
+KEYS: ["name","text","rowMode","types"]
+CONFIG: {"text":"select \"id\", \"email\", \"password_hash\", \"name\", \"role\", \"status\", \"is_verified\", \"verification_token\", \"reset_token\", \"reset_token_expires_at\", \"created_at\", \"updated_at\" from \"users\" where \"users\".\"id\" = $1","rowMode":"array","types":{}}
+PARAMS: ["e3bf52e3-d4d0-4e1c-9738-68b72b966886"]
+
+SQL: SET search_path TO "tenant_test_corp_9293", public
+KEYS: []
+CONFIG: "SET search_path TO \"tenant_test_corp_9293\", public"
+PARAMS: []
+
+SQL: select "id", "domain", "name", "schema", "status", "created_at", "updated_at" from "tenants" where "tenants"."domain" = $1
+KEYS: ["name","text","rowMode","types"]
+CONFIG: {"text":"select \"id\", \"domain\", \"name\", \"schema\", \"status\", \"created_at\", \"updated_at\" from \"tenants\" where \"tenants\".\"domain\" = $1","rowMode":"array","types":{}}
+PARAMS: ["test-corp-9293"]
+
+SQL: select "id", "email", "password_hash", "name", "role", "status", "is_verified", "verification_token", "reset_token", "reset_token_expires_at", "created_at", "updated_at" from "users" where "users"."email" = $1 limit $2
+KEYS: ["name","text","rowMode","types"]
+CONFIG: {"text":"select \"id\", \"email\", \"password_hash\", \"name\", \"role\", \"status\", \"is_verified\", \"verification_token\", \"reset_token\", \"reset_token_expires_at\", \"created_at\", \"updated_at\" from \"users\" where \"users\".\"email\" = $1 limit $2","rowMode":"array","types":{}}
+PARAMS: ["ceo@acme-test.com",1]
+
+SQL: insert into "sessions" ("id", "user_id", "token", "expires_at", "created_at") values (default, $1, $2, $3, default)
+KEYS: ["name","text","types"]
+CONFIG: {"text":"insert into \"sessions\" (\"id\", \"user_id\", \"token\", \"expires_at\", \"created_at\") values (default, $1, $2, $3, default)","types":{}}
+PARAMS: ["e3bf52e3-d4d0-4e1c-9738-68b72b966886","eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImUzYmY1MmUzLWQ0ZDAtNGUxYy05NzM4LTY4YjcyYjk2Njg4NiIsImVtYWlsIjoiY2VvQGFjbWUtdGVzdC5jb20iLCJyb2xlIjoib3duZXIiLCJ0ZW5hbnRJZCI6IjkxYzkxZGE0LTViNmQtNDI2YS1hNTI3LWE3MWRmMzA4NTBlOSIsImp0aSI6ImEyNDQ0ZGFiLTNkNjAtNDg3MC1iNTgzLWQyMDMxNmJjNDE3ZCIsImlhdCI6MTc4NTY0MDcwNywiZXhwIjoxNzg2MjQ1NTA3fQ.Mn9-40zRm-7bfvCx02FuDjMNDhSx-m6oIT_BhuEiHhc","2026-08-09T03:18:27.245Z"]
+
+SQL: SET search_path TO "tenant_test_corp_9293", public
+KEYS: []
+CONFIG: "SET search_path TO \"tenant_test_corp_9293\", public"
+PARAMS: []
+
+SQL: select "id", "domain", "name", "schema", "status", "created_at", "updated_at" from "tenants" where "tenants"."domain" = $1
+KEYS: ["name","text","rowMode","types"]
+CONFIG: {"text":"select \"id\", \"domain\", \"name\", \"schema\", \"status\", \"created_at\", \"updated_at\" from \"tenants\" where \"tenants\".\"domain\" = $1","rowMode":"array","types":{}}
+PARAMS: ["test-corp-9293"]
+
+SQL: select "id", "user_id", "token", "expires_at", "created_at" from "sessions" where "sessions"."token" = $1 limit $2
+KEYS: ["name","text","rowMode","types"]
+CONFIG: {"text":"select \"id\", \"user_id\", \"token\", \"expires_at\", \"created_at\" from \"sessions\" where \"sessions\".\"token\" = $1 limit $2","rowMode":"array","types":{}}
+PARAMS: ["eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImUzYmY1MmUzLWQ0ZDAtNGUxYy05NzM4LTY4YjcyYjk2Njg4NiIsImVtYWlsIjoiY2VvQGFjbWUtdGVzdC5jb20iLCJyb2xlIjoib3duZXIiLCJ0ZW5hbnRJZCI6IjkxYzkxZGE0LTViNmQtNDI2YS1hNTI3LWE3MWRmMzA4NTBlOSIsImp0aSI6ImEyNDQ0ZGFiLTNkNjAtNDg3MC1iNTgzLWQyMDMxNmJjNDE3ZCIsImlhdCI6MTc4NTY0MDcwNywiZXhwIjoxNzg2MjQ1NTA3fQ.Mn9-40zRm-7bfvCx02FuDjMNDhSx-m6oIT_BhuEiHhc",1]
+
+SQL: delete from "sessions" where "sessions"."token" = $1
+KEYS: ["name","text","types"]
+CONFIG: {"text":"delete from \"sessions\" where \"sessions\".\"token\" = $1","types":{}}
+PARAMS: ["eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImUzYmY1MmUzLWQ0ZDAtNGUxYy05NzM4LTY4YjcyYjk2Njg4NiIsImVtYWlsIjoiY2VvQGFjbWUtdGVzdC5jb20iLCJyb2xlIjoib3duZXIiLCJ0ZW5hbnRJZCI6IjkxYzkxZGE0LTViNmQtNDI2YS1hNTI3LWE3MWRmMzA4NTBlOSIsImp0aSI6ImEyNDQ0ZGFiLTNkNjAtNDg3MC1iNTgzLWQyMDMxNmJjNDE3ZCIsImlhdCI6MTc4NTY0MDcwNywiZXhwIjoxNzg2MjQ1NTA3fQ.Mn9-40zRm-7bfvCx02FuDjMNDhSx-m6oIT_BhuEiHhc"]
+
+SQL: insert into "sessions" ("id", "user_id", "token", "expires_at", "created_at") values (default, $1, $2, $3, default)
+KEYS: ["name","text","types"]
+CONFIG: {"text":"insert into \"sessions\" (\"id\", \"user_id\", \"token\", \"expires_at\", \"created_at\") values (default, $1, $2, $3, default)","types":{}}
+PARAMS: ["e3bf52e3-d4d0-4e1c-9738-68b72b966886","eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImUzYmY1MmUzLWQ0ZDAtNGUxYy05NzM4LTY4YjcyYjk2Njg4NiIsImVtYWlsIjoiY2VvQGFjbWUtdGVzdC5jb20iLCJyb2xlIjoib3duZXIiLCJ0ZW5hbnRJZCI6IjkxYzkxZGE0LTViNmQtNDI2YS1hNTI3LWE3MWRmMzA4NTBlOSIsImp0aSI6ImFlYzc0NTIyLTIzOTYtNDFlYi1hNjVlLWU4ZGNkMDdhYjljMCIsImlhdCI6MTc4NTY0MDcwNywiZXhwIjoxNzg2MjQ1NTA3fQ.wu0PFAcHzy1_LrYdZYm_7FJmSlfNmMZZEj8JnIHehrA","2026-08-09T03:18:27.251Z"]
+
+SQL: SET search_path TO "tenant_test_corp_9293", public
+KEYS: []
+CONFIG: "SET search_path TO \"tenant_test_corp_9293\", public"
+PARAMS: []
+
+SQL: select "id", "domain", "name", "schema", "status", "created_at", "updated_at" from "tenants" where "tenants"."domain" = $1
+KEYS: ["name","text","rowMode","types"]
+CONFIG: {"text":"select \"id\", \"domain\", \"name\", \"schema\", \"status\", \"created_at\", \"updated_at\" from \"tenants\" where \"tenants\".\"domain\" = $1","rowMode":"array","types":{}}
+PARAMS: ["test-corp-9293"]
+
+SQL: select "id", "user_id", "token", "expires_at", "created_at" from "sessions" where "sessions"."token" = $1 limit $2
+KEYS: ["name","text","rowMode","types"]
+CONFIG: {"text":"select \"id\", \"user_id\", \"token\", \"expires_at\", \"created_at\" from \"sessions\" where \"sessions\".\"token\" = $1 limit $2","rowMode":"array","types":{}}
+PARAMS: ["eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImUzYmY1MmUzLWQ0ZDAtNGUxYy05NzM4LTY4YjcyYjk2Njg4NiIsImVtYWlsIjoiY2VvQGFjbWUtdGVzdC5jb20iLCJyb2xlIjoib3duZXIiLCJ0ZW5hbnRJZCI6IjkxYzkxZGE0LTViNmQtNDI2YS1hNTI3LWE3MWRmMzA4NTBlOSIsImp0aSI6ImEyNDQ0ZGFiLTNkNjAtNDg3MC1iNTgzLWQyMDMxNmJjNDE3ZCIsImlhdCI6MTc4NTY0MDcwNywiZXhwIjoxNzg2MjQ1NTA3fQ.Mn9-40zRm-7bfvCx02FuDjMNDhSx-m6oIT_BhuEiHhc",1]
+
+SQL: delete from "sessions" where "sessions"."token" = $1
+KEYS: ["name","text","types"]
+CONFIG: {"text":"delete from \"sessions\" where \"sessions\".\"token\" = $1","types":{}}
+PARAMS: ["eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImUzYmY1MmUzLWQ0ZDAtNGUxYy05NzM4LTY4YjcyYjk2Njg4NiIsImVtYWlsIjoiY2VvQGFjbWUtdGVzdC5jb20iLCJyb2xlIjoib3duZXIiLCJ0ZW5hbnRJZCI6IjkxYzkxZGE0LTViNmQtNDI2YS1hNTI3LWE3MWRmMzA4NTBlOSIsImp0aSI6ImEyNDQ0ZGFiLTNkNjAtNDg3MC1iNTgzLWQyMDMxNmJjNDE3ZCIsImlhdCI6MTc4NTY0MDcwNywiZXhwIjoxNzg2MjQ1NTA3fQ.Mn9-40zRm-7bfvCx02FuDjMNDhSx-m6oIT_BhuEiHhc"]
+
+SQL: insert into "sessions" ("id", "user_id", "token", "expires_at", "created_at") values (default, $1, $2, $3, default)
+KEYS: ["name","text","types"]
+CONFIG: {"text":"insert into \"sessions\" (\"id\", \"user_id\", \"token\", \"expires_at\", \"created_at\") values (default, $1, $2, $3, default)","types":{}}
+PARAMS: ["e3bf52e3-d4d0-4e1c-9738-68b72b966886","eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImUzYmY1MmUzLWQ0ZDAtNGUxYy05NzM4LTY4YjcyYjk2Njg4NiIsImVtYWlsIjoiY2VvQGFjbWUtdGVzdC5jb20iLCJyb2xlIjoib3duZXIiLCJ0ZW5hbnRJZCI6IjkxYzkxZGE0LTViNmQtNDI2YS1hNTI3LWE3MWRmMzA4NTBlOSIsImp0aSI6ImQyZDBhNjQ2LTc0OTctNDI0Ni04Y2UwLWIxZWI1MGU1YTAxYSIsImlhdCI6MTc4NTY0MDcwNywiZXhwIjoxNzg2MjQ1NTA3fQ.KyJKvq-QheTPtoPXamOzIrmBB50iYMb9rVu2UIaTvR0","2026-08-09T03:18:27.254Z"]
+
+SQL: SET search_path TO "tenant_test_corp_9293", public
+KEYS: []
+CONFIG: "SET search_path TO \"tenant_test_corp_9293\", public"
+PARAMS: []
+
+SQL: select "id", "email", "password_hash", "name", "role", "status", "is_verified", "verification_token", "reset_token", "reset_token_expires_at", "created_at", "updated_at" from "users" where "users"."email" = $1 limit $2
+KEYS: ["name","text","rowMode","types"]
+CONFIG: {"text":"select \"id\", \"email\", \"password_hash\", \"name\", \"role\", \"status\", \"is_verified\", \"verification_token\", \"reset_token\", \"reset_token_expires_at\", \"created_at\", \"updated_at\" from \"users\" where \"users\".\"email\" = $1 limit $2","rowMode":"array","types":{}}
+PARAMS: ["ceo@acme-test.com",1]
+
+SQL: update "users" set "reset_token" = $1, "reset_token_expires_at" = $2 where "users"."id" = $3
+KEYS: ["name","text","types"]
+CONFIG: {"text":"update \"users\" set \"reset_token\" = $1, \"reset_token_expires_at\" = $2 where \"users\".\"id\" = $3","types":{}}
+PARAMS: ["ee1a5f989f2ecb815ed893963054db98d7375cd2e05b060e54fda0ba8678792a","2026-08-02T04:18:27.263Z","e3bf52e3-d4d0-4e1c-9738-68b72b966886"]
+
+SQL: SET search_path TO "tenant_test_corp_9293", public
+KEYS: []
+CONFIG: "SET search_path TO \"tenant_test_corp_9293\", public"
+PARAMS: []
+
+SQL: select "id", "email", "password_hash", "name", "role", "status", "is_verified", "verification_token", "reset_token", "reset_token_expires_at", "created_at", "updated_at" from "users" where "users"."reset_token" = $1 limit $2
+KEYS: ["name","text","rowMode","types"]
+CONFIG: {"text":"select \"id\", \"email\", \"password_hash\", \"name\", \"role\", \"status\", \"is_verified\", \"verification_token\", \"reset_token\", \"reset_token_expires_at\", \"created_at\", \"updated_at\" from \"users\" where \"users\".\"reset_token\" = $1 limit $2","rowMode":"array","types":{}}
+PARAMS: ["ee1a5f989f2ecb815ed893963054db98d7375cd2e05b060e54fda0ba8678792a",1]
+
+SQL: update "users" set "password_hash" = $1, "reset_token" = $2, "reset_token_expires_at" = $3 where "users"."id" = $4
+KEYS: ["name","text","types"]
+CONFIG: {"text":"update \"users\" set \"password_hash\" = $1, \"reset_token\" = $2, \"reset_token_expires_at\" = $3 where \"users\".\"id\" = $4","types":{}}
+PARAMS: ["d0ebe80a23e5bff478ae4c1d48f088c1:1a20493937ac181ed4f83128501ed47bfc03ab049cc768550c900e4db2e6682a9fa09745cea2ce9f96c49abd3e2a106d0c4f6a0e19f2ec5b699d2df0157cc735",null,null,"e3bf52e3-d4d0-4e1c-9738-68b72b966886"]
+
+SQL: delete from "sessions" where "sessions"."user_id" = $1
+KEYS: ["name","text","types"]
+CONFIG: {"text":"delete from \"sessions\" where \"sessions\".\"user_id\" = $1","types":{}}
+PARAMS: ["e3bf52e3-d4d0-4e1c-9738-68b72b966886"]
+
+SQL: SET search_path TO "tenant_test_corp_9293", public
+KEYS: []
+CONFIG: "SET search_path TO \"tenant_test_corp_9293\", public"
+PARAMS: []
+
+SQL: select "id", "domain", "name", "schema", "status", "created_at", "updated_at" from "tenants" where "tenants"."domain" = $1
+KEYS: ["name","text","rowMode","types"]
+CONFIG: {"text":"select \"id\", \"domain\", \"name\", \"schema\", \"status\", \"created_at\", \"updated_at\" from \"tenants\" where \"tenants\".\"domain\" = $1","rowMode":"array","types":{}}
+PARAMS: ["test-corp-9293"]
+
+SQL: select "id", "email", "password_hash", "name", "role", "status", "is_verified", "verification_token", "reset_token", "reset_token_expires_at", "created_at", "updated_at" from "users" where "users"."email" = $1 limit $2
+KEYS: ["name","text","rowMode","types"]
+CONFIG: {"text":"select \"id\", \"email\", \"password_hash\", \"name\", \"role\", \"status\", \"is_verified\", \"verification_token\", \"reset_token\", \"reset_token_expires_at\", \"created_at\", \"updated_at\" from \"users\" where \"users\".\"email\" = $1 limit $2","rowMode":"array","types":{}}
+PARAMS: ["ceo@acme-test.com",1]
+
+SQL: insert into "sessions" ("id", "user_id", "token", "expires_at", "created_at") values (default, $1, $2, $3, default)
+KEYS: ["name","text","types"]
+CONFIG: {"text":"insert into \"sessions\" (\"id\", \"user_id\", \"token\", \"expires_at\", \"created_at\") values (default, $1, $2, $3, default)","types":{}}
+PARAMS: ["e3bf52e3-d4d0-4e1c-9738-68b72b966886","eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImUzYmY1MmUzLWQ0ZDAtNGUxYy05NzM4LTY4YjcyYjk2Njg4NiIsImVtYWlsIjoiY2VvQGFjbWUtdGVzdC5jb20iLCJyb2xlIjoib3duZXIiLCJ0ZW5hbnRJZCI6IjkxYzkxZGE0LTViNmQtNDI2YS1hNTI3LWE3MWRmMzA4NTBlOSIsImp0aSI6ImRiYjU0Njk1LTc4NjgtNDgxMS1iMTA3LWJhMDZiZGM2YTNhMyIsImlhdCI6MTc4NTY0MDcwNywiZXhwIjoxNzg2MjQ1NTA3fQ.7A4UGVPJrl6Ld_hZ8Vc3E7T9fo-CaxdI-fdXS33MbbI","2026-08-09T03:18:27.371Z"]
+
+SQL: select "id", "domain", "name", "schema", "status", "created_at", "updated_at" from "tenants" where "tenants"."domain" = $1 limit $2
+KEYS: ["name","text","rowMode","types"]
+CONFIG: {"text":"select \"id\", \"domain\", \"name\", \"schema\", \"status\", \"created_at\", \"updated_at\" from \"tenants\" where \"tenants\".\"domain\" = $1 limit $2","rowMode":"array","types":{}}
+PARAMS: ["test-corp-7688",1]
+
+SQL: CREATE SCHEMA IF NOT EXISTS "tenant_test_corp_7688"
+KEYS: ["name","text","types"]
+CONFIG: {"text":"CREATE SCHEMA IF NOT EXISTS \"tenant_test_corp_7688\"","types":{}}
+PARAMS: []
+
+SQL: 
+        CREATE TABLE IF NOT EXISTS "tenant_test_corp_7688"."users" (
+          "id" uuid PRIMARY KEY DEFAULT gen_random_uuid(),
+          "email" varchar(256) NOT NULL UNIQUE,
+          "password_hash" text NOT NULL,
+          "name" varchar(256) NOT NULL,
+          "role" varchar(64) NOT NULL DEFAULT 'member',
+          "status" varchar(32) NOT NULL DEFAULT 'active',
+          "is_verified" boolean NOT NULL DEFAULT false,
+          "verification_token" varchar(256),
+          "reset_token" varchar(256),
+          "reset_token_expires_at" timestamp,
+          "created_at" timestamp NOT NULL DEFAULT now(),
+          "updated_at" timestamp NOT NULL DEFAULT now()
+        );
+      
+KEYS: ["name","text","types"]
+CONFIG: {"text":"\n        CREATE TABLE IF NOT EXISTS \"tenant_test_corp_7688\".\"users\" (\n          \"id\" uuid PRIMARY KEY DEFAULT gen_random_uuid(),\n          \"email\" varchar(256) NOT NULL UNIQUE,\n          \"password_hash\" text NOT NULL,\n          \"name\" varchar(256) NOT NULL,\n          \"role\" varchar(64) NOT NULL DEFAULT 'member',\n          \"status\" varchar(32) NOT NULL DEFAULT 'active',\n          \"is_verified\" boolean NOT NULL DEFAULT false,\n          \"verification_token\" varchar(256),\n          \"reset_token\" varchar(256),\n          \"reset_token_expires_at\" timestamp,\n          \"created_at\" timestamp NOT NULL DEFAULT now(),\n          \"updated_at\" timestamp NOT NULL DEFAULT now()\n        );\n      ","types":{}}
+PARAMS: []
+
+SQL: 
+        CREATE TABLE IF NOT EXISTS "tenant_test_corp_7688"."sessions" (
+          "id" uuid PRIMARY KEY DEFAULT gen_random_uuid(),
+          "user_id" uuid NOT NULL REFERENCES "tenant_test_corp_7688"."users"("id") ON DELETE CASCADE,
+          "token" varchar(512) NOT NULL UNIQUE,
+          "expires_at" timestamp NOT NULL,
+          "created_at" timestamp NOT NULL DEFAULT now()
+        );
+      
+KEYS: ["name","text","types"]
+CONFIG: {"text":"\n        CREATE TABLE IF NOT EXISTS \"tenant_test_corp_7688\".\"sessions\" (\n          \"id\" uuid PRIMARY KEY DEFAULT gen_random_uuid(),\n          \"user_id\" uuid NOT NULL REFERENCES \"tenant_test_corp_7688\".\"users\"(\"id\") ON DELETE CASCADE,\n          \"token\" varchar(512) NOT NULL UNIQUE,\n          \"expires_at\" timestamp NOT NULL,\n          \"created_at\" timestamp NOT NULL DEFAULT now()\n        );\n      ","types":{}}
+PARAMS: []
+
+SQL: insert into "tenants" ("id", "domain", "name", "schema", "status", "created_at", "updated_at") values (default, $1, $2, $3, $4, default, default) returning "id", "domain", "name", "schema", "status", "created_at", "updated_at"
+KEYS: ["name","text","rowMode","types"]
+CONFIG: {"text":"insert into \"tenants\" (\"id\", \"domain\", \"name\", \"schema\", \"status\", \"created_at\", \"updated_at\") values (default, $1, $2, $3, $4, default, default) returning \"id\", \"domain\", \"name\", \"schema\", \"status\", \"created_at\", \"updated_at\"","rowMode":"array","types":{}}
+PARAMS: ["test-corp-7688","Acme Test Corp","tenant_test_corp_7688","active"]
+
+SQL: 
+        INSERT INTO "tenant_test_corp_7688"."users" (email, password_hash, name, role, is_verified, verification_token)
+        VALUES ('ceo@acme-test.com', 'cf74b48368a4ea76b607a313829edfe7:f35d20de8f39d3fc10336676045e7045532f8ec7485ff50ddc785532656023908498d129fd0843aac16146794ad028c3fc9a653185f95bb03e098728d92770cc', 'Acme CEO', 'owner', false, '718cdba4e6319b7ce4bb1f5f25b0e0c64703c5cba9122852b8717f0c8fc8cd55')
+      
+KEYS: ["name","text","types"]
+CONFIG: {"text":"\n        INSERT INTO \"tenant_test_corp_7688\".\"users\" (email, password_hash, name, role, is_verified, verification_token)\n        VALUES ('ceo@acme-test.com', 'cf74b48368a4ea76b607a313829edfe7:f35d20de8f39d3fc10336676045e7045532f8ec7485ff50ddc785532656023908498d129fd0843aac16146794ad028c3fc9a653185f95bb03e098728d92770cc', 'Acme CEO', 'owner', false, '718cdba4e6319b7ce4bb1f5f25b0e0c64703c5cba9122852b8717f0c8fc8cd55')\n      ","types":{}}
+PARAMS: []
+
+SQL: 
+        SELECT id, email, name, role, is_verified, verification_token FROM "tenant_test_corp_7688"."users" WHERE email = 'ceo@acme-test.com' LIMIT 1
+      
+KEYS: ["name","text","types"]
+CONFIG: {"text":"\n        SELECT id, email, name, role, is_verified, verification_token FROM \"tenant_test_corp_7688\".\"users\" WHERE email = 'ceo@acme-test.com' LIMIT 1\n      ","types":{}}
+PARAMS: []
+
+SQL: SET search_path TO "tenant_test_corp_7688", public
+KEYS: []
+CONFIG: "SET search_path TO \"tenant_test_corp_7688\", public"
+PARAMS: []
+
+SQL: insert into "sessions" ("id", "user_id", "token", "expires_at", "created_at") values (default, $1, $2, $3, default)
+KEYS: ["name","text","types"]
+CONFIG: {"text":"insert into \"sessions\" (\"id\", \"user_id\", \"token\", \"expires_at\", \"created_at\") values (default, $1, $2, $3, default)","types":{}}
+PARAMS: ["ff1f48d4-df27-4656-9fc6-b93c5e97c026","eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImZmMWY0OGQ0LWRmMjctNDY1Ni05ZmM2LWI5M2M1ZTk3YzAyNiIsImVtYWlsIjoiY2VvQGFjbWUtdGVzdC5jb20iLCJyb2xlIjoib3duZXIiLCJ0ZW5hbnRJZCI6ImY0NjhhZjA3LWNmYjktNGM3NS1hY2QzLTEzNDU4MmQyOTBjMCIsImp0aSI6ImRmMjEyMGQ1LWQ5N2EtNGIwNS1iNGRlLWNjZWRlZDIyZDZlMyIsImlhdCI6MTc4NTY0MDc0NywiZXhwIjoxNzg2MjQ1NTQ3fQ.EfjnfE4K3VCUCV_4glzMnYB4GalxMyq9lN28e-21oGw","2026-08-09T03:19:07.102Z"]
+
+SQL: select "id", "domain", "name", "schema", "status", "created_at", "updated_at" from "tenants" where "tenants"."domain" = $1
+KEYS: ["name","text","rowMode","types"]
+CONFIG: {"text":"select \"id\", \"domain\", \"name\", \"schema\", \"status\", \"created_at\", \"updated_at\" from \"tenants\" where \"tenants\".\"domain\" = $1","rowMode":"array","types":{}}
+PARAMS: ["test-corp-7688"]
+
+SQL: SET search_path TO "tenant_test_corp_7688", public
+KEYS: []
+CONFIG: "SET search_path TO \"tenant_test_corp_7688\", public"
+PARAMS: []
+
+SQL: select "id", "email", "password_hash", "name", "role", "status", "is_verified", "verification_token", "reset_token", "reset_token_expires_at", "created_at", "updated_at" from "users" where "users"."verification_token" = $1 limit $2
+KEYS: ["name","text","rowMode","types"]
+CONFIG: {"text":"select \"id\", \"email\", \"password_hash\", \"name\", \"role\", \"status\", \"is_verified\", \"verification_token\", \"reset_token\", \"reset_token_expires_at\", \"created_at\", \"updated_at\" from \"users\" where \"users\".\"verification_token\" = $1 limit $2","rowMode":"array","types":{}}
+PARAMS: ["718cdba4e6319b7ce4bb1f5f25b0e0c64703c5cba9122852b8717f0c8fc8cd55",1]
+
+SQL: update "users" set "is_verified" = $1, "verification_token" = $2 where "users"."id" = $3
+KEYS: ["name","text","types"]
+CONFIG: {"text":"update \"users\" set \"is_verified\" = $1, \"verification_token\" = $2 where \"users\".\"id\" = $3","types":{}}
+PARAMS: [true,null,"ff1f48d4-df27-4656-9fc6-b93c5e97c026"]
+
+SQL: SET search_path TO "tenant_test_corp_7688", public
+KEYS: []
+CONFIG: "SET search_path TO \"tenant_test_corp_7688\", public"
+PARAMS: []
+
+SQL: select "id", "email", "password_hash", "name", "role", "status", "is_verified", "verification_token", "reset_token", "reset_token_expires_at", "created_at", "updated_at" from "users" where "users"."id" = $1
+KEYS: ["name","text","rowMode","types"]
+CONFIG: {"text":"select \"id\", \"email\", \"password_hash\", \"name\", \"role\", \"status\", \"is_verified\", \"verification_token\", \"reset_token\", \"reset_token_expires_at\", \"created_at\", \"updated_at\" from \"users\" where \"users\".\"id\" = $1","rowMode":"array","types":{}}
+PARAMS: ["ff1f48d4-df27-4656-9fc6-b93c5e97c026"]
+
+SQL: SET search_path TO "tenant_test_corp_7688", public
+KEYS: []
+CONFIG: "SET search_path TO \"tenant_test_corp_7688\", public"
+PARAMS: []
+
+SQL: select "id", "domain", "name", "schema", "status", "created_at", "updated_at" from "tenants" where "tenants"."domain" = $1
+KEYS: ["name","text","rowMode","types"]
+CONFIG: {"text":"select \"id\", \"domain\", \"name\", \"schema\", \"status\", \"created_at\", \"updated_at\" from \"tenants\" where \"tenants\".\"domain\" = $1","rowMode":"array","types":{}}
+PARAMS: ["test-corp-7688"]
+
+SQL: select "id", "email", "password_hash", "name", "role", "status", "is_verified", "verification_token", "reset_token", "reset_token_expires_at", "created_at", "updated_at" from "users" where "users"."email" = $1 limit $2
+KEYS: ["name","text","rowMode","types"]
+CONFIG: {"text":"select \"id\", \"email\", \"password_hash\", \"name\", \"role\", \"status\", \"is_verified\", \"verification_token\", \"reset_token\", \"reset_token_expires_at\", \"created_at\", \"updated_at\" from \"users\" where \"users\".\"email\" = $1 limit $2","rowMode":"array","types":{}}
+PARAMS: ["ceo@acme-test.com",1]
+
+SQL: insert into "sessions" ("id", "user_id", "token", "expires_at", "created_at") values (default, $1, $2, $3, default)
+KEYS: ["name","text","types"]
+CONFIG: {"text":"insert into \"sessions\" (\"id\", \"user_id\", \"token\", \"expires_at\", \"created_at\") values (default, $1, $2, $3, default)","types":{}}
+PARAMS: ["ff1f48d4-df27-4656-9fc6-b93c5e97c026","eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImZmMWY0OGQ0LWRmMjctNDY1Ni05ZmM2LWI5M2M1ZTk3YzAyNiIsImVtYWlsIjoiY2VvQGFjbWUtdGVzdC5jb20iLCJyb2xlIjoib3duZXIiLCJ0ZW5hbnRJZCI6ImY0NjhhZjA3LWNmYjktNGM3NS1hY2QzLTEzNDU4MmQyOTBjMCIsImp0aSI6IjQ3OTQ0MmIzLTQ1OWEtNGM1Yy05NmE3LWZmNzY3NTliODIwNCIsImlhdCI6MTc4NTY0MDc0NywiZXhwIjoxNzg2MjQ1NTQ3fQ.A439vbYL2tru2rxnQOVeprtscudLMqbFiViG3HhOUtE","2026-08-09T03:19:07.178Z"]
+
+SQL: SET search_path TO "tenant_test_corp_7688", public
+KEYS: []
+CONFIG: "SET search_path TO \"tenant_test_corp_7688\", public"
+PARAMS: []
+
+SQL: select "id", "domain", "name", "schema", "status", "created_at", "updated_at" from "tenants" where "tenants"."domain" = $1
+KEYS: ["name","text","rowMode","types"]
+CONFIG: {"text":"select \"id\", \"domain\", \"name\", \"schema\", \"status\", \"created_at\", \"updated_at\" from \"tenants\" where \"tenants\".\"domain\" = $1","rowMode":"array","types":{}}
+PARAMS: ["test-corp-7688"]
+
+SQL: select "id", "user_id", "token", "expires_at", "created_at" from "sessions" where "sessions"."token" = $1 limit $2
+KEYS: ["name","text","rowMode","types"]
+CONFIG: {"text":"select \"id\", \"user_id\", \"token\", \"expires_at\", \"created_at\" from \"sessions\" where \"sessions\".\"token\" = $1 limit $2","rowMode":"array","types":{}}
+PARAMS: ["eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImZmMWY0OGQ0LWRmMjctNDY1Ni05ZmM2LWI5M2M1ZTk3YzAyNiIsImVtYWlsIjoiY2VvQGFjbWUtdGVzdC5jb20iLCJyb2xlIjoib3duZXIiLCJ0ZW5hbnRJZCI6ImY0NjhhZjA3LWNmYjktNGM3NS1hY2QzLTEzNDU4MmQyOTBjMCIsImp0aSI6IjQ3OTQ0MmIzLTQ1OWEtNGM1Yy05NmE3LWZmNzY3NTliODIwNCIsImlhdCI6MTc4NTY0MDc0NywiZXhwIjoxNzg2MjQ1NTQ3fQ.A439vbYL2tru2rxnQOVeprtscudLMqbFiViG3HhOUtE",1]
+
+SQL: delete from "sessions" where "sessions"."token" = $1
+KEYS: ["name","text","types"]
+CONFIG: {"text":"delete from \"sessions\" where \"sessions\".\"token\" = $1","types":{}}
+PARAMS: ["eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImZmMWY0OGQ0LWRmMjctNDY1Ni05ZmM2LWI5M2M1ZTk3YzAyNiIsImVtYWlsIjoiY2VvQGFjbWUtdGVzdC5jb20iLCJyb2xlIjoib3duZXIiLCJ0ZW5hbnRJZCI6ImY0NjhhZjA3LWNmYjktNGM3NS1hY2QzLTEzNDU4MmQyOTBjMCIsImp0aSI6IjQ3OTQ0MmIzLTQ1OWEtNGM1Yy05NmE3LWZmNzY3NTliODIwNCIsImlhdCI6MTc4NTY0MDc0NywiZXhwIjoxNzg2MjQ1NTQ3fQ.A439vbYL2tru2rxnQOVeprtscudLMqbFiViG3HhOUtE"]
+
+SQL: insert into "sessions" ("id", "user_id", "token", "expires_at", "created_at") values (default, $1, $2, $3, default)
+KEYS: ["name","text","types"]
+CONFIG: {"text":"insert into \"sessions\" (\"id\", \"user_id\", \"token\", \"expires_at\", \"created_at\") values (default, $1, $2, $3, default)","types":{}}
+PARAMS: ["ff1f48d4-df27-4656-9fc6-b93c5e97c026","eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImZmMWY0OGQ0LWRmMjctNDY1Ni05ZmM2LWI5M2M1ZTk3YzAyNiIsImVtYWlsIjoiY2VvQGFjbWUtdGVzdC5jb20iLCJyb2xlIjoib3duZXIiLCJ0ZW5hbnRJZCI6ImY0NjhhZjA3LWNmYjktNGM3NS1hY2QzLTEzNDU4MmQyOTBjMCIsImp0aSI6IjdmNjJmN2RiLTI1NWQtNDk0OC04YWViLTIxNDRmMjMwMjBkMyIsImlhdCI6MTc4NTY0MDc0NywiZXhwIjoxNzg2MjQ1NTQ3fQ.BU6yIfjA18KEDOXRuURPWmeqRlSnNja4wcwpD3WnWLE","2026-08-09T03:19:07.184Z"]
+
+SQL: SET search_path TO "tenant_test_corp_7688", public
+KEYS: []
+CONFIG: "SET search_path TO \"tenant_test_corp_7688\", public"
+PARAMS: []
+
+SQL: select "id", "domain", "name", "schema", "status", "created_at", "updated_at" from "tenants" where "tenants"."domain" = $1
+KEYS: ["name","text","rowMode","types"]
+CONFIG: {"text":"select \"id\", \"domain\", \"name\", \"schema\", \"status\", \"created_at\", \"updated_at\" from \"tenants\" where \"tenants\".\"domain\" = $1","rowMode":"array","types":{}}
+PARAMS: ["test-corp-7688"]
+
+SQL: select "id", "user_id", "token", "expires_at", "created_at" from "sessions" where "sessions"."token" = $1 limit $2
+KEYS: ["name","text","rowMode","types"]
+CONFIG: {"text":"select \"id\", \"user_id\", \"token\", \"expires_at\", \"created_at\" from \"sessions\" where \"sessions\".\"token\" = $1 limit $2","rowMode":"array","types":{}}
+PARAMS: ["eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImZmMWY0OGQ0LWRmMjctNDY1Ni05ZmM2LWI5M2M1ZTk3YzAyNiIsImVtYWlsIjoiY2VvQGFjbWUtdGVzdC5jb20iLCJyb2xlIjoib3duZXIiLCJ0ZW5hbnRJZCI6ImY0NjhhZjA3LWNmYjktNGM3NS1hY2QzLTEzNDU4MmQyOTBjMCIsImp0aSI6IjQ3OTQ0MmIzLTQ1OWEtNGM1Yy05NmE3LWZmNzY3NTliODIwNCIsImlhdCI6MTc4NTY0MDc0NywiZXhwIjoxNzg2MjQ1NTQ3fQ.A439vbYL2tru2rxnQOVeprtscudLMqbFiViG3HhOUtE",1]
+
+SQL: delete from "sessions" where "sessions"."user_id" = $1
+KEYS: ["name","text","types"]
+CONFIG: {"text":"delete from \"sessions\" where \"sessions\".\"user_id\" = $1","types":{}}
+PARAMS: ["ff1f48d4-df27-4656-9fc6-b93c5e97c026"]
+
+SQL: SET search_path TO "tenant_test_corp_7688", public
+KEYS: []
+CONFIG: "SET search_path TO \"tenant_test_corp_7688\", public"
+PARAMS: []
+
+SQL: select "id", "user_id", "token", "expires_at", "created_at" from "sessions" where "sessions"."user_id" = $1
+KEYS: ["name","text","rowMode","types"]
+CONFIG: {"text":"select \"id\", \"user_id\", \"token\", \"expires_at\", \"created_at\" from \"sessions\" where \"sessions\".\"user_id\" = $1","rowMode":"array","types":{}}
+PARAMS: ["ff1f48d4-df27-4656-9fc6-b93c5e97c026"]
+
+SQL: SET search_path TO "tenant_test_corp_7688", public
+KEYS: []
+CONFIG: "SET search_path TO \"tenant_test_corp_7688\", public"
+PARAMS: []
+
+SQL: select "id", "email", "password_hash", "name", "role", "status", "is_verified", "verification_token", "reset_token", "reset_token_expires_at", "created_at", "updated_at" from "users" where "users"."email" = $1 limit $2
+KEYS: ["name","text","rowMode","types"]
+CONFIG: {"text":"select \"id\", \"email\", \"password_hash\", \"name\", \"role\", \"status\", \"is_verified\", \"verification_token\", \"reset_token\", \"reset_token_expires_at\", \"created_at\", \"updated_at\" from \"users\" where \"users\".\"email\" = $1 limit $2","rowMode":"array","types":{}}
+PARAMS: ["ceo@acme-test.com",1]
+
+SQL: update "users" set "reset_token" = $1, "reset_token_expires_at" = $2 where "users"."id" = $3
+KEYS: ["name","text","types"]
+CONFIG: {"text":"update \"users\" set \"reset_token\" = $1, \"reset_token_expires_at\" = $2 where \"users\".\"id\" = $3","types":{}}
+PARAMS: ["7cb2af3e3cbbb5ac21c7252e8158fd8c333d3bed55d65a62338cd352a759b822","2026-08-02T04:19:07.190Z","ff1f48d4-df27-4656-9fc6-b93c5e97c026"]
+
+SQL: SET search_path TO "tenant_test_corp_7688", public
+KEYS: []
+CONFIG: "SET search_path TO \"tenant_test_corp_7688\", public"
+PARAMS: []
+
+SQL: select "id", "email", "password_hash", "name", "role", "status", "is_verified", "verification_token", "reset_token", "reset_token_expires_at", "created_at", "updated_at" from "users" where "users"."reset_token" = $1 limit $2
+KEYS: ["name","text","rowMode","types"]
+CONFIG: {"text":"select \"id\", \"email\", \"password_hash\", \"name\", \"role\", \"status\", \"is_verified\", \"verification_token\", \"reset_token\", \"reset_token_expires_at\", \"created_at\", \"updated_at\" from \"users\" where \"users\".\"reset_token\" = $1 limit $2","rowMode":"array","types":{}}
+PARAMS: ["7cb2af3e3cbbb5ac21c7252e8158fd8c333d3bed55d65a62338cd352a759b822",1]
+
+SQL: update "users" set "password_hash" = $1, "reset_token" = $2, "reset_token_expires_at" = $3 where "users"."id" = $4
+KEYS: ["name","text","types"]
+CONFIG: {"text":"update \"users\" set \"password_hash\" = $1, \"reset_token\" = $2, \"reset_token_expires_at\" = $3 where \"users\".\"id\" = $4","types":{}}
+PARAMS: ["ebf1ec4a2e74e3c745c230922ee315bf:9410c17a03c93098504d8471820cabe0c18fcee3e94fc39609b884632fbef2f798b35f34b57009f4eeba2f8bd24f2062c2647b07874a0496fb3dbe9f3af96b55",null,null,"ff1f48d4-df27-4656-9fc6-b93c5e97c026"]
+
+SQL: delete from "sessions" where "sessions"."user_id" = $1
+KEYS: ["name","text","types"]
+CONFIG: {"text":"delete from \"sessions\" where \"sessions\".\"user_id\" = $1","types":{}}
+PARAMS: ["ff1f48d4-df27-4656-9fc6-b93c5e97c026"]
+
+SQL: SET search_path TO "tenant_test_corp_7688", public
+KEYS: []
+CONFIG: "SET search_path TO \"tenant_test_corp_7688\", public"
+PARAMS: []
+
+SQL: select "id", "domain", "name", "schema", "status", "created_at", "updated_at" from "tenants" where "tenants"."domain" = $1
+KEYS: ["name","text","rowMode","types"]
+CONFIG: {"text":"select \"id\", \"domain\", \"name\", \"schema\", \"status\", \"created_at\", \"updated_at\" from \"tenants\" where \"tenants\".\"domain\" = $1","rowMode":"array","types":{}}
+PARAMS: ["test-corp-7688"]
+
+SQL: select "id", "email", "password_hash", "name", "role", "status", "is_verified", "verification_token", "reset_token", "reset_token_expires_at", "created_at", "updated_at" from "users" where "users"."email" = $1 limit $2
+KEYS: ["name","text","rowMode","types"]
+CONFIG: {"text":"select \"id\", \"email\", \"password_hash\", \"name\", \"role\", \"status\", \"is_verified\", \"verification_token\", \"reset_token\", \"reset_token_expires_at\", \"created_at\", \"updated_at\" from \"users\" where \"users\".\"email\" = $1 limit $2","rowMode":"array","types":{}}
+PARAMS: ["ceo@acme-test.com",1]
+
+SQL: insert into "sessions" ("id", "user_id", "token", "expires_at", "created_at") values (default, $1, $2, $3, default)
+KEYS: ["name","text","types"]
+CONFIG: {"text":"insert into \"sessions\" (\"id\", \"user_id\", \"token\", \"expires_at\", \"created_at\") values (default, $1, $2, $3, default)","types":{}}
+PARAMS: ["ff1f48d4-df27-4656-9fc6-b93c5e97c026","eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImZmMWY0OGQ0LWRmMjctNDY1Ni05ZmM2LWI5M2M1ZTk3YzAyNiIsImVtYWlsIjoiY2VvQGFjbWUtdGVzdC5jb20iLCJyb2xlIjoib3duZXIiLCJ0ZW5hbnRJZCI6ImY0NjhhZjA3LWNmYjktNGM3NS1hY2QzLTEzNDU4MmQyOTBjMCIsImp0aSI6IjMwM2Q2YzJjLTg5OWItNDYwMy1iM2ZiLTE5NjQ1MmRhZmE2NiIsImlhdCI6MTc4NTY0MDc0NywiZXhwIjoxNzg2MjQ1NTQ3fQ.GvdLf8NTjcUvAy4t4md4p6vaUrRBQz_B7MAW1QUhpk8","2026-08-09T03:19:07.322Z"]
+
+SQL: SELECT 1
+KEYS: []
+CONFIG: "SELECT 1"
+PARAMS: []
+
+SQL: SELECT 1
+KEYS: []
+CONFIG: "SELECT 1"
+PARAMS: []
+
+SQL: select "id", "domain", "name", "schema", "status", "created_at", "updated_at" from "tenants" where "tenants"."domain" = $1 limit $2
+KEYS: ["name","text","rowMode","types"]
+CONFIG: {"text":"select \"id\", \"domain\", \"name\", \"schema\", \"status\", \"created_at\", \"updated_at\" from \"tenants\" where \"tenants\".\"domain\" = $1 limit $2","rowMode":"array","types":{}}
+PARAMS: ["test-corp-6011",1]
+
+SQL: CREATE SCHEMA IF NOT EXISTS "tenant_test_corp_6011"
+KEYS: ["name","text","types"]
+CONFIG: {"text":"CREATE SCHEMA IF NOT EXISTS \"tenant_test_corp_6011\"","types":{}}
+PARAMS: []
+
+SQL: 
+        CREATE TABLE IF NOT EXISTS "tenant_test_corp_6011"."users" (
+          "id" uuid PRIMARY KEY DEFAULT gen_random_uuid(),
+          "email" varchar(256) NOT NULL UNIQUE,
+          "password_hash" text NOT NULL,
+          "name" varchar(256) NOT NULL,
+          "role" varchar(64) NOT NULL DEFAULT 'member',
+          "status" varchar(32) NOT NULL DEFAULT 'active',
+          "is_verified" boolean NOT NULL DEFAULT false,
+          "verification_token" varchar(256),
+          "reset_token" varchar(256),
+          "reset_token_expires_at" timestamp,
+          "created_at" timestamp NOT NULL DEFAULT now(),
+          "updated_at" timestamp NOT NULL DEFAULT now()
+        );
+      
+KEYS: ["name","text","types"]
+CONFIG: {"text":"\n        CREATE TABLE IF NOT EXISTS \"tenant_test_corp_6011\".\"users\" (\n          \"id\" uuid PRIMARY KEY DEFAULT gen_random_uuid(),\n          \"email\" varchar(256) NOT NULL UNIQUE,\n          \"password_hash\" text NOT NULL,\n          \"name\" varchar(256) NOT NULL,\n          \"role\" varchar(64) NOT NULL DEFAULT 'member',\n          \"status\" varchar(32) NOT NULL DEFAULT 'active',\n          \"is_verified\" boolean NOT NULL DEFAULT false,\n          \"verification_token\" varchar(256),\n          \"reset_token\" varchar(256),\n          \"reset_token_expires_at\" timestamp,\n          \"created_at\" timestamp NOT NULL DEFAULT now(),\n          \"updated_at\" timestamp NOT NULL DEFAULT now()\n        );\n      ","types":{}}
+PARAMS: []
+
+SQL: 
+        CREATE TABLE IF NOT EXISTS "tenant_test_corp_6011"."sessions" (
+          "id" uuid PRIMARY KEY DEFAULT gen_random_uuid(),
+          "user_id" uuid NOT NULL REFERENCES "tenant_test_corp_6011"."users"("id") ON DELETE CASCADE,
+          "token" varchar(512) NOT NULL UNIQUE,
+          "expires_at" timestamp NOT NULL,
+          "created_at" timestamp NOT NULL DEFAULT now()
+        );
+      
+KEYS: ["name","text","types"]
+CONFIG: {"text":"\n        CREATE TABLE IF NOT EXISTS \"tenant_test_corp_6011\".\"sessions\" (\n          \"id\" uuid PRIMARY KEY DEFAULT gen_random_uuid(),\n          \"user_id\" uuid NOT NULL REFERENCES \"tenant_test_corp_6011\".\"users\"(\"id\") ON DELETE CASCADE,\n          \"token\" varchar(512) NOT NULL UNIQUE,\n          \"expires_at\" timestamp NOT NULL,\n          \"created_at\" timestamp NOT NULL DEFAULT now()\n        );\n      ","types":{}}
+PARAMS: []
+
+SQL: insert into "tenants" ("id", "domain", "name", "schema", "status", "created_at", "updated_at") values (default, $1, $2, $3, $4, default, default) returning "id", "domain", "name", "schema", "status", "created_at", "updated_at"
+KEYS: ["name","text","rowMode","types"]
+CONFIG: {"text":"insert into \"tenants\" (\"id\", \"domain\", \"name\", \"schema\", \"status\", \"created_at\", \"updated_at\") values (default, $1, $2, $3, $4, default, default) returning \"id\", \"domain\", \"name\", \"schema\", \"status\", \"created_at\", \"updated_at\"","rowMode":"array","types":{}}
+PARAMS: ["test-corp-6011","Acme Test Corp","tenant_test_corp_6011","active"]
+
+SQL: 
+        INSERT INTO "tenant_test_corp_6011"."users" (email, password_hash, name, role, is_verified, verification_token)
+        VALUES ('ceo@acme-test.com', '5c45efdb1d0840cf9437bb72676e4332:2a7f89d3020667b36d5e77b87fdac25b475143a14a38eb1f7b8b090acafa97207076b73d4af6e7447fe55cf6bd665a7eb5e46a307b2f961cb5864ed70614e5a3', 'Acme CEO', 'owner', false, '4a851505db4b4fc56563769d9adb644236e998ca38e254c994c62a6e756f9021')
+      
+KEYS: ["name","text","types"]
+CONFIG: {"text":"\n        INSERT INTO \"tenant_test_corp_6011\".\"users\" (email, password_hash, name, role, is_verified, verification_token)\n        VALUES ('ceo@acme-test.com', '5c45efdb1d0840cf9437bb72676e4332:2a7f89d3020667b36d5e77b87fdac25b475143a14a38eb1f7b8b090acafa97207076b73d4af6e7447fe55cf6bd665a7eb5e46a307b2f961cb5864ed70614e5a3', 'Acme CEO', 'owner', false, '4a851505db4b4fc56563769d9adb644236e998ca38e254c994c62a6e756f9021')\n      ","types":{}}
+PARAMS: []
+
+SQL: 
+        SELECT id, email, name, role, is_verified, verification_token FROM "tenant_test_corp_6011"."users" WHERE email = 'ceo@acme-test.com' LIMIT 1
+      
+KEYS: ["name","text","types"]
+CONFIG: {"text":"\n        SELECT id, email, name, role, is_verified, verification_token FROM \"tenant_test_corp_6011\".\"users\" WHERE email = 'ceo@acme-test.com' LIMIT 1\n      ","types":{}}
+PARAMS: []
+
+SQL: SET search_path TO "tenant_test_corp_6011", public
+KEYS: []
+CONFIG: "SET search_path TO \"tenant_test_corp_6011\", public"
+PARAMS: []
+
+SQL: insert into "sessions" ("id", "user_id", "token", "expires_at", "created_at") values (default, $1, $2, $3, default)
+KEYS: ["name","text","types"]
+CONFIG: {"text":"insert into \"sessions\" (\"id\", \"user_id\", \"token\", \"expires_at\", \"created_at\") values (default, $1, $2, $3, default)","types":{}}
+PARAMS: ["7cb77f21-ad97-45af-8fce-72e8d049a704","eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjdjYjc3ZjIxLWFkOTctNDVhZi04ZmNlLTcyZThkMDQ5YTcwNCIsImVtYWlsIjoiY2VvQGFjbWUtdGVzdC5jb20iLCJyb2xlIjoib3duZXIiLCJ0ZW5hbnRJZCI6IjUxMmQxZDM4LWNmZDMtNGQxYS1iNTk0LTYzZDE1YmE0YTJhNCIsImp0aSI6Ijg0NmU2YjkxLTQ3MzAtNDllNi1iMGNhLTc4OGE5NmZkZDZmMyIsImlhdCI6MTc4NTY0MDc2NywiZXhwIjoxNzg2MjQ1NTY3fQ.JWZmleK7VkIbPZyAGc05c5qymxVg8EIcEgWJ09Qdt9I","2026-08-09T03:19:27.229Z"]
+
+SQL: select "id", "domain", "name", "schema", "status", "created_at", "updated_at" from "tenants" where "tenants"."domain" = $1
+KEYS: ["name","text","rowMode","types"]
+CONFIG: {"text":"select \"id\", \"domain\", \"name\", \"schema\", \"status\", \"created_at\", \"updated_at\" from \"tenants\" where \"tenants\".\"domain\" = $1","rowMode":"array","types":{}}
+PARAMS: ["test-corp-6011"]
+
+SQL: SET search_path TO "tenant_test_corp_6011", public
+KEYS: []
+CONFIG: "SET search_path TO \"tenant_test_corp_6011\", public"
+PARAMS: []
+
+SQL: select "id", "email", "password_hash", "name", "role", "status", "is_verified", "verification_token", "reset_token", "reset_token_expires_at", "created_at", "updated_at" from "users" where "users"."verification_token" = $1 limit $2
+KEYS: ["name","text","rowMode","types"]
+CONFIG: {"text":"select \"id\", \"email\", \"password_hash\", \"name\", \"role\", \"status\", \"is_verified\", \"verification_token\", \"reset_token\", \"reset_token_expires_at\", \"created_at\", \"updated_at\" from \"users\" where \"users\".\"verification_token\" = $1 limit $2","rowMode":"array","types":{}}
+PARAMS: ["4a851505db4b4fc56563769d9adb644236e998ca38e254c994c62a6e756f9021",1]
+
+SQL: update "users" set "is_verified" = $1, "verification_token" = $2 where "users"."id" = $3
+KEYS: ["name","text","types"]
+CONFIG: {"text":"update \"users\" set \"is_verified\" = $1, \"verification_token\" = $2 where \"users\".\"id\" = $3","types":{}}
+PARAMS: [true,null,"7cb77f21-ad97-45af-8fce-72e8d049a704"]
+
+SQL: SET search_path TO "tenant_test_corp_6011", public
+KEYS: []
+CONFIG: "SET search_path TO \"tenant_test_corp_6011\", public"
+PARAMS: []
+
+SQL: select "id", "email", "password_hash", "name", "role", "status", "is_verified", "verification_token", "reset_token", "reset_token_expires_at", "created_at", "updated_at" from "users" where "users"."id" = $1
+KEYS: ["name","text","rowMode","types"]
+CONFIG: {"text":"select \"id\", \"email\", \"password_hash\", \"name\", \"role\", \"status\", \"is_verified\", \"verification_token\", \"reset_token\", \"reset_token_expires_at\", \"created_at\", \"updated_at\" from \"users\" where \"users\".\"id\" = $1","rowMode":"array","types":{}}
+PARAMS: ["7cb77f21-ad97-45af-8fce-72e8d049a704"]
+
+SQL: SET search_path TO "tenant_test_corp_6011", public
+KEYS: []
+CONFIG: "SET search_path TO \"tenant_test_corp_6011\", public"
+PARAMS: []
+
+SQL: select "id", "domain", "name", "schema", "status", "created_at", "updated_at" from "tenants" where "tenants"."domain" = $1
+KEYS: ["name","text","rowMode","types"]
+CONFIG: {"text":"select \"id\", \"domain\", \"name\", \"schema\", \"status\", \"created_at\", \"updated_at\" from \"tenants\" where \"tenants\".\"domain\" = $1","rowMode":"array","types":{}}
+PARAMS: ["test-corp-6011"]
+
+SQL: select "id", "email", "password_hash", "name", "role", "status", "is_verified", "verification_token", "reset_token", "reset_token_expires_at", "created_at", "updated_at" from "users" where "users"."email" = $1 limit $2
+KEYS: ["name","text","rowMode","types"]
+CONFIG: {"text":"select \"id\", \"email\", \"password_hash\", \"name\", \"role\", \"status\", \"is_verified\", \"verification_token\", \"reset_token\", \"reset_token_expires_at\", \"created_at\", \"updated_at\" from \"users\" where \"users\".\"email\" = $1 limit $2","rowMode":"array","types":{}}
+PARAMS: ["ceo@acme-test.com",1]
+
+SQL: insert into "sessions" ("id", "user_id", "token", "expires_at", "created_at") values (default, $1, $2, $3, default)
+KEYS: ["name","text","types"]
+CONFIG: {"text":"insert into \"sessions\" (\"id\", \"user_id\", \"token\", \"expires_at\", \"created_at\") values (default, $1, $2, $3, default)","types":{}}
+PARAMS: ["7cb77f21-ad97-45af-8fce-72e8d049a704","eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjdjYjc3ZjIxLWFkOTctNDVhZi04ZmNlLTcyZThkMDQ5YTcwNCIsImVtYWlsIjoiY2VvQGFjbWUtdGVzdC5jb20iLCJyb2xlIjoib3duZXIiLCJ0ZW5hbnRJZCI6IjUxMmQxZDM4LWNmZDMtNGQxYS1iNTk0LTYzZDE1YmE0YTJhNCIsImp0aSI6IjhkZWU5ZDQ2LWM4Y2YtNDYwZC04NzQwLWEwOWU5MGQ5MTU4ZCIsImlhdCI6MTc4NTY0MDc2NywiZXhwIjoxNzg2MjQ1NTY3fQ.4dyTqYirU7L_frYCSC3m_RMHI5MTjRiWBkPUfZHej6M","2026-08-09T03:19:27.333Z"]
+
+SQL: SET search_path TO "tenant_test_corp_6011", public
+KEYS: []
+CONFIG: "SET search_path TO \"tenant_test_corp_6011\", public"
+PARAMS: []
+
+SQL: select "id", "domain", "name", "schema", "status", "created_at", "updated_at" from "tenants" where "tenants"."domain" = $1
+KEYS: ["name","text","rowMode","types"]
+CONFIG: {"text":"select \"id\", \"domain\", \"name\", \"schema\", \"status\", \"created_at\", \"updated_at\" from \"tenants\" where \"tenants\".\"domain\" = $1","rowMode":"array","types":{}}
+PARAMS: ["test-corp-6011"]
+
+SQL: select "id", "user_id", "token", "expires_at", "created_at" from "sessions" where "sessions"."token" = $1 limit $2
+KEYS: ["name","text","rowMode","types"]
+CONFIG: {"text":"select \"id\", \"user_id\", \"token\", \"expires_at\", \"created_at\" from \"sessions\" where \"sessions\".\"token\" = $1 limit $2","rowMode":"array","types":{}}
+PARAMS: ["eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjdjYjc3ZjIxLWFkOTctNDVhZi04ZmNlLTcyZThkMDQ5YTcwNCIsImVtYWlsIjoiY2VvQGFjbWUtdGVzdC5jb20iLCJyb2xlIjoib3duZXIiLCJ0ZW5hbnRJZCI6IjUxMmQxZDM4LWNmZDMtNGQxYS1iNTk0LTYzZDE1YmE0YTJhNCIsImp0aSI6IjhkZWU5ZDQ2LWM4Y2YtNDYwZC04NzQwLWEwOWU5MGQ5MTU4ZCIsImlhdCI6MTc4NTY0MDc2NywiZXhwIjoxNzg2MjQ1NTY3fQ.4dyTqYirU7L_frYCSC3m_RMHI5MTjRiWBkPUfZHej6M",1]
+
+SQL: delete from "sessions" where "sessions"."token" = $1
+KEYS: ["name","text","types"]
+CONFIG: {"text":"delete from \"sessions\" where \"sessions\".\"token\" = $1","types":{}}
+PARAMS: ["eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjdjYjc3ZjIxLWFkOTctNDVhZi04ZmNlLTcyZThkMDQ5YTcwNCIsImVtYWlsIjoiY2VvQGFjbWUtdGVzdC5jb20iLCJyb2xlIjoib3duZXIiLCJ0ZW5hbnRJZCI6IjUxMmQxZDM4LWNmZDMtNGQxYS1iNTk0LTYzZDE1YmE0YTJhNCIsImp0aSI6IjhkZWU5ZDQ2LWM4Y2YtNDYwZC04NzQwLWEwOWU5MGQ5MTU4ZCIsImlhdCI6MTc4NTY0MDc2NywiZXhwIjoxNzg2MjQ1NTY3fQ.4dyTqYirU7L_frYCSC3m_RMHI5MTjRiWBkPUfZHej6M"]
+
+SQL: insert into "sessions" ("id", "user_id", "token", "expires_at", "created_at") values (default, $1, $2, $3, default)
+KEYS: ["name","text","types"]
+CONFIG: {"text":"insert into \"sessions\" (\"id\", \"user_id\", \"token\", \"expires_at\", \"created_at\") values (default, $1, $2, $3, default)","types":{}}
+PARAMS: ["7cb77f21-ad97-45af-8fce-72e8d049a704","eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjdjYjc3ZjIxLWFkOTctNDVhZi04ZmNlLTcyZThkMDQ5YTcwNCIsImVtYWlsIjoiY2VvQGFjbWUtdGVzdC5jb20iLCJyb2xlIjoib3duZXIiLCJ0ZW5hbnRJZCI6IjUxMmQxZDM4LWNmZDMtNGQxYS1iNTk0LTYzZDE1YmE0YTJhNCIsImp0aSI6IjRlOGE0ZTZkLTVkNmUtNDlkYy1iZmUyLWZmZjlhY2E5YzAxYiIsImlhdCI6MTc4NTY0MDc2NywiZXhwIjoxNzg2MjQ1NTY3fQ.eUx6XulYGLBVkFepcRmT2KzBSYidSm6dBaAvCWKY7EA","2026-08-09T03:19:27.340Z"]
+
+SQL: SET search_path TO "tenant_test_corp_6011", public
+KEYS: []
+CONFIG: "SET search_path TO \"tenant_test_corp_6011\", public"
+PARAMS: []
+
+SQL: select "id", "domain", "name", "schema", "status", "created_at", "updated_at" from "tenants" where "tenants"."domain" = $1
+KEYS: ["name","text","rowMode","types"]
+CONFIG: {"text":"select \"id\", \"domain\", \"name\", \"schema\", \"status\", \"created_at\", \"updated_at\" from \"tenants\" where \"tenants\".\"domain\" = $1","rowMode":"array","types":{}}
+PARAMS: ["test-corp-6011"]
+
+SQL: select "id", "user_id", "token", "expires_at", "created_at" from "sessions" where "sessions"."token" = $1 limit $2
+KEYS: ["name","text","rowMode","types"]
+CONFIG: {"text":"select \"id\", \"user_id\", \"token\", \"expires_at\", \"created_at\" from \"sessions\" where \"sessions\".\"token\" = $1 limit $2","rowMode":"array","types":{}}
+PARAMS: ["eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjdjYjc3ZjIxLWFkOTctNDVhZi04ZmNlLTcyZThkMDQ5YTcwNCIsImVtYWlsIjoiY2VvQGFjbWUtdGVzdC5jb20iLCJyb2xlIjoib3duZXIiLCJ0ZW5hbnRJZCI6IjUxMmQxZDM4LWNmZDMtNGQxYS1iNTk0LTYzZDE1YmE0YTJhNCIsImp0aSI6IjhkZWU5ZDQ2LWM4Y2YtNDYwZC04NzQwLWEwOWU5MGQ5MTU4ZCIsImlhdCI6MTc4NTY0MDc2NywiZXhwIjoxNzg2MjQ1NTY3fQ.4dyTqYirU7L_frYCSC3m_RMHI5MTjRiWBkPUfZHej6M",1]
+
+SQL: delete from "sessions" where "sessions"."user_id" = $1
+KEYS: ["name","text","types"]
+CONFIG: {"text":"delete from \"sessions\" where \"sessions\".\"user_id\" = $1","types":{}}
+PARAMS: ["7cb77f21-ad97-45af-8fce-72e8d049a704"]
+
+SQL: SET search_path TO "tenant_test_corp_6011", public
+KEYS: []
+CONFIG: "SET search_path TO \"tenant_test_corp_6011\", public"
+PARAMS: []
+
+SQL: select "id", "user_id", "token", "expires_at", "created_at" from "sessions" where "sessions"."user_id" = $1
+KEYS: ["name","text","rowMode","types"]
+CONFIG: {"text":"select \"id\", \"user_id\", \"token\", \"expires_at\", \"created_at\" from \"sessions\" where \"sessions\".\"user_id\" = $1","rowMode":"array","types":{}}
+PARAMS: ["7cb77f21-ad97-45af-8fce-72e8d049a704"]
+
+SQL: SET search_path TO "tenant_test_corp_6011", public
+KEYS: []
+CONFIG: "SET search_path TO \"tenant_test_corp_6011\", public"
+PARAMS: []
+
+SQL: select "id", "email", "password_hash", "name", "role", "status", "is_verified", "verification_token", "reset_token", "reset_token_expires_at", "created_at", "updated_at" from "users" where "users"."email" = $1 limit $2
+KEYS: ["name","text","rowMode","types"]
+CONFIG: {"text":"select \"id\", \"email\", \"password_hash\", \"name\", \"role\", \"status\", \"is_verified\", \"verification_token\", \"reset_token\", \"reset_token_expires_at\", \"created_at\", \"updated_at\" from \"users\" where \"users\".\"email\" = $1 limit $2","rowMode":"array","types":{}}
+PARAMS: ["ceo@acme-test.com",1]
+
+SQL: update "users" set "reset_token" = $1, "reset_token_expires_at" = $2 where "users"."id" = $3
+KEYS: ["name","text","types"]
+CONFIG: {"text":"update \"users\" set \"reset_token\" = $1, \"reset_token_expires_at\" = $2 where \"users\".\"id\" = $3","types":{}}
+PARAMS: ["c1783a851c3d218cc3e0e2da224139661d0b67942ba8dc3f8e37ef65cc1d91e7","2026-08-02T04:19:27.345Z","7cb77f21-ad97-45af-8fce-72e8d049a704"]
+
+SQL: SET search_path TO "tenant_test_corp_6011", public
+KEYS: []
+CONFIG: "SET search_path TO \"tenant_test_corp_6011\", public"
+PARAMS: []
+
+SQL: select "id", "email", "password_hash", "name", "role", "status", "is_verified", "verification_token", "reset_token", "reset_token_expires_at", "created_at", "updated_at" from "users" where "users"."reset_token" = $1 limit $2
+KEYS: ["name","text","rowMode","types"]
+CONFIG: {"text":"select \"id\", \"email\", \"password_hash\", \"name\", \"role\", \"status\", \"is_verified\", \"verification_token\", \"reset_token\", \"reset_token_expires_at\", \"created_at\", \"updated_at\" from \"users\" where \"users\".\"reset_token\" = $1 limit $2","rowMode":"array","types":{}}
+PARAMS: ["c1783a851c3d218cc3e0e2da224139661d0b67942ba8dc3f8e37ef65cc1d91e7",1]
+
+SQL: update "users" set "password_hash" = $1, "reset_token" = $2, "reset_token_expires_at" = $3 where "users"."id" = $4
+KEYS: ["name","text","types"]
+CONFIG: {"text":"update \"users\" set \"password_hash\" = $1, \"reset_token\" = $2, \"reset_token_expires_at\" = $3 where \"users\".\"id\" = $4","types":{}}
+PARAMS: ["669c8aa8fce6b80b5aabe1438b68a133:4880957070998ea0530ac98d3b57d9dc2a2404636a4f7877b734fd0516a50fff5fdff8ac2c00fbf7060d61cce0b3ba052b3484d9bfb451d1b831f9ae3c341453",null,null,"7cb77f21-ad97-45af-8fce-72e8d049a704"]
+
+SQL: delete from "sessions" where "sessions"."user_id" = $1
+KEYS: ["name","text","types"]
+CONFIG: {"text":"delete from \"sessions\" where \"sessions\".\"user_id\" = $1","types":{}}
+PARAMS: ["7cb77f21-ad97-45af-8fce-72e8d049a704"]
+
+SQL: SET search_path TO "tenant_test_corp_6011", public
+KEYS: []
+CONFIG: "SET search_path TO \"tenant_test_corp_6011\", public"
+PARAMS: []
+
+SQL: select "id", "domain", "name", "schema", "status", "created_at", "updated_at" from "tenants" where "tenants"."domain" = $1
+KEYS: ["name","text","rowMode","types"]
+CONFIG: {"text":"select \"id\", \"domain\", \"name\", \"schema\", \"status\", \"created_at\", \"updated_at\" from \"tenants\" where \"tenants\".\"domain\" = $1","rowMode":"array","types":{}}
+PARAMS: ["test-corp-6011"]
+
+SQL: select "id", "email", "password_hash", "name", "role", "status", "is_verified", "verification_token", "reset_token", "reset_token_expires_at", "created_at", "updated_at" from "users" where "users"."email" = $1 limit $2
+KEYS: ["name","text","rowMode","types"]
+CONFIG: {"text":"select \"id\", \"email\", \"password_hash\", \"name\", \"role\", \"status\", \"is_verified\", \"verification_token\", \"reset_token\", \"reset_token_expires_at\", \"created_at\", \"updated_at\" from \"users\" where \"users\".\"email\" = $1 limit $2","rowMode":"array","types":{}}
+PARAMS: ["ceo@acme-test.com",1]
+
+SQL: insert into "sessions" ("id", "user_id", "token", "expires_at", "created_at") values (default, $1, $2, $3, default)
+KEYS: ["name","text","types"]
+CONFIG: {"text":"insert into \"sessions\" (\"id\", \"user_id\", \"token\", \"expires_at\", \"created_at\") values (default, $1, $2, $3, default)","types":{}}
+PARAMS: ["7cb77f21-ad97-45af-8fce-72e8d049a704","eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjdjYjc3ZjIxLWFkOTctNDVhZi04ZmNlLTcyZThkMDQ5YTcwNCIsImVtYWlsIjoiY2VvQGFjbWUtdGVzdC5jb20iLCJyb2xlIjoib3duZXIiLCJ0ZW5hbnRJZCI6IjUxMmQxZDM4LWNmZDMtNGQxYS1iNTk0LTYzZDE1YmE0YTJhNCIsImp0aSI6IjAyNGM4NzBlLTRhNTEtNGZkMC1hYjQ5LTgxOTFhMzg0ZDVkZiIsImlhdCI6MTc4NTY0MDc2NywiZXhwIjoxNzg2MjQ1NTY3fQ.AB82yzIb2V6BFWLmtuFnuJe9BuqkomleJblIngFqT0k","2026-08-09T03:19:27.461Z"]
+
+SQL: SELECT 1
+KEYS: []
+CONFIG: "SELECT 1"
+PARAMS: []
+
+SQL: SELECT 1
+KEYS: []
+CONFIG: "SELECT 1"
+PARAMS: []
+
+SQL: SELECT 1
+KEYS: []
+CONFIG: "SELECT 1"
+PARAMS: []
+
+SQL: SELECT 1
+KEYS: []
+CONFIG: "SELECT 1"
+PARAMS: []
+
+SQL: select "id", "domain", "name", "schema", "status", "created_at", "updated_at" from "tenants" where "tenants"."domain" = $1 limit $2
+KEYS: ["name","text","rowMode","types"]
+CONFIG: {"text":"select \"id\", \"domain\", \"name\", \"schema\", \"status\", \"created_at\", \"updated_at\" from \"tenants\" where \"tenants\".\"domain\" = $1 limit $2","rowMode":"array","types":{}}
+PARAMS: ["test-corp-6396",1]
+
+SQL: CREATE SCHEMA IF NOT EXISTS "tenant_test_corp_6396"
+KEYS: ["name","text","types"]
+CONFIG: {"text":"CREATE SCHEMA IF NOT EXISTS \"tenant_test_corp_6396\"","types":{}}
+PARAMS: []
+
+SQL: 
+        CREATE TABLE IF NOT EXISTS "tenant_test_corp_6396"."users" (
+          "id" uuid PRIMARY KEY DEFAULT gen_random_uuid(),
+          "email" varchar(256) NOT NULL UNIQUE,
+          "password_hash" text NOT NULL,
+          "name" varchar(256) NOT NULL,
+          "role" varchar(64) NOT NULL DEFAULT 'member',
+          "status" varchar(32) NOT NULL DEFAULT 'active',
+          "is_verified" boolean NOT NULL DEFAULT false,
+          "verification_token" varchar(256),
+          "reset_token" varchar(256),
+          "reset_token_expires_at" timestamp,
+          "created_at" timestamp NOT NULL DEFAULT now(),
+          "updated_at" timestamp NOT NULL DEFAULT now()
+        );
+      
+KEYS: ["name","text","types"]
+CONFIG: {"text":"\n        CREATE TABLE IF NOT EXISTS \"tenant_test_corp_6396\".\"users\" (\n          \"id\" uuid PRIMARY KEY DEFAULT gen_random_uuid(),\n          \"email\" varchar(256) NOT NULL UNIQUE,\n          \"password_hash\" text NOT NULL,\n          \"name\" varchar(256) NOT NULL,\n          \"role\" varchar(64) NOT NULL DEFAULT 'member',\n          \"status\" varchar(32) NOT NULL DEFAULT 'active',\n          \"is_verified\" boolean NOT NULL DEFAULT false,\n          \"verification_token\" varchar(256),\n          \"reset_token\" varchar(256),\n          \"reset_token_expires_at\" timestamp,\n          \"created_at\" timestamp NOT NULL DEFAULT now(),\n          \"updated_at\" timestamp NOT NULL DEFAULT now()\n        );\n      ","types":{}}
+PARAMS: []
+
+SQL: 
+        CREATE TABLE IF NOT EXISTS "tenant_test_corp_6396"."sessions" (
+          "id" uuid PRIMARY KEY DEFAULT gen_random_uuid(),
+          "user_id" uuid NOT NULL REFERENCES "tenant_test_corp_6396"."users"("id") ON DELETE CASCADE,
+          "token" varchar(512) NOT NULL UNIQUE,
+          "expires_at" timestamp NOT NULL,
+          "created_at" timestamp NOT NULL DEFAULT now()
+        );
+      
+KEYS: ["name","text","types"]
+CONFIG: {"text":"\n        CREATE TABLE IF NOT EXISTS \"tenant_test_corp_6396\".\"sessions\" (\n          \"id\" uuid PRIMARY KEY DEFAULT gen_random_uuid(),\n          \"user_id\" uuid NOT NULL REFERENCES \"tenant_test_corp_6396\".\"users\"(\"id\") ON DELETE CASCADE,\n          \"token\" varchar(512) NOT NULL UNIQUE,\n          \"expires_at\" timestamp NOT NULL,\n          \"created_at\" timestamp NOT NULL DEFAULT now()\n        );\n      ","types":{}}
+PARAMS: []
+
+SQL: insert into "tenants" ("id", "domain", "name", "schema", "status", "created_at", "updated_at") values (default, $1, $2, $3, $4, default, default) returning "id", "domain", "name", "schema", "status", "created_at", "updated_at"
+KEYS: ["name","text","rowMode","types"]
+CONFIG: {"text":"insert into \"tenants\" (\"id\", \"domain\", \"name\", \"schema\", \"status\", \"created_at\", \"updated_at\") values (default, $1, $2, $3, $4, default, default) returning \"id\", \"domain\", \"name\", \"schema\", \"status\", \"created_at\", \"updated_at\"","rowMode":"array","types":{}}
+PARAMS: ["test-corp-6396","Acme Test Corp","tenant_test_corp_6396","active"]
+
+SQL: 
+        INSERT INTO "tenant_test_corp_6396"."users" (email, password_hash, name, role, is_verified, verification_token)
+        VALUES ('ceo@acme-test.com', '98d656df2747a6dc6be3943828e6fe62:e91027cdb196dfe2d61baace09e3cb44ee1490a93efa574670e43e7b90ae7ba4bc2ae35dfc15a350eafa91afc1825212b7f015db07d351459a121b84ec87b915', 'Acme CEO', 'owner', false, '3a7fa7a3496824ce06309bf13d42a7a01bc0f96d3e6015ded670875f37f124d5')
+      
+KEYS: ["name","text","types"]
+CONFIG: {"text":"\n        INSERT INTO \"tenant_test_corp_6396\".\"users\" (email, password_hash, name, role, is_verified, verification_token)\n        VALUES ('ceo@acme-test.com', '98d656df2747a6dc6be3943828e6fe62:e91027cdb196dfe2d61baace09e3cb44ee1490a93efa574670e43e7b90ae7ba4bc2ae35dfc15a350eafa91afc1825212b7f015db07d351459a121b84ec87b915', 'Acme CEO', 'owner', false, '3a7fa7a3496824ce06309bf13d42a7a01bc0f96d3e6015ded670875f37f124d5')\n      ","types":{}}
+PARAMS: []
+
+SQL: 
+        SELECT id, email, name, role, is_verified, verification_token FROM "tenant_test_corp_6396"."users" WHERE email = 'ceo@acme-test.com' LIMIT 1
+      
+KEYS: ["name","text","types"]
+CONFIG: {"text":"\n        SELECT id, email, name, role, is_verified, verification_token FROM \"tenant_test_corp_6396\".\"users\" WHERE email = 'ceo@acme-test.com' LIMIT 1\n      ","types":{}}
+PARAMS: []
+
+SQL: SET search_path TO "tenant_test_corp_6396", public
+KEYS: []
+CONFIG: "SET search_path TO \"tenant_test_corp_6396\", public"
+PARAMS: []
+
+SQL: insert into "sessions" ("id", "user_id", "token", "expires_at", "created_at") values (default, $1, $2, $3, default)
+KEYS: ["name","text","types"]
+CONFIG: {"text":"insert into \"sessions\" (\"id\", \"user_id\", \"token\", \"expires_at\", \"created_at\") values (default, $1, $2, $3, default)","types":{}}
+PARAMS: ["71166ebf-4178-4ecb-869e-5fb6e5dfb4a7","eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjcxMTY2ZWJmLTQxNzgtNGVjYi04NjllLTVmYjZlNWRmYjRhNyIsImVtYWlsIjoiY2VvQGFjbWUtdGVzdC5jb20iLCJyb2xlIjoib3duZXIiLCJ0ZW5hbnRJZCI6IjEwZDU2ZDMwLWE3NjAtNGJiNy05MTc3LTgxZTM0ZWIxMDkwNyIsImp0aSI6ImMwZWJhMzUwLTMyMDQtNDllZS05MTIzLTI5OGQzZWVkMTRhNyIsImlhdCI6MTc4NTY0MDgxMSwiZXhwIjoxNzg2MjQ1NjExfQ.XRBh7NbTOS7truRn7CwH2r0O6GBefiDtlT_pisu10Bw","2026-08-09T03:20:11.204Z"]
+
+SQL: select "id", "domain", "name", "schema", "status", "created_at", "updated_at" from "tenants" where "tenants"."domain" = $1
+KEYS: ["name","text","rowMode","types"]
+CONFIG: {"text":"select \"id\", \"domain\", \"name\", \"schema\", \"status\", \"created_at\", \"updated_at\" from \"tenants\" where \"tenants\".\"domain\" = $1","rowMode":"array","types":{}}
+PARAMS: ["test-corp-6396"]
+
+SQL: SET search_path TO "tenant_test_corp_6396", public
+KEYS: []
+CONFIG: "SET search_path TO \"tenant_test_corp_6396\", public"
+PARAMS: []
+
+SQL: select "id", "email", "password_hash", "name", "role", "status", "is_verified", "verification_token", "reset_token", "reset_token_expires_at", "created_at", "updated_at" from "users" where "users"."verification_token" = $1 limit $2
+KEYS: ["name","text","rowMode","types"]
+CONFIG: {"text":"select \"id\", \"email\", \"password_hash\", \"name\", \"role\", \"status\", \"is_verified\", \"verification_token\", \"reset_token\", \"reset_token_expires_at\", \"created_at\", \"updated_at\" from \"users\" where \"users\".\"verification_token\" = $1 limit $2","rowMode":"array","types":{}}
+PARAMS: ["3a7fa7a3496824ce06309bf13d42a7a01bc0f96d3e6015ded670875f37f124d5",1]
+
+SQL: update "users" set "is_verified" = $1, "verification_token" = $2 where "users"."id" = $3
+KEYS: ["name","text","types"]
+CONFIG: {"text":"update \"users\" set \"is_verified\" = $1, \"verification_token\" = $2 where \"users\".\"id\" = $3","types":{}}
+PARAMS: [true,null,"71166ebf-4178-4ecb-869e-5fb6e5dfb4a7"]
+
+SQL: SET search_path TO "tenant_test_corp_6396", public
+KEYS: []
+CONFIG: "SET search_path TO \"tenant_test_corp_6396\", public"
+PARAMS: []
+
+SQL: select "id", "email", "password_hash", "name", "role", "status", "is_verified", "verification_token", "reset_token", "reset_token_expires_at", "created_at", "updated_at" from "users" where "users"."id" = $1
+KEYS: ["name","text","rowMode","types"]
+CONFIG: {"text":"select \"id\", \"email\", \"password_hash\", \"name\", \"role\", \"status\", \"is_verified\", \"verification_token\", \"reset_token\", \"reset_token_expires_at\", \"created_at\", \"updated_at\" from \"users\" where \"users\".\"id\" = $1","rowMode":"array","types":{}}
+PARAMS: ["71166ebf-4178-4ecb-869e-5fb6e5dfb4a7"]
+
+SQL: SET search_path TO "tenant_test_corp_6396", public
+KEYS: []
+CONFIG: "SET search_path TO \"tenant_test_corp_6396\", public"
+PARAMS: []
+
+SQL: select "id", "domain", "name", "schema", "status", "created_at", "updated_at" from "tenants" where "tenants"."domain" = $1
+KEYS: ["name","text","rowMode","types"]
+CONFIG: {"text":"select \"id\", \"domain\", \"name\", \"schema\", \"status\", \"created_at\", \"updated_at\" from \"tenants\" where \"tenants\".\"domain\" = $1","rowMode":"array","types":{}}
+PARAMS: ["test-corp-6396"]
+
+SQL: select "id", "email", "password_hash", "name", "role", "status", "is_verified", "verification_token", "reset_token", "reset_token_expires_at", "created_at", "updated_at" from "users" where "users"."email" = $1 limit $2
+KEYS: ["name","text","rowMode","types"]
+CONFIG: {"text":"select \"id\", \"email\", \"password_hash\", \"name\", \"role\", \"status\", \"is_verified\", \"verification_token\", \"reset_token\", \"reset_token_expires_at\", \"created_at\", \"updated_at\" from \"users\" where \"users\".\"email\" = $1 limit $2","rowMode":"array","types":{}}
+PARAMS: ["ceo@acme-test.com",1]
+
+SQL: insert into "sessions" ("id", "user_id", "token", "expires_at", "created_at") values (default, $1, $2, $3, default)
+KEYS: ["name","text","types"]
+CONFIG: {"text":"insert into \"sessions\" (\"id\", \"user_id\", \"token\", \"expires_at\", \"created_at\") values (default, $1, $2, $3, default)","types":{}}
+PARAMS: ["71166ebf-4178-4ecb-869e-5fb6e5dfb4a7","eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjcxMTY2ZWJmLTQxNzgtNGVjYi04NjllLTVmYjZlNWRmYjRhNyIsImVtYWlsIjoiY2VvQGFjbWUtdGVzdC5jb20iLCJyb2xlIjoib3duZXIiLCJ0ZW5hbnRJZCI6IjEwZDU2ZDMwLWE3NjAtNGJiNy05MTc3LTgxZTM0ZWIxMDkwNyIsImp0aSI6IjNjMzI1OWNmLTc0NDEtNDRjNS04MjI0LTBjMGQyNWZhZDgxYSIsImlhdCI6MTc4NTY0MDgxMSwiZXhwIjoxNzg2MjQ1NjExfQ.0YKgianrFqUn34B-L_RpzfktljSHtQOSk4UP9LpHj5o","2026-08-09T03:20:11.288Z"]
+
+SQL: SET search_path TO "tenant_test_corp_6396", public
+KEYS: []
+CONFIG: "SET search_path TO \"tenant_test_corp_6396\", public"
+PARAMS: []
+
+SQL: select "id", "domain", "name", "schema", "status", "created_at", "updated_at" from "tenants" where "tenants"."domain" = $1
+KEYS: ["name","text","rowMode","types"]
+CONFIG: {"text":"select \"id\", \"domain\", \"name\", \"schema\", \"status\", \"created_at\", \"updated_at\" from \"tenants\" where \"tenants\".\"domain\" = $1","rowMode":"array","types":{}}
+PARAMS: ["test-corp-6396"]
+
+SQL: select "id", "user_id", "token", "expires_at", "created_at" from "sessions" where "sessions"."token" = $1 limit $2
+KEYS: ["name","text","rowMode","types"]
+CONFIG: {"text":"select \"id\", \"user_id\", \"token\", \"expires_at\", \"created_at\" from \"sessions\" where \"sessions\".\"token\" = $1 limit $2","rowMode":"array","types":{}}
+PARAMS: ["eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjcxMTY2ZWJmLTQxNzgtNGVjYi04NjllLTVmYjZlNWRmYjRhNyIsImVtYWlsIjoiY2VvQGFjbWUtdGVzdC5jb20iLCJyb2xlIjoib3duZXIiLCJ0ZW5hbnRJZCI6IjEwZDU2ZDMwLWE3NjAtNGJiNy05MTc3LTgxZTM0ZWIxMDkwNyIsImp0aSI6IjNjMzI1OWNmLTc0NDEtNDRjNS04MjI0LTBjMGQyNWZhZDgxYSIsImlhdCI6MTc4NTY0MDgxMSwiZXhwIjoxNzg2MjQ1NjExfQ.0YKgianrFqUn34B-L_RpzfktljSHtQOSk4UP9LpHj5o",1]
+
+SQL: delete from "sessions" where "sessions"."token" = $1
+KEYS: ["name","text","types"]
+CONFIG: {"text":"delete from \"sessions\" where \"sessions\".\"token\" = $1","types":{}}
+PARAMS: ["eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjcxMTY2ZWJmLTQxNzgtNGVjYi04NjllLTVmYjZlNWRmYjRhNyIsImVtYWlsIjoiY2VvQGFjbWUtdGVzdC5jb20iLCJyb2xlIjoib3duZXIiLCJ0ZW5hbnRJZCI6IjEwZDU2ZDMwLWE3NjAtNGJiNy05MTc3LTgxZTM0ZWIxMDkwNyIsImp0aSI6IjNjMzI1OWNmLTc0NDEtNDRjNS04MjI0LTBjMGQyNWZhZDgxYSIsImlhdCI6MTc4NTY0MDgxMSwiZXhwIjoxNzg2MjQ1NjExfQ.0YKgianrFqUn34B-L_RpzfktljSHtQOSk4UP9LpHj5o"]
+
+SQL: insert into "sessions" ("id", "user_id", "token", "expires_at", "created_at") values (default, $1, $2, $3, default)
+KEYS: ["name","text","types"]
+CONFIG: {"text":"insert into \"sessions\" (\"id\", \"user_id\", \"token\", \"expires_at\", \"created_at\") values (default, $1, $2, $3, default)","types":{}}
+PARAMS: ["71166ebf-4178-4ecb-869e-5fb6e5dfb4a7","eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjcxMTY2ZWJmLTQxNzgtNGVjYi04NjllLTVmYjZlNWRmYjRhNyIsImVtYWlsIjoiY2VvQGFjbWUtdGVzdC5jb20iLCJyb2xlIjoib3duZXIiLCJ0ZW5hbnRJZCI6IjEwZDU2ZDMwLWE3NjAtNGJiNy05MTc3LTgxZTM0ZWIxMDkwNyIsImp0aSI6IjY0ODhjNDYxLTk5ZWUtNGYxMy04ZTVhLWEyYmYxNDFjZjNkMiIsImlhdCI6MTc4NTY0MDgxMSwiZXhwIjoxNzg2MjQ1NjExfQ.J1WVGg8ttmJ06P2gkl62j2KFSM8RNJLOezoPEpFiHto","2026-08-09T03:20:11.294Z"]
+
+SQL: SET search_path TO "tenant_test_corp_6396", public
+KEYS: []
+CONFIG: "SET search_path TO \"tenant_test_corp_6396\", public"
+PARAMS: []
+
+SQL: select "id", "domain", "name", "schema", "status", "created_at", "updated_at" from "tenants" where "tenants"."domain" = $1
+KEYS: ["name","text","rowMode","types"]
+CONFIG: {"text":"select \"id\", \"domain\", \"name\", \"schema\", \"status\", \"created_at\", \"updated_at\" from \"tenants\" where \"tenants\".\"domain\" = $1","rowMode":"array","types":{}}
+PARAMS: ["test-corp-6396"]
+
+SQL: select "id", "user_id", "token", "expires_at", "created_at" from "sessions" where "sessions"."token" = $1 limit $2
+KEYS: ["name","text","rowMode","types"]
+CONFIG: {"text":"select \"id\", \"user_id\", \"token\", \"expires_at\", \"created_at\" from \"sessions\" where \"sessions\".\"token\" = $1 limit $2","rowMode":"array","types":{}}
+PARAMS: ["eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjcxMTY2ZWJmLTQxNzgtNGVjYi04NjllLTVmYjZlNWRmYjRhNyIsImVtYWlsIjoiY2VvQGFjbWUtdGVzdC5jb20iLCJyb2xlIjoib3duZXIiLCJ0ZW5hbnRJZCI6IjEwZDU2ZDMwLWE3NjAtNGJiNy05MTc3LTgxZTM0ZWIxMDkwNyIsImp0aSI6IjNjMzI1OWNmLTc0NDEtNDRjNS04MjI0LTBjMGQyNWZhZDgxYSIsImlhdCI6MTc4NTY0MDgxMSwiZXhwIjoxNzg2MjQ1NjExfQ.0YKgianrFqUn34B-L_RpzfktljSHtQOSk4UP9LpHj5o",1]
+
+SQL: delete from "sessions" where "sessions"."user_id" = $1
+KEYS: ["name","text","types"]
+CONFIG: {"text":"delete from \"sessions\" where \"sessions\".\"user_id\" = $1","types":{}}
+PARAMS: ["71166ebf-4178-4ecb-869e-5fb6e5dfb4a7"]
+
+SQL: SET search_path TO "tenant_test_corp_6396", public
+KEYS: []
+CONFIG: "SET search_path TO \"tenant_test_corp_6396\", public"
+PARAMS: []
+
+SQL: select "id", "user_id", "token", "expires_at", "created_at" from "sessions" where "sessions"."user_id" = $1
+KEYS: ["name","text","rowMode","types"]
+CONFIG: {"text":"select \"id\", \"user_id\", \"token\", \"expires_at\", \"created_at\" from \"sessions\" where \"sessions\".\"user_id\" = $1","rowMode":"array","types":{}}
+PARAMS: ["71166ebf-4178-4ecb-869e-5fb6e5dfb4a7"]
+
+SQL: SET search_path TO "tenant_test_corp_6396", public
+KEYS: []
+CONFIG: "SET search_path TO \"tenant_test_corp_6396\", public"
+PARAMS: []
+
+SQL: select "id", "email", "password_hash", "name", "role", "status", "is_verified", "verification_token", "reset_token", "reset_token_expires_at", "created_at", "updated_at" from "users" where "users"."email" = $1 limit $2
+KEYS: ["name","text","rowMode","types"]
+CONFIG: {"text":"select \"id\", \"email\", \"password_hash\", \"name\", \"role\", \"status\", \"is_verified\", \"verification_token\", \"reset_token\", \"reset_token_expires_at\", \"created_at\", \"updated_at\" from \"users\" where \"users\".\"email\" = $1 limit $2","rowMode":"array","types":{}}
+PARAMS: ["ceo@acme-test.com",1]
+
+SQL: update "users" set "reset_token" = $1, "reset_token_expires_at" = $2 where "users"."id" = $3
+KEYS: ["name","text","types"]
+CONFIG: {"text":"update \"users\" set \"reset_token\" = $1, \"reset_token_expires_at\" = $2 where \"users\".\"id\" = $3","types":{}}
+PARAMS: ["324e173f72a9eefe66edc6e53b05f529da4d474842192651067d981530025837","2026-08-02T04:20:11.299Z","71166ebf-4178-4ecb-869e-5fb6e5dfb4a7"]
+
+SQL: SET search_path TO "tenant_test_corp_6396", public
+KEYS: []
+CONFIG: "SET search_path TO \"tenant_test_corp_6396\", public"
+PARAMS: []
+
+SQL: select "id", "email", "password_hash", "name", "role", "status", "is_verified", "verification_token", "reset_token", "reset_token_expires_at", "created_at", "updated_at" from "users" where "users"."reset_token" = $1 limit $2
+KEYS: ["name","text","rowMode","types"]
+CONFIG: {"text":"select \"id\", \"email\", \"password_hash\", \"name\", \"role\", \"status\", \"is_verified\", \"verification_token\", \"reset_token\", \"reset_token_expires_at\", \"created_at\", \"updated_at\" from \"users\" where \"users\".\"reset_token\" = $1 limit $2","rowMode":"array","types":{}}
+PARAMS: ["324e173f72a9eefe66edc6e53b05f529da4d474842192651067d981530025837",1]
+
+SQL: update "users" set "password_hash" = $1, "reset_token" = $2, "reset_token_expires_at" = $3 where "users"."id" = $4
+KEYS: ["name","text","types"]
+CONFIG: {"text":"update \"users\" set \"password_hash\" = $1, \"reset_token\" = $2, \"reset_token_expires_at\" = $3 where \"users\".\"id\" = $4","types":{}}
+PARAMS: ["21db083db5ec5dcdabe241bfbda48a3d:ca25a1490f3df86f3f7b601934dc0d6cabf9fb81014c83c8d317c316277090ad232370035915624a35e1315bf1e0c23c54e67666cc53ccdcc554aa9b1418d39a",null,null,"71166ebf-4178-4ecb-869e-5fb6e5dfb4a7"]
+
+SQL: delete from "sessions" where "sessions"."user_id" = $1
+KEYS: ["name","text","types"]
+CONFIG: {"text":"delete from \"sessions\" where \"sessions\".\"user_id\" = $1","types":{}}
+PARAMS: ["71166ebf-4178-4ecb-869e-5fb6e5dfb4a7"]
+
+SQL: SET search_path TO "tenant_test_corp_6396", public
+KEYS: []
+CONFIG: "SET search_path TO \"tenant_test_corp_6396\", public"
+PARAMS: []
+
+SQL: select "id", "domain", "name", "schema", "status", "created_at", "updated_at" from "tenants" where "tenants"."domain" = $1
+KEYS: ["name","text","rowMode","types"]
+CONFIG: {"text":"select \"id\", \"domain\", \"name\", \"schema\", \"status\", \"created_at\", \"updated_at\" from \"tenants\" where \"tenants\".\"domain\" = $1","rowMode":"array","types":{}}
+PARAMS: ["test-corp-6396"]
+
+SQL: select "id", "email", "password_hash", "name", "role", "status", "is_verified", "verification_token", "reset_token", "reset_token_expires_at", "created_at", "updated_at" from "users" where "users"."email" = $1 limit $2
+KEYS: ["name","text","rowMode","types"]
+CONFIG: {"text":"select \"id\", \"email\", \"password_hash\", \"name\", \"role\", \"status\", \"is_verified\", \"verification_token\", \"reset_token\", \"reset_token_expires_at\", \"created_at\", \"updated_at\" from \"users\" where \"users\".\"email\" = $1 limit $2","rowMode":"array","types":{}}
+PARAMS: ["ceo@acme-test.com",1]
+
+SQL: insert into "sessions" ("id", "user_id", "token", "expires_at", "created_at") values (default, $1, $2, $3, default)
+KEYS: ["name","text","types"]
+CONFIG: {"text":"insert into \"sessions\" (\"id\", \"user_id\", \"token\", \"expires_at\", \"created_at\") values (default, $1, $2, $3, default)","types":{}}
+PARAMS: ["71166ebf-4178-4ecb-869e-5fb6e5dfb4a7","eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjcxMTY2ZWJmLTQxNzgtNGVjYi04NjllLTVmYjZlNWRmYjRhNyIsImVtYWlsIjoiY2VvQGFjbWUtdGVzdC5jb20iLCJyb2xlIjoib3duZXIiLCJ0ZW5hbnRJZCI6IjEwZDU2ZDMwLWE3NjAtNGJiNy05MTc3LTgxZTM0ZWIxMDkwNyIsImp0aSI6IjA0MjU5NTE0LWJhN2QtNDlkOS05ZmFkLTQ4MDJjYTIwMjU4MSIsImlhdCI6MTc4NTY0MDgxMSwiZXhwIjoxNzg2MjQ1NjExfQ.VLH7LwJUkMiFNr0O06BRFHXGFgMnPcHrC9Htt5SXK3g","2026-08-09T03:20:11.407Z"]
+
+SQL: SELECT 1
+KEYS: []
+CONFIG: "SELECT 1"
+PARAMS: []
+
+SQL: SELECT 1
+KEYS: []
+CONFIG: "SELECT 1"
+PARAMS: []
+
+SQL: SELECT 1
+KEYS: []
+CONFIG: "SELECT 1"
+PARAMS: []
+
+SQL: SELECT 1
+KEYS: []
+CONFIG: "SELECT 1"
+PARAMS: []
+
+SQL: SELECT 1
+KEYS: []
+CONFIG: "SELECT 1"
+PARAMS: []
+
+SQL: SELECT 1
+KEYS: []
+CONFIG: "SELECT 1"
+PARAMS: []
+
+SQL: SELECT 1
+KEYS: []
+CONFIG: "SELECT 1"
+PARAMS: []
+
+SQL: SELECT 1
+KEYS: []
+CONFIG: "SELECT 1"
+PARAMS: []
+
+SQL: SELECT 1
+KEYS: []
+CONFIG: "SELECT 1"
+PARAMS: []
+
+SQL: SELECT 1
+KEYS: []
+CONFIG: "SELECT 1"
+PARAMS: []
+
+SQL: SELECT 1
+KEYS: []
+CONFIG: "SELECT 1"
+PARAMS: []
+
+SQL: SELECT 1
+KEYS: []
+CONFIG: "SELECT 1"
+PARAMS: []
+
+SQL: SELECT 1
+KEYS: []
+CONFIG: "SELECT 1"
+PARAMS: []
+
+SQL: SELECT 1
+KEYS: []
+CONFIG: "SELECT 1"
+PARAMS: []
+
+SQL: SELECT 1
+KEYS: []
+CONFIG: "SELECT 1"
+PARAMS: []
+
+SQL: SELECT 1
+KEYS: []
+CONFIG: "SELECT 1"
+PARAMS: []
+
+SQL: SELECT 1
+KEYS: []
+CONFIG: "SELECT 1"
+PARAMS: []
+
+SQL: SELECT 1
+KEYS: []
+CONFIG: "SELECT 1"
+PARAMS: []
+
+SQL: SELECT 1
+KEYS: []
+CONFIG: "SELECT 1"
+PARAMS: []
+
+SQL: SELECT 1
+KEYS: []
+CONFIG: "SELECT 1"
+PARAMS: []
+
+SQL: SELECT 1
+KEYS: []
+CONFIG: "SELECT 1"
+PARAMS: []
+
+SQL: SELECT 1
+KEYS: []
+CONFIG: "SELECT 1"
+PARAMS: []
+
+SQL: SELECT 1
+KEYS: []
+CONFIG: "SELECT 1"
+PARAMS: []
+
+SQL: SELECT 1
+KEYS: []
+CONFIG: "SELECT 1"
+PARAMS: []
+
+SQL: SELECT 1
+KEYS: []
+CONFIG: "SELECT 1"
+PARAMS: []
+
+SQL: SELECT 1
+KEYS: []
+CONFIG: "SELECT 1"
+PARAMS: []
+
+SQL: SELECT 1
+KEYS: []
+CONFIG: "SELECT 1"
+PARAMS: []
+
+SQL: SELECT 1
+KEYS: []
+CONFIG: "SELECT 1"
+PARAMS: []
+
+SQL: SELECT 1
+KEYS: []
+CONFIG: "SELECT 1"
+PARAMS: []
+
+SQL: SELECT 1
+KEYS: []
+CONFIG: "SELECT 1"
+PARAMS: []
+
+SQL: SELECT 1
+KEYS: []
+CONFIG: "SELECT 1"
+PARAMS: []
+
+SQL: SELECT 1
+KEYS: []
+CONFIG: "SELECT 1"
+PARAMS: []
+
+SQL: SELECT 1
+KEYS: []
+CONFIG: "SELECT 1"
+PARAMS: []
+
+SQL: SELECT 1
+KEYS: []
+CONFIG: "SELECT 1"
+PARAMS: []
+
+SQL: SELECT 1
+KEYS: []
+CONFIG: "SELECT 1"
+PARAMS: []
+
+SQL: SELECT 1
+KEYS: []
+CONFIG: "SELECT 1"
+PARAMS: []
+
+SQL: SELECT 1
+KEYS: []
+CONFIG: "SELECT 1"
+PARAMS: []
+
+SQL: SELECT 1
+KEYS: []
+CONFIG: "SELECT 1"
+PARAMS: []
+
+SQL: SELECT 1
+KEYS: []
+CONFIG: "SELECT 1"
+PARAMS: []
+
+SQL: SELECT 1
+KEYS: []
+CONFIG: "SELECT 1"
+PARAMS: []
+
+SQL: SELECT 1
+KEYS: []
+CONFIG: "SELECT 1"
+PARAMS: []
+
+SQL: SELECT 1
+KEYS: []
+CONFIG: "SELECT 1"
+PARAMS: []
+
+SQL: SELECT 1
+KEYS: []
+CONFIG: "SELECT 1"
+PARAMS: []
+
+SQL: SELECT 1
+KEYS: []
+CONFIG: "SELECT 1"
+PARAMS: []
+
+SQL: SELECT 1
+KEYS: []
+CONFIG: "SELECT 1"
+PARAMS: []
+
+SQL: SELECT 1
+KEYS: []
+CONFIG: "SELECT 1"
+PARAMS: []
+
+SQL: SELECT 1
+KEYS: []
+CONFIG: "SELECT 1"
+PARAMS: []
+
+SQL: select "id", "domain", "name", "schema", "status", "created_at", "updated_at" from "tenants" where "tenants"."domain" = $1 limit $2
+KEYS: ["name","text","rowMode","types"]
+CONFIG: {"text":"select \"id\", \"domain\", \"name\", \"schema\", \"status\", \"created_at\", \"updated_at\" from \"tenants\" where \"tenants\".\"domain\" = $1 limit $2","rowMode":"array","types":{}}
+PARAMS: ["test-corp-8934",1]
+
+SQL: CREATE SCHEMA IF NOT EXISTS "tenant_test_corp_8934"
+KEYS: ["name","text","types"]
+CONFIG: {"text":"CREATE SCHEMA IF NOT EXISTS \"tenant_test_corp_8934\"","types":{}}
+PARAMS: []
+
+SQL: 
+        CREATE TABLE IF NOT EXISTS "tenant_test_corp_8934"."users" (
+          "id" uuid PRIMARY KEY DEFAULT gen_random_uuid(),
+          "email" varchar(256) NOT NULL UNIQUE,
+          "password_hash" text NOT NULL,
+          "name" varchar(256) NOT NULL,
+          "role" varchar(64) NOT NULL DEFAULT 'member',
+          "status" varchar(32) NOT NULL DEFAULT 'active',
+          "is_verified" boolean NOT NULL DEFAULT false,
+          "verification_token" varchar(256),
+          "reset_token" varchar(256),
+          "reset_token_expires_at" timestamp,
+          "created_at" timestamp NOT NULL DEFAULT now(),
+          "updated_at" timestamp NOT NULL DEFAULT now()
+        );
+      
+KEYS: ["name","text","types"]
+CONFIG: {"text":"\n        CREATE TABLE IF NOT EXISTS \"tenant_test_corp_8934\".\"users\" (\n          \"id\" uuid PRIMARY KEY DEFAULT gen_random_uuid(),\n          \"email\" varchar(256) NOT NULL UNIQUE,\n          \"password_hash\" text NOT NULL,\n          \"name\" varchar(256) NOT NULL,\n          \"role\" varchar(64) NOT NULL DEFAULT 'member',\n          \"status\" varchar(32) NOT NULL DEFAULT 'active',\n          \"is_verified\" boolean NOT NULL DEFAULT false,\n          \"verification_token\" varchar(256),\n          \"reset_token\" varchar(256),\n          \"reset_token_expires_at\" timestamp,\n          \"created_at\" timestamp NOT NULL DEFAULT now(),\n          \"updated_at\" timestamp NOT NULL DEFAULT now()\n        );\n      ","types":{}}
+PARAMS: []
+
+SQL: 
+        CREATE TABLE IF NOT EXISTS "tenant_test_corp_8934"."sessions" (
+          "id" uuid PRIMARY KEY DEFAULT gen_random_uuid(),
+          "user_id" uuid NOT NULL REFERENCES "tenant_test_corp_8934"."users"("id") ON DELETE CASCADE,
+          "token" varchar(512) NOT NULL UNIQUE,
+          "expires_at" timestamp NOT NULL,
+          "created_at" timestamp NOT NULL DEFAULT now()
+        );
+      
+KEYS: ["name","text","types"]
+CONFIG: {"text":"\n        CREATE TABLE IF NOT EXISTS \"tenant_test_corp_8934\".\"sessions\" (\n          \"id\" uuid PRIMARY KEY DEFAULT gen_random_uuid(),\n          \"user_id\" uuid NOT NULL REFERENCES \"tenant_test_corp_8934\".\"users\"(\"id\") ON DELETE CASCADE,\n          \"token\" varchar(512) NOT NULL UNIQUE,\n          \"expires_at\" timestamp NOT NULL,\n          \"created_at\" timestamp NOT NULL DEFAULT now()\n        );\n      ","types":{}}
+PARAMS: []
+
+SQL: insert into "tenants" ("id", "domain", "name", "schema", "status", "created_at", "updated_at") values (default, $1, $2, $3, $4, default, default) returning "id", "domain", "name", "schema", "status", "created_at", "updated_at"
+KEYS: ["name","text","rowMode","types"]
+CONFIG: {"text":"insert into \"tenants\" (\"id\", \"domain\", \"name\", \"schema\", \"status\", \"created_at\", \"updated_at\") values (default, $1, $2, $3, $4, default, default) returning \"id\", \"domain\", \"name\", \"schema\", \"status\", \"created_at\", \"updated_at\"","rowMode":"array","types":{}}
+PARAMS: ["test-corp-8934","Acme Test Corp","tenant_test_corp_8934","active"]
+
+SQL: 
+        INSERT INTO "tenant_test_corp_8934"."users" (email, password_hash, name, role, is_verified, verification_token)
+        VALUES ('ceo@acme-test.com', '6c64f66732f3350a32add20f5332f81d:c3a6a873eac48783309e833a43cb58b32d03d3518a4d140955465c7735be931c8c5e89de4af950fc11f6f0c9793637f6ba71054bbc5f94511db6fb7be8aed085', 'Acme CEO', 'owner', false, '98da028cdff7396976099e44d3243bfc42311fa69462d7aaf466f3a77a5252d9')
+      
+KEYS: ["name","text","types"]
+CONFIG: {"text":"\n        INSERT INTO \"tenant_test_corp_8934\".\"users\" (email, password_hash, name, role, is_verified, verification_token)\n        VALUES ('ceo@acme-test.com', '6c64f66732f3350a32add20f5332f81d:c3a6a873eac48783309e833a43cb58b32d03d3518a4d140955465c7735be931c8c5e89de4af950fc11f6f0c9793637f6ba71054bbc5f94511db6fb7be8aed085', 'Acme CEO', 'owner', false, '98da028cdff7396976099e44d3243bfc42311fa69462d7aaf466f3a77a5252d9')\n      ","types":{}}
+PARAMS: []
+
+SQL: 
+        SELECT id, email, name, role, is_verified, verification_token FROM "tenant_test_corp_8934"."users" WHERE email = 'ceo@acme-test.com' LIMIT 1
+      
+KEYS: ["name","text","types"]
+CONFIG: {"text":"\n        SELECT id, email, name, role, is_verified, verification_token FROM \"tenant_test_corp_8934\".\"users\" WHERE email = 'ceo@acme-test.com' LIMIT 1\n      ","types":{}}
+PARAMS: []
+
+SQL: SET search_path TO "tenant_test_corp_8934", public
+KEYS: []
+CONFIG: "SET search_path TO \"tenant_test_corp_8934\", public"
+PARAMS: []
+
+SQL: insert into "sessions" ("id", "user_id", "token", "expires_at", "created_at") values (default, $1, $2, $3, default)
+KEYS: ["name","text","types"]
+CONFIG: {"text":"insert into \"sessions\" (\"id\", \"user_id\", \"token\", \"expires_at\", \"created_at\") values (default, $1, $2, $3, default)","types":{}}
+PARAMS: ["339c7523-0682-4840-851b-aa1d7a1f50fd","eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjMzOWM3NTIzLTA2ODItNDg0MC04NTFiLWFhMWQ3YTFmNTBmZCIsImVtYWlsIjoiY2VvQGFjbWUtdGVzdC5jb20iLCJyb2xlIjoib3duZXIiLCJ0ZW5hbnRJZCI6IjIzODg0YTlhLThjZWMtNGQ3Mi1hMDdlLTZiNzY5YzkzMjM1ZiIsImp0aSI6IjRhMjFkY2EzLTYyZjMtNGMzYi1iZGY3LTgzMWRhODFlNDcwMiIsImlhdCI6MTc4NTY0MTYyOCwiZXhwIjoxNzg2MjQ2NDI4fQ.aJ6hKOyGb5bAhdtUczqhTwSdnwTwc2-4FosCBCFHLO4","2026-08-09T03:33:48.319Z"]
+
+SQL: select "id", "domain", "name", "schema", "status", "created_at", "updated_at" from "tenants" where "tenants"."domain" = $1
+KEYS: ["name","text","rowMode","types"]
+CONFIG: {"text":"select \"id\", \"domain\", \"name\", \"schema\", \"status\", \"created_at\", \"updated_at\" from \"tenants\" where \"tenants\".\"domain\" = $1","rowMode":"array","types":{}}
+PARAMS: ["test-corp-8934"]
+
+SQL: SET search_path TO "tenant_test_corp_8934", public
+KEYS: []
+CONFIG: "SET search_path TO \"tenant_test_corp_8934\", public"
+PARAMS: []
+
+SQL: select "id", "email", "password_hash", "name", "role", "status", "is_verified", "verification_token", "reset_token", "reset_token_expires_at", "created_at", "updated_at" from "users" where "users"."verification_token" = $1 limit $2
+KEYS: ["name","text","rowMode","types"]
+CONFIG: {"text":"select \"id\", \"email\", \"password_hash\", \"name\", \"role\", \"status\", \"is_verified\", \"verification_token\", \"reset_token\", \"reset_token_expires_at\", \"created_at\", \"updated_at\" from \"users\" where \"users\".\"verification_token\" = $1 limit $2","rowMode":"array","types":{}}
+PARAMS: ["98da028cdff7396976099e44d3243bfc42311fa69462d7aaf466f3a77a5252d9",1]
+
+SQL: update "users" set "is_verified" = $1, "verification_token" = $2 where "users"."id" = $3
+KEYS: ["name","text","types"]
+CONFIG: {"text":"update \"users\" set \"is_verified\" = $1, \"verification_token\" = $2 where \"users\".\"id\" = $3","types":{}}
+PARAMS: [true,null,"339c7523-0682-4840-851b-aa1d7a1f50fd"]
+
+SQL: SET search_path TO "tenant_test_corp_8934", public
+KEYS: []
+CONFIG: "SET search_path TO \"tenant_test_corp_8934\", public"
+PARAMS: []
+
+SQL: select "id", "email", "password_hash", "name", "role", "status", "is_verified", "verification_token", "reset_token", "reset_token_expires_at", "created_at", "updated_at" from "users" where "users"."id" = $1
+KEYS: ["name","text","rowMode","types"]
+CONFIG: {"text":"select \"id\", \"email\", \"password_hash\", \"name\", \"role\", \"status\", \"is_verified\", \"verification_token\", \"reset_token\", \"reset_token_expires_at\", \"created_at\", \"updated_at\" from \"users\" where \"users\".\"id\" = $1","rowMode":"array","types":{}}
+PARAMS: ["339c7523-0682-4840-851b-aa1d7a1f50fd"]
+
+SQL: SET search_path TO "tenant_test_corp_8934", public
+KEYS: []
+CONFIG: "SET search_path TO \"tenant_test_corp_8934\", public"
+PARAMS: []
+
+SQL: select "id", "domain", "name", "schema", "status", "created_at", "updated_at" from "tenants" where "tenants"."domain" = $1
+KEYS: ["name","text","rowMode","types"]
+CONFIG: {"text":"select \"id\", \"domain\", \"name\", \"schema\", \"status\", \"created_at\", \"updated_at\" from \"tenants\" where \"tenants\".\"domain\" = $1","rowMode":"array","types":{}}
+PARAMS: ["test-corp-8934"]
+
+SQL: select "id", "email", "password_hash", "name", "role", "status", "is_verified", "verification_token", "reset_token", "reset_token_expires_at", "created_at", "updated_at" from "users" where "users"."email" = $1 limit $2
+KEYS: ["name","text","rowMode","types"]
+CONFIG: {"text":"select \"id\", \"email\", \"password_hash\", \"name\", \"role\", \"status\", \"is_verified\", \"verification_token\", \"reset_token\", \"reset_token_expires_at\", \"created_at\", \"updated_at\" from \"users\" where \"users\".\"email\" = $1 limit $2","rowMode":"array","types":{}}
+PARAMS: ["ceo@acme-test.com",1]
+
+SQL: insert into "sessions" ("id", "user_id", "token", "expires_at", "created_at") values (default, $1, $2, $3, default)
+KEYS: ["name","text","types"]
+CONFIG: {"text":"insert into \"sessions\" (\"id\", \"user_id\", \"token\", \"expires_at\", \"created_at\") values (default, $1, $2, $3, default)","types":{}}
+PARAMS: ["339c7523-0682-4840-851b-aa1d7a1f50fd","eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjMzOWM3NTIzLTA2ODItNDg0MC04NTFiLWFhMWQ3YTFmNTBmZCIsImVtYWlsIjoiY2VvQGFjbWUtdGVzdC5jb20iLCJyb2xlIjoib3duZXIiLCJ0ZW5hbnRJZCI6IjIzODg0YTlhLThjZWMtNGQ3Mi1hMDdlLTZiNzY5YzkzMjM1ZiIsImp0aSI6ImM0MGE4NjRlLTZkZDYtNDc3Yi1hYWQ0LTk4ZWNlYjMwMGQ1ZCIsImlhdCI6MTc4NTY0MTYyOCwiZXhwIjoxNzg2MjQ2NDI4fQ.tDkD1myVzd66JP_MFmwkClltcKe0vbyhT2On3VYg03o","2026-08-09T03:33:48.405Z"]
+
+SQL: SET search_path TO "tenant_test_corp_8934", public
+KEYS: []
+CONFIG: "SET search_path TO \"tenant_test_corp_8934\", public"
+PARAMS: []
+
+SQL: select "id", "domain", "name", "schema", "status", "created_at", "updated_at" from "tenants" where "tenants"."domain" = $1
+KEYS: ["name","text","rowMode","types"]
+CONFIG: {"text":"select \"id\", \"domain\", \"name\", \"schema\", \"status\", \"created_at\", \"updated_at\" from \"tenants\" where \"tenants\".\"domain\" = $1","rowMode":"array","types":{}}
+PARAMS: ["test-corp-8934"]
+
+SQL: select "id", "user_id", "token", "expires_at", "created_at" from "sessions" where "sessions"."token" = $1 limit $2
+KEYS: ["name","text","rowMode","types"]
+CONFIG: {"text":"select \"id\", \"user_id\", \"token\", \"expires_at\", \"created_at\" from \"sessions\" where \"sessions\".\"token\" = $1 limit $2","rowMode":"array","types":{}}
+PARAMS: ["eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjMzOWM3NTIzLTA2ODItNDg0MC04NTFiLWFhMWQ3YTFmNTBmZCIsImVtYWlsIjoiY2VvQGFjbWUtdGVzdC5jb20iLCJyb2xlIjoib3duZXIiLCJ0ZW5hbnRJZCI6IjIzODg0YTlhLThjZWMtNGQ3Mi1hMDdlLTZiNzY5YzkzMjM1ZiIsImp0aSI6ImM0MGE4NjRlLTZkZDYtNDc3Yi1hYWQ0LTk4ZWNlYjMwMGQ1ZCIsImlhdCI6MTc4NTY0MTYyOCwiZXhwIjoxNzg2MjQ2NDI4fQ.tDkD1myVzd66JP_MFmwkClltcKe0vbyhT2On3VYg03o",1]
+
+SQL: delete from "sessions" where "sessions"."token" = $1
+KEYS: ["name","text","types"]
+CONFIG: {"text":"delete from \"sessions\" where \"sessions\".\"token\" = $1","types":{}}
+PARAMS: ["eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjMzOWM3NTIzLTA2ODItNDg0MC04NTFiLWFhMWQ3YTFmNTBmZCIsImVtYWlsIjoiY2VvQGFjbWUtdGVzdC5jb20iLCJyb2xlIjoib3duZXIiLCJ0ZW5hbnRJZCI6IjIzODg0YTlhLThjZWMtNGQ3Mi1hMDdlLTZiNzY5YzkzMjM1ZiIsImp0aSI6ImM0MGE4NjRlLTZkZDYtNDc3Yi1hYWQ0LTk4ZWNlYjMwMGQ1ZCIsImlhdCI6MTc4NTY0MTYyOCwiZXhwIjoxNzg2MjQ2NDI4fQ.tDkD1myVzd66JP_MFmwkClltcKe0vbyhT2On3VYg03o"]
+
+SQL: insert into "sessions" ("id", "user_id", "token", "expires_at", "created_at") values (default, $1, $2, $3, default)
+KEYS: ["name","text","types"]
+CONFIG: {"text":"insert into \"sessions\" (\"id\", \"user_id\", \"token\", \"expires_at\", \"created_at\") values (default, $1, $2, $3, default)","types":{}}
+PARAMS: ["339c7523-0682-4840-851b-aa1d7a1f50fd","eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjMzOWM3NTIzLTA2ODItNDg0MC04NTFiLWFhMWQ3YTFmNTBmZCIsImVtYWlsIjoiY2VvQGFjbWUtdGVzdC5jb20iLCJyb2xlIjoib3duZXIiLCJ0ZW5hbnRJZCI6IjIzODg0YTlhLThjZWMtNGQ3Mi1hMDdlLTZiNzY5YzkzMjM1ZiIsImp0aSI6ImViZDA0MDBkLWIyY2QtNGJlMy04NjM2LTliNzUyMWQ1N2NmZCIsImlhdCI6MTc4NTY0MTYyOCwiZXhwIjoxNzg2MjQ2NDI4fQ.bLtT54y95299UBx8SCu3jZAEY-pK6K4vnKUIh0gRHvc","2026-08-09T03:33:48.412Z"]
+
+SQL: SET search_path TO "tenant_test_corp_8934", public
+KEYS: []
+CONFIG: "SET search_path TO \"tenant_test_corp_8934\", public"
+PARAMS: []
+
+SQL: select "id", "domain", "name", "schema", "status", "created_at", "updated_at" from "tenants" where "tenants"."domain" = $1
+KEYS: ["name","text","rowMode","types"]
+CONFIG: {"text":"select \"id\", \"domain\", \"name\", \"schema\", \"status\", \"created_at\", \"updated_at\" from \"tenants\" where \"tenants\".\"domain\" = $1","rowMode":"array","types":{}}
+PARAMS: ["test-corp-8934"]
+
+SQL: select "id", "user_id", "token", "expires_at", "created_at" from "sessions" where "sessions"."token" = $1 limit $2
+KEYS: ["name","text","rowMode","types"]
+CONFIG: {"text":"select \"id\", \"user_id\", \"token\", \"expires_at\", \"created_at\" from \"sessions\" where \"sessions\".\"token\" = $1 limit $2","rowMode":"array","types":{}}
+PARAMS: ["eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjMzOWM3NTIzLTA2ODItNDg0MC04NTFiLWFhMWQ3YTFmNTBmZCIsImVtYWlsIjoiY2VvQGFjbWUtdGVzdC5jb20iLCJyb2xlIjoib3duZXIiLCJ0ZW5hbnRJZCI6IjIzODg0YTlhLThjZWMtNGQ3Mi1hMDdlLTZiNzY5YzkzMjM1ZiIsImp0aSI6ImM0MGE4NjRlLTZkZDYtNDc3Yi1hYWQ0LTk4ZWNlYjMwMGQ1ZCIsImlhdCI6MTc4NTY0MTYyOCwiZXhwIjoxNzg2MjQ2NDI4fQ.tDkD1myVzd66JP_MFmwkClltcKe0vbyhT2On3VYg03o",1]
+
+SQL: delete from "sessions" where "sessions"."user_id" = $1
+KEYS: ["name","text","types"]
+CONFIG: {"text":"delete from \"sessions\" where \"sessions\".\"user_id\" = $1","types":{}}
+PARAMS: ["339c7523-0682-4840-851b-aa1d7a1f50fd"]
+
+SQL: SET search_path TO "tenant_test_corp_8934", public
+KEYS: []
+CONFIG: "SET search_path TO \"tenant_test_corp_8934\", public"
+PARAMS: []
+
+SQL: select "id", "user_id", "token", "expires_at", "created_at" from "sessions" where "sessions"."user_id" = $1
+KEYS: ["name","text","rowMode","types"]
+CONFIG: {"text":"select \"id\", \"user_id\", \"token\", \"expires_at\", \"created_at\" from \"sessions\" where \"sessions\".\"user_id\" = $1","rowMode":"array","types":{}}
+PARAMS: ["339c7523-0682-4840-851b-aa1d7a1f50fd"]
+
+SQL: SET search_path TO "tenant_test_corp_8934", public
+KEYS: []
+CONFIG: "SET search_path TO \"tenant_test_corp_8934\", public"
+PARAMS: []
+
+SQL: select "id", "email", "password_hash", "name", "role", "status", "is_verified", "verification_token", "reset_token", "reset_token_expires_at", "created_at", "updated_at" from "users" where "users"."email" = $1 limit $2
+KEYS: ["name","text","rowMode","types"]
+CONFIG: {"text":"select \"id\", \"email\", \"password_hash\", \"name\", \"role\", \"status\", \"is_verified\", \"verification_token\", \"reset_token\", \"reset_token_expires_at\", \"created_at\", \"updated_at\" from \"users\" where \"users\".\"email\" = $1 limit $2","rowMode":"array","types":{}}
+PARAMS: ["ceo@acme-test.com",1]
+
+SQL: update "users" set "reset_token" = $1, "reset_token_expires_at" = $2 where "users"."id" = $3
+KEYS: ["name","text","types"]
+CONFIG: {"text":"update \"users\" set \"reset_token\" = $1, \"reset_token_expires_at\" = $2 where \"users\".\"id\" = $3","types":{}}
+PARAMS: ["858c5f0c814f195f4c94172d18d48e001d3e68906b1942cb6d475810c7447689","2026-08-02T04:33:48.418Z","339c7523-0682-4840-851b-aa1d7a1f50fd"]
+
+SQL: SET search_path TO "tenant_test_corp_8934", public
+KEYS: []
+CONFIG: "SET search_path TO \"tenant_test_corp_8934\", public"
+PARAMS: []
+
+SQL: select "id", "email", "password_hash", "name", "role", "status", "is_verified", "verification_token", "reset_token", "reset_token_expires_at", "created_at", "updated_at" from "users" where "users"."reset_token" = $1 limit $2
+KEYS: ["name","text","rowMode","types"]
+CONFIG: {"text":"select \"id\", \"email\", \"password_hash\", \"name\", \"role\", \"status\", \"is_verified\", \"verification_token\", \"reset_token\", \"reset_token_expires_at\", \"created_at\", \"updated_at\" from \"users\" where \"users\".\"reset_token\" = $1 limit $2","rowMode":"array","types":{}}
+PARAMS: ["858c5f0c814f195f4c94172d18d48e001d3e68906b1942cb6d475810c7447689",1]
+
+SQL: update "users" set "password_hash" = $1, "reset_token" = $2, "reset_token_expires_at" = $3 where "users"."id" = $4
+KEYS: ["name","text","types"]
+CONFIG: {"text":"update \"users\" set \"password_hash\" = $1, \"reset_token\" = $2, \"reset_token_expires_at\" = $3 where \"users\".\"id\" = $4","types":{}}
+PARAMS: ["e7d94772e833bad3d9533e90b93f2021:86f7a22c0a6d89cc3487ef3759323d5573d0e9c8a2ec1a7acaec62a4fdbe86bea1043661dd1d7bccfc8186637282399a63e69138aff346b6a961d643e0ca9792",null,null,"339c7523-0682-4840-851b-aa1d7a1f50fd"]
+
+SQL: delete from "sessions" where "sessions"."user_id" = $1
+KEYS: ["name","text","types"]
+CONFIG: {"text":"delete from \"sessions\" where \"sessions\".\"user_id\" = $1","types":{}}
+PARAMS: ["339c7523-0682-4840-851b-aa1d7a1f50fd"]
+
+SQL: SET search_path TO "tenant_test_corp_8934", public
+KEYS: []
+CONFIG: "SET search_path TO \"tenant_test_corp_8934\", public"
+PARAMS: []
+
+SQL: select "id", "domain", "name", "schema", "status", "created_at", "updated_at" from "tenants" where "tenants"."domain" = $1
+KEYS: ["name","text","rowMode","types"]
+CONFIG: {"text":"select \"id\", \"domain\", \"name\", \"schema\", \"status\", \"created_at\", \"updated_at\" from \"tenants\" where \"tenants\".\"domain\" = $1","rowMode":"array","types":{}}
+PARAMS: ["test-corp-8934"]
+
+SQL: select "id", "email", "password_hash", "name", "role", "status", "is_verified", "verification_token", "reset_token", "reset_token_expires_at", "created_at", "updated_at" from "users" where "users"."email" = $1 limit $2
+KEYS: ["name","text","rowMode","types"]
+CONFIG: {"text":"select \"id\", \"email\", \"password_hash\", \"name\", \"role\", \"status\", \"is_verified\", \"verification_token\", \"reset_token\", \"reset_token_expires_at\", \"created_at\", \"updated_at\" from \"users\" where \"users\".\"email\" = $1 limit $2","rowMode":"array","types":{}}
+PARAMS: ["ceo@acme-test.com",1]
+
+SQL: insert into "sessions" ("id", "user_id", "token", "expires_at", "created_at") values (default, $1, $2, $3, default)
+KEYS: ["name","text","types"]
+CONFIG: {"text":"insert into \"sessions\" (\"id\", \"user_id\", \"token\", \"expires_at\", \"created_at\") values (default, $1, $2, $3, default)","types":{}}
+PARAMS: ["339c7523-0682-4840-851b-aa1d7a1f50fd","eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjMzOWM3NTIzLTA2ODItNDg0MC04NTFiLWFhMWQ3YTFmNTBmZCIsImVtYWlsIjoiY2VvQGFjbWUtdGVzdC5jb20iLCJyb2xlIjoib3duZXIiLCJ0ZW5hbnRJZCI6IjIzODg0YTlhLThjZWMtNGQ3Mi1hMDdlLTZiNzY5YzkzMjM1ZiIsImp0aSI6ImI0MWVmMWY4LTI1YzQtNDE2OS05NjQ2LTQ1NTUxZmM4MjA0ZiIsImlhdCI6MTc4NTY0MTYyOCwiZXhwIjoxNzg2MjQ2NDI4fQ.-YvxlWGG-ALnDr0x4KxznUYZP8txY7xh0-l3tpMkdO4","2026-08-09T03:33:48.531Z"]
+

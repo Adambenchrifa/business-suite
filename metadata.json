@@ -1,0 +1,6 @@
+{
+  "name": "Business Suite",
+  "description": "A modular, multi-tenant SaaS Business Management platform designed for enterprise scalability.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
