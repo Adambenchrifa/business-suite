@@ -125,12 +125,11 @@ export class AuthController {
       const verificationToken = crypto.randomBytes(32).toString('hex');
 
       // 5. Seed the default company administrator account in the isolated schema context
-      // Note: We seed them as unverified so they can test the email verification endpoint if they choose,
-      // or we can seed them as verified if we want instant onboarding. Let's seed as unverified (is_verified = false)
-      // but let's return the token clearly so it can be verified with a single click or API call.
+      // Note: We seed them as verified (is_verified = true) for instant onboarding experience.
+      // The verificationToken is still generated and returned for reference/audit purposes.
       await publicDb.execute(`
         INSERT INTO "${schemaName}"."users" (email, password_hash, name, role, is_verified, verification_token)
-        VALUES ('${ownerEmail.replace(/'/g, "''")}', '${passwordHash}', '${ownerName.replace(/'/g, "''")}', 'owner', false, '${verificationToken}')
+        VALUES ('${ownerEmail.replace(/'/g, "''")}', '${passwordHash}', '${ownerName.replace(/'/g, "''")}', 'owner', true, '${verificationToken}')
       `);
 
       const ownerResult = await publicDb.execute(`
