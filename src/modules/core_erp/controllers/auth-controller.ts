@@ -4,7 +4,7 @@ import { z } from 'zod';
 import crypto from 'crypto';
 import { tenants, users, sessions } from '../infrastructure/db-schemas';
 import { PasswordHasher, JwtProvider } from '../domain/user';
-import { publicDb, getTenantDrizzleClient } from '../../../config/database';
+import { publicDb, getTenantDrizzleClient, ensureTenantTables } from '../../../config/database';
 import { ConflictError, ValidationError, UnauthorizedError, NotFoundError } from '../../../shared/utils/errors';
 import { Logger } from '../../../shared/utils/logger';
 
@@ -75,37 +75,7 @@ export class AuthController {
       logger.info(`Provisioning workspace [${sanitizedDomain}] inside PostgreSQL schema [${schemaName}]`);
 
       // 2. Perform Dynamic Schema & Database Provisioning
-      // Run raw PostgreSQL DDL instructions to isolate this tenant physically
-      await publicDb.execute(`CREATE SCHEMA IF NOT EXISTS "${schemaName}"`);
-      
-      // Build tenant-specific users table
-      await publicDb.execute(`
-        CREATE TABLE IF NOT EXISTS "${schemaName}"."users" (
-          "id" uuid PRIMARY KEY DEFAULT gen_random_uuid(),
-          "email" varchar(256) NOT NULL UNIQUE,
-          "password_hash" text NOT NULL,
-          "name" varchar(256) NOT NULL,
-          "role" varchar(64) NOT NULL DEFAULT 'member',
-          "status" varchar(32) NOT NULL DEFAULT 'active',
-          "is_verified" boolean NOT NULL DEFAULT false,
-          "verification_token" varchar(256),
-          "reset_token" varchar(256),
-          "reset_token_expires_at" timestamp,
-          "created_at" timestamp NOT NULL DEFAULT now(),
-          "updated_at" timestamp NOT NULL DEFAULT now()
-        );
-      `);
-
-      // Build tenant-specific session table
-      await publicDb.execute(`
-        CREATE TABLE IF NOT EXISTS "${schemaName}"."sessions" (
-          "id" uuid PRIMARY KEY DEFAULT gen_random_uuid(),
-          "user_id" uuid NOT NULL REFERENCES "${schemaName}"."users"("id") ON DELETE CASCADE,
-          "token" varchar(512) NOT NULL UNIQUE,
-          "expires_at" timestamp NOT NULL,
-          "created_at" timestamp NOT NULL DEFAULT now()
-        );
-      `);
+      await ensureTenantTables(schemaName);
 
       // 3. Register the tenant workspace metadata in global tenants table
       const [newTenant] = await publicDb
@@ -125,18 +95,19 @@ export class AuthController {
       const verificationToken = crypto.randomBytes(32).toString('hex');
 
       // 5. Seed the default company administrator account in the isolated schema context
-      // Note: We seed them as unverified so they can test the email verification endpoint if they choose,
-      // or we can seed them as verified if we want instant onboarding. Let's seed as unverified (is_verified = false)
-      // but let's return the token clearly so it can be verified with a single click or API call.
-      await publicDb.execute(`
-        INSERT INTO "${schemaName}"."users" (email, password_hash, name, role, is_verified, verification_token)
-        VALUES ('${ownerEmail.replace(/'/g, "''")}', '${passwordHash}', '${ownerName.replace(/'/g, "''")}', 'owner', false, '${verificationToken}')
-      `);
-
-      const ownerResult = await publicDb.execute(`
-        SELECT id, email, name, role, is_verified, verification_token FROM "${schemaName}"."users" WHERE email = '${ownerEmail.replace(/'/g, "''")}' LIMIT 1
-      `);
-      const createdOwner = (ownerResult.rows as any[])[0];
+      const tenantDbInfo = await getTenantDrizzleClient(schemaName);
+      const [createdOwner] = await tenantDbInfo.db
+        .insert(users)
+        .values({
+          email: ownerEmail.toLowerCase(),
+          passwordHash,
+          name: ownerName,
+          role: 'owner',
+          status: 'active',
+          isVerified: false,
+          verificationToken,
+        })
+        .returning();
 
       // 6. Generate authenticated access token and refresh token
       const accessToken = JwtProvider.signAccessToken({
@@ -154,7 +125,6 @@ export class AuthController {
       });
 
       // 7. Save refresh token inside the newly created sessions table
-      const tenantDbInfo = await getTenantDrizzleClient(schemaName);
       await tenantDbInfo.db.insert(sessions).values({
         userId: createdOwner.id,
         token: refreshToken,
@@ -194,8 +164,8 @@ export class AuthController {
             email: createdOwner.email,
             name: createdOwner.name,
             role: createdOwner.role,
-            isVerified: createdOwner.is_verified,
-            verificationToken: createdOwner.verification_token,
+            isVerified: createdOwner.isVerified,
+            verificationToken: createdOwner.verificationToken,
           },
           token: accessToken,
           refreshToken,
