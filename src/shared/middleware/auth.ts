@@ -30,8 +30,8 @@ export function authenticate(req: Request, res: Response, next: NextFunction): v
 
   if (authHeader && authHeader.startsWith('Bearer ')) {
     token = authHeader.substring(7);
-  } else if (req.cookies && req.cookies.token) {
-    token = req.cookies.token;
+  } else if (req.cookies && req.cookies.accessToken) {
+    token = req.cookies.accessToken;
   }
 
   if (!token) {

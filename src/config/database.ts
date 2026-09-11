@@ -1,4 +1,5 @@
 import { drizzle } from 'drizzle-orm/node-postgres';
+import pg from 'pg';
 import { env } from './env';
 import { Logger } from '../shared/utils/logger';
 import { InternalServerError } from '../shared/utils/errors';
@@ -112,13 +113,23 @@ function handleMockQuery(thisClient: { currentSchema?: string }, config: any, va
   const sql = typeof config === 'string' ? config : config.text;
   const params = (values && values.length > 0) ? values : (config && typeof config === 'object' && config.values ? config.values : []);
 
-  try {
-    const configKeys = typeof config === 'object' && config !== null ? Object.keys(config) : [];
-    fs.appendFileSync(path.join(process.cwd(), 'sql_logs.txt'), `SQL: ${sql}\nKEYS: ${JSON.stringify(configKeys)}\nCONFIG: ${JSON.stringify(config)}\nPARAMS: ${JSON.stringify(params)}\n\n`);
-  } catch (err) {}
+  const safeParams = params.map(p => {
+    if (typeof p === 'string') {
+      if (p.includes(':') && p.length > 50) return '[REDACTED_HASH]';
+      if (p.startsWith('ey') && p.length > 40) return '[REDACTED_JWT]';
+      if (p.length >= 32) return '[REDACTED_SECRET]';
+    }
+    return p;
+  });
 
-  console.log(`[SQL EXECUTE] ${sql} | Params: ${JSON.stringify(params)}`);
-  logger.debug(`Executing mocked SQL: ${sql} | Params: ${JSON.stringify(params)}`);
+  if (env.NODE_ENV !== 'production') {
+    try {
+      const configKeys = typeof config === 'object' && config !== null ? Object.keys(config) : [];
+      fs.appendFileSync(path.join(process.cwd(), 'sql_logs.txt'), `SQL: ${sql}\nKEYS: ${JSON.stringify(configKeys)}\nPARAMS: ${JSON.stringify(safeParams)}\n\n`);
+    } catch (err) {}
+
+    logger.debug(`Executing SQL: ${sql} | Params: ${JSON.stringify(safeParams)}`);
+  }
 
   let finalRows: any[] = [];
   let commandName = 'UNKNOWN';
@@ -208,47 +219,68 @@ function handleMockQuery(thisClient: { currentSchema?: string }, config: any, va
     const schemaMatch = sql.match(/INSERT\s+INTO\s+"([^"]+)"\."users"/i);
     const targetSchema = schemaMatch ? schemaMatch[1] : null;
     
-    const openParen = sql.lastIndexOf('(');
-    const closeParen = sql.lastIndexOf(')');
-    if (openParen !== -1 && closeParen !== -1 && targetSchema) {
-      const rawValues = sql.substring(openParen + 1, closeParen);
-      const valuesArray: string[] = [];
-      let currentVal = '';
-      let insideQuote = false;
-      for (let i = 0; i < rawValues.length; i++) {
-        const char = rawValues[i];
-        if (char === "'") {
-          if (insideQuote && rawValues[i+1] === "'") {
-            currentVal += "'";
-            i++;
-          } else {
-            insideQuote = !insideQuote;
-          }
-        } else if (char === ',' && !insideQuote) {
-          valuesArray.push(currentVal.trim());
-          currentVal = '';
-        } else {
-          currentVal += char;
-        }
-      }
-      valuesArray.push(currentVal.trim());
-
-      const newUser = {
+    let newUser: any;
+    if (params && params.length >= 3) {
+      newUser = {
         id: crypto.randomUUID(),
-        email: valuesArray[0],
-        password_hash: valuesArray[1],
-        passwordHash: valuesArray[1],
-        name: valuesArray[2],
-        role: valuesArray[3] || 'member',
+        email: params[0],
+        password_hash: params[1],
+        passwordHash: params[1],
+        name: params[2],
+        role: params[3] || 'owner',
         status: 'active',
-        isVerified: valuesArray[4] === 'true',
-        is_verified: valuesArray[4] === 'true',
-        verificationToken: valuesArray[5] || null,
-        verification_token: valuesArray[5] || null,
+        isVerified: params[4] === true || params[4] === 'true',
+        is_verified: params[4] === true || params[4] === 'true',
+        verificationToken: params[5] || null,
+        verification_token: params[5] || null,
         created_at: new Date().toISOString(),
         updated_at: new Date().toISOString()
       };
-      
+    } else {
+      const openParen = sql.lastIndexOf('(');
+      const closeParen = sql.lastIndexOf(')');
+      if (openParen !== -1 && closeParen !== -1 && targetSchema) {
+        const rawValues = sql.substring(openParen + 1, closeParen);
+        const valuesArray: string[] = [];
+        let currentVal = '';
+        let insideQuote = false;
+        for (let i = 0; i < rawValues.length; i++) {
+          const char = rawValues[i];
+          if (char === "'") {
+            if (insideQuote && rawValues[i+1] === "'") {
+              currentVal += "'";
+              i++;
+            } else {
+              insideQuote = !insideQuote;
+            }
+          } else if (char === ',' && !insideQuote) {
+            valuesArray.push(currentVal.trim());
+            currentVal = '';
+          } else {
+            currentVal += char;
+          }
+        }
+        valuesArray.push(currentVal.trim());
+
+        newUser = {
+          id: crypto.randomUUID(),
+          email: valuesArray[0],
+          password_hash: valuesArray[1],
+          passwordHash: valuesArray[1],
+          name: valuesArray[2],
+          role: valuesArray[3] || 'member',
+          status: 'active',
+          isVerified: valuesArray[4] === 'true',
+          is_verified: valuesArray[4] === 'true',
+          verificationToken: valuesArray[5] || null,
+          verification_token: valuesArray[5] || null,
+          created_at: new Date().toISOString(),
+          updated_at: new Date().toISOString()
+        };
+      }
+    }
+
+    if (newUser && targetSchema) {
       if (!state.users[targetSchema]) {
         state.users[targetSchema] = [];
       }
@@ -265,8 +297,13 @@ function handleMockQuery(thisClient: { currentSchema?: string }, config: any, va
     const schemaMatch = sql.match(/FROM\s+"([^"]+)"\."users"/i);
     const targetSchema = schemaMatch ? schemaMatch[1] : null;
     
+    let targetEmail = '';
     const emailMatch = sql.match(/WHERE\s+email\s*=\s*'([^']+)'/i);
-    const targetEmail = emailMatch ? emailMatch[1] : '';
+    if (emailMatch) {
+      targetEmail = emailMatch[1];
+    } else if (params && params.length > 0) {
+      targetEmail = params[0];
+    }
     
     if (targetSchema) {
       const list = state.users[targetSchema] || [];
@@ -870,7 +907,35 @@ class MockPool extends EventEmitter {
   }
 }
 
-export const pool = new MockPool() as any;
+let activePool: any;
+
+const isProduction = env.NODE_ENV === 'production';
+const isExplicitPostgres = env.DB_MODE === 'postgres';
+const isExplicitMock = env.DB_MODE === 'mock';
+
+if (isProduction || isExplicitPostgres) {
+  if (isExplicitMock && isProduction) {
+    logger.error('❌ CONFIGURATION ERROR: Cannot use mock database mode in production environment!');
+    process.exit(1);
+  }
+  logger.info(`Initializing PostgreSQL database connection pool for [${env.NODE_ENV}] environment...`);
+  activePool = new pg.Pool({
+    connectionString: env.DATABASE_URL,
+    ssl: env.DATABASE_URL.includes('sslmode=require') || isProduction ? { rejectUnauthorized: false } : false,
+  });
+
+  activePool.on('error', (err: Error) => {
+    logger.error('Unexpected error on idle PostgreSQL client pool', err);
+    if (isProduction) {
+      process.exit(1);
+    }
+  });
+} else {
+  logger.info('Initializing Mock database pool for development/testing environment...');
+  activePool = new MockPool();
+}
+
+export const pool = activePool as any;
 
 /**
  * Creates a Drizzle client instance bound to a specific tenant schema using search_path.

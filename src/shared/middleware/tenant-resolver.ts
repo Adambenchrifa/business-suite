@@ -86,12 +86,12 @@ export async function tenantResolver(req: Request, res: Response, next: NextFunc
     const activeTenant = registeredTenants[0];
 
     if (!activeTenant) {
-      next(new NotFoundError(`Tenant [${tenantKey}] is not registered`));
+      next(new NotFoundError('Tenant workspace not found or inaccessible'));
       return;
     }
 
     if (activeTenant.status === 'suspended') {
-      next(new ForbiddenError(`Tenant [${tenantKey}] has been suspended`));
+      next(new ForbiddenError('Tenant workspace is suspended'));
       return;
     }
 

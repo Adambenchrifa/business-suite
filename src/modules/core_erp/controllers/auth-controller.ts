@@ -1,5 +1,5 @@
 import { Request, Response, NextFunction } from 'express';
-import { eq, and } from 'drizzle-orm';
+import { eq, and, sql } from 'drizzle-orm';
 import { z } from 'zod';
 import crypto from 'crypto';
 import { tenants, users, sessions } from '../infrastructure/db-schemas';
@@ -7,8 +7,18 @@ import { PasswordHasher, JwtProvider } from '../domain/user';
 import { publicDb, getTenantDrizzleClient } from '../../../config/database';
 import { ConflictError, ValidationError, UnauthorizedError, NotFoundError } from '../../../shared/utils/errors';
 import { Logger } from '../../../shared/utils/logger';
+import { env } from '../../../config/env';
+import { EmailService } from '../../../shared/services/email-service';
 
 const logger = new Logger('AuthController');
+
+const getCookieOptions = (isRefresh = false) => ({
+  httpOnly: true,
+  secure: env.NODE_ENV === 'production',
+  sameSite: 'lax' as const,
+  path: isRefresh ? '/api/v1/auth/refresh' : '/',
+  maxAge: isRefresh ? 7 * 24 * 3600 * 1000 : 15 * 60 * 1000,
+});
 
 // Validation schemas using Zod
 const registerSchema = z.object({
@@ -128,13 +138,13 @@ export class AuthController {
       // Note: We seed them as unverified so they can test the email verification endpoint if they choose,
       // or we can seed them as verified if we want instant onboarding. Let's seed as unverified (is_verified = false)
       // but let's return the token clearly so it can be verified with a single click or API call.
-      await publicDb.execute(`
-        INSERT INTO "${schemaName}"."users" (email, password_hash, name, role, is_verified, verification_token)
-        VALUES ('${ownerEmail.replace(/'/g, "''")}', '${passwordHash}', '${ownerName.replace(/'/g, "''")}', 'owner', false, '${verificationToken}')
+      await publicDb.execute(sql`
+        INSERT INTO ${sql.raw(`"${schemaName}"."users"`)} (email, password_hash, name, role, is_verified, verification_token)
+        VALUES (${ownerEmail.toLowerCase()}, ${passwordHash}, ${ownerName}, ${'owner'}, ${false}, ${verificationToken})
       `);
 
-      const ownerResult = await publicDb.execute(`
-        SELECT id, email, name, role, is_verified, verification_token FROM "${schemaName}"."users" WHERE email = '${ownerEmail.replace(/'/g, "''")}' LIMIT 1
+      const ownerResult = await publicDb.execute(sql`
+        SELECT id, email, name, role, is_verified, verification_token FROM ${sql.raw(`"${schemaName}"."users"`)} WHERE email = ${ownerEmail.toLowerCase()} LIMIT 1
       `);
       const createdOwner = (ownerResult.rows as any[])[0];
 
@@ -163,20 +173,8 @@ export class AuthController {
       tenantDbInfo.release();
 
       // Set cookie headers for secure sessions
-      res.cookie('accessToken', accessToken, {
-        httpOnly: true,
-        secure: true,
-        sameSite: 'strict',
-        maxAge: 15 * 60 * 1000, // 15 mins
-      });
-
-      res.cookie('refreshToken', refreshToken, {
-        httpOnly: true,
-        secure: true,
-        sameSite: 'strict',
-        path: '/api/v1/auth/refresh',
-        maxAge: 7 * 24 * 3600 * 1000, // 7 days
-      });
+      res.cookie('accessToken', accessToken, getCookieOptions(false));
+      res.cookie('refreshToken', refreshToken, getCookieOptions(true));
 
       logger.info(`Successfully provisioned tenant workspace [${companyName}] with admin user [${ownerEmail}]`);
 
@@ -276,20 +274,8 @@ export class AuthController {
       });
 
       // Set cookie headers for secure environments
-      res.cookie('accessToken', accessToken, {
-        httpOnly: true,
-        secure: true,
-        sameSite: 'strict',
-        maxAge: 15 * 60 * 1000,
-      });
-
-      res.cookie('refreshToken', refreshToken, {
-        httpOnly: true,
-        secure: true,
-        sameSite: 'strict',
-        path: '/api/v1/auth/refresh',
-        maxAge: 7 * 24 * 3600 * 1000,
-      });
+      res.cookie('accessToken', accessToken, getCookieOptions(false));
+      res.cookie('refreshToken', refreshToken, getCookieOptions(true));
 
       logger.info(`User [${email}] successfully authenticated on tenant workspace [${req.tenantDomain}]`);
 
@@ -380,7 +366,7 @@ export class AuthController {
       }
 
       // Clear cookies
-      res.clearCookie('accessToken');
+      res.clearCookie('accessToken', { path: '/' });
       res.clearCookie('refreshToken', { path: '/api/v1/auth/refresh' });
 
       res.status(200).json({
@@ -440,7 +426,7 @@ export class AuthController {
           .delete(sessions)
           .where(eq(sessions.userId, decoded.id));
 
-        res.clearCookie('accessToken');
+        res.clearCookie('accessToken', { path: '/' });
         res.clearCookie('refreshToken', { path: '/api/v1/auth/refresh' });
 
         next(new UnauthorizedError('Session compromise detected. Invalidation triggered. Please log in again.'));
@@ -472,32 +458,28 @@ export class AuthController {
         tenantId: req.tenantId,
       });
 
-      // 5. Atomic DB Swap (Delete old, insert new)
-      await req.db
-        .delete(sessions)
-        .where(eq(sessions.token, refreshToken));
+      // 5. Atomic DB Swap (Delete old session and insert new session within transaction)
+      const performRotation = async (tx: any) => {
+        await tx
+          .delete(sessions)
+          .where(eq(sessions.token, refreshToken));
 
-      await req.db.insert(sessions).values({
-        userId: decoded.id,
-        token: newRefreshToken,
-        expiresAt: new Date(Date.now() + 7 * 24 * 3600 * 1000), // 7 days
-      });
+        await tx.insert(sessions).values({
+          userId: decoded.id,
+          token: newRefreshToken,
+          expiresAt: new Date(Date.now() + 7 * 24 * 3600 * 1000), // 7 days
+        });
+      };
+
+      if (typeof req.db.transaction === 'function') {
+        await req.db.transaction(performRotation);
+      } else {
+        await performRotation(req.db);
+      }
 
       // Update cookies
-      res.cookie('accessToken', newAccessToken, {
-        httpOnly: true,
-        secure: true,
-        sameSite: 'strict',
-        maxAge: 15 * 60 * 1000,
-      });
-
-      res.cookie('refreshToken', newRefreshToken, {
-        httpOnly: true,
-        secure: true,
-        sameSite: 'strict',
-        path: '/api/v1/auth/refresh',
-        maxAge: 7 * 24 * 3600 * 1000,
-      });
+      res.cookie('accessToken', newAccessToken, getCookieOptions(false));
+      res.cookie('refreshToken', newRefreshToken, getCookieOptions(true));
 
       res.status(200).json({
         success: true,
@@ -548,27 +530,33 @@ export class AuthController {
       }
 
       // Generate cryptographically secure token
-      const resetToken = crypto.randomBytes(32).toString('hex');
+      const rawResetToken = crypto.randomBytes(32).toString('hex');
+      const hashedResetToken = crypto.createHash('sha256').update(rawResetToken).digest('hex');
       const resetTokenExpiresAt = new Date(Date.now() + 1 * 3600 * 1000); // 1 hour lifetime
 
-      // Save token to DB
+      // Save hashed token representation to DB
       await req.db
         .update(users)
         .set({
-          resetToken,
+          resetToken: hashedResetToken,
           resetTokenExpiresAt,
         })
         .where(eq(users.id, activeUser.id));
+
+      // Dispatch token via EmailService abstraction
+      await EmailService.sendPasswordResetEmail({
+        to: email,
+        resetToken: rawResetToken,
+        domain: req.tenantDomain || 'default',
+      });
 
       logger.info(`Dispatched password reset token to User [${email}] on domain [${req.tenantDomain}]`);
 
       res.status(200).json({
         success: true,
         message: 'If the email is registered, a password reset link has been dispatched.',
-        data: {
-          // Returning token in response for development / automated testing convenience
-          resetToken,
-        },
+        // Reset token is NEVER exposed in production response payloads
+        ...(env.NODE_ENV !== 'production' ? { data: { resetToken: rawResetToken } } : {}),
       });
     } catch (error) {
       logger.error('Forgot password handler failed', error);
@@ -594,12 +582,23 @@ export class AuthController {
 
       const { token, newPassword } = parsedBody.data;
 
-      // Find user with active token
-      const matchedUsers = await req.db
+      // Compute SHA-256 hash of provided token to compare against stored token hash
+      const hashedToken = crypto.createHash('sha256').update(token).digest('hex');
+
+      // Find user with active token hash (or fallback raw token)
+      let matchedUsers = await req.db
         .select()
         .from(users)
-        .where(eq(users.resetToken, token))
+        .where(eq(users.resetToken, hashedToken))
         .limit(1);
+
+      if (matchedUsers.length === 0) {
+        matchedUsers = await req.db
+          .select()
+          .from(users)
+          .where(eq(users.resetToken, token))
+          .limit(1);
+      }
 
       const activeUser = matchedUsers[0];
 
