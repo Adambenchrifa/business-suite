@@ -3,7 +3,9 @@ import path from 'path';
 import { createServer as createViteServer } from 'vite';
 import { env } from './src/config/env';
 import { tenantResolver } from './src/shared/middleware/tenant-resolver';
-import { authenticate } from './src/shared/middleware/auth';
+import { authenticate, requireRole } from './src/shared/middleware/auth';
+import { authRateLimiter } from './src/shared/middleware/rate-limiter';
+import { securityHeadersMiddleware } from './src/shared/middleware/security-headers';
 import { AuthController } from './src/modules/core_erp/controllers/auth-controller';
 import { ErpController } from './src/modules/core_erp/controllers/erp-controller';
 import { SalesCrmController } from './src/modules/core_erp/controllers/sales-crm-controller';
@@ -26,6 +28,7 @@ async function bootstrap() {
   const app = express();
 
   // 1. Core middlewares
+  app.use(securityHeadersMiddleware);
   app.use(express.json());
 
   // Light-weight inline zero-dependency cookie parsing
@@ -71,70 +74,70 @@ async function bootstrap() {
   app.use('/api/v1', tenantResolver);
 
   // 4. Core Authentication endpoints
-  app.post('/api/v1/auth/register', AuthController.register);
-  app.post('/api/v1/auth/login', AuthController.login);
+  app.post('/api/v1/auth/register', authRateLimiter, AuthController.register);
+  app.post('/api/v1/auth/login', authRateLimiter, AuthController.login);
   app.post('/api/v1/auth/logout', AuthController.logout);
-  app.post('/api/v1/auth/refresh', AuthController.refresh);
-  app.post('/api/v1/auth/forgot-password', AuthController.forgotPassword);
-  app.post('/api/v1/auth/reset-password', AuthController.resetPassword);
-  app.post('/api/v1/auth/verify-email', AuthController.verifyEmail);
+  app.post('/api/v1/auth/refresh', authRateLimiter, AuthController.refresh);
+  app.post('/api/v1/auth/forgot-password', authRateLimiter, AuthController.forgotPassword);
+  app.post('/api/v1/auth/reset-password', authRateLimiter, AuthController.resetPassword);
+  app.post('/api/v1/auth/verify-email', authRateLimiter, AuthController.verifyEmail);
   app.get('/api/v1/auth/me', authenticate, AuthController.me);
 
   // 4b. Core ERP Foundation Module endpoints
   // Organization
   app.get('/api/v1/erp/organization', authenticate, ErpController.getOrganization);
-  app.put('/api/v1/erp/organization', authenticate, ErpController.updateOrganization);
+  app.put('/api/v1/erp/organization', authenticate, requireRole(['owner', 'admin']), ErpController.updateOrganization);
 
   // Branches
   app.get('/api/v1/erp/branches', authenticate, ErpController.getBranches);
-  app.post('/api/v1/erp/branches', authenticate, ErpController.createBranch);
-  app.put('/api/v1/erp/branches/:id', authenticate, ErpController.updateBranch);
-  app.delete('/api/v1/erp/branches/:id', authenticate, ErpController.deleteBranch);
+  app.post('/api/v1/erp/branches', authenticate, requireRole(['owner', 'admin']), ErpController.createBranch);
+  app.put('/api/v1/erp/branches/:id', authenticate, requireRole(['owner', 'admin']), ErpController.updateBranch);
+  app.delete('/api/v1/erp/branches/:id', authenticate, requireRole(['owner', 'admin']), ErpController.deleteBranch);
 
   // Warehouses
   app.get('/api/v1/erp/warehouses', authenticate, ErpController.getWarehouses);
-  app.post('/api/v1/erp/warehouses', authenticate, ErpController.createWarehouse);
-  app.put('/api/v1/erp/warehouses/:id', authenticate, ErpController.updateWarehouse);
-  app.delete('/api/v1/erp/warehouses/:id', authenticate, ErpController.deleteWarehouse);
+  app.post('/api/v1/erp/warehouses', authenticate, requireRole(['owner', 'admin']), ErpController.createWarehouse);
+  app.put('/api/v1/erp/warehouses/:id', authenticate, requireRole(['owner', 'admin']), ErpController.updateWarehouse);
+  app.delete('/api/v1/erp/warehouses/:id', authenticate, requireRole(['owner', 'admin']), ErpController.deleteWarehouse);
 
   // Departments
   app.get('/api/v1/erp/departments', authenticate, ErpController.getDepartments);
-  app.post('/api/v1/erp/departments', authenticate, ErpController.createDepartment);
-  app.put('/api/v1/erp/departments/:id', authenticate, ErpController.updateDepartment);
-  app.delete('/api/v1/erp/departments/:id', authenticate, ErpController.deleteDepartment);
+  app.post('/api/v1/erp/departments', authenticate, requireRole(['owner', 'admin']), ErpController.createDepartment);
+  app.put('/api/v1/erp/departments/:id', authenticate, requireRole(['owner', 'admin']), ErpController.updateDepartment);
+  app.delete('/api/v1/erp/departments/:id', authenticate, requireRole(['owner', 'admin']), ErpController.deleteDepartment);
 
   // Positions
   app.get('/api/v1/erp/positions', authenticate, ErpController.getPositions);
-  app.post('/api/v1/erp/positions', authenticate, ErpController.createPosition);
-  app.put('/api/v1/erp/positions/:id', authenticate, ErpController.updatePosition);
-  app.delete('/api/v1/erp/positions/:id', authenticate, ErpController.deletePosition);
+  app.post('/api/v1/erp/positions', authenticate, requireRole(['owner', 'admin']), ErpController.createPosition);
+  app.put('/api/v1/erp/positions/:id', authenticate, requireRole(['owner', 'admin']), ErpController.updatePosition);
+  app.delete('/api/v1/erp/positions/:id', authenticate, requireRole(['owner', 'admin']), ErpController.deletePosition);
 
   // Employees
   app.get('/api/v1/erp/employees', authenticate, ErpController.getEmployees);
-  app.post('/api/v1/erp/employees', authenticate, ErpController.createEmployee);
-  app.put('/api/v1/erp/employees/:id', authenticate, ErpController.updateEmployee);
-  app.delete('/api/v1/erp/employees/:id', authenticate, ErpController.deleteEmployee);
+  app.post('/api/v1/erp/employees', authenticate, requireRole(['owner', 'admin']), ErpController.createEmployee);
+  app.put('/api/v1/erp/employees/:id', authenticate, requireRole(['owner', 'admin']), ErpController.updateEmployee);
+  app.delete('/api/v1/erp/employees/:id', authenticate, requireRole(['owner', 'admin']), ErpController.deleteEmployee);
 
   // User Invitations
   app.get('/api/v1/erp/invitations', authenticate, ErpController.getInvitations);
-  app.post('/api/v1/erp/invitations', authenticate, ErpController.createInvitation);
-  app.delete('/api/v1/erp/invitations/:id', authenticate, ErpController.cancelInvitation);
+  app.post('/api/v1/erp/invitations', authenticate, requireRole(['owner', 'admin']), ErpController.createInvitation);
+  app.delete('/api/v1/erp/invitations/:id', authenticate, requireRole(['owner', 'admin']), ErpController.cancelInvitation);
 
   // Currencies
   app.get('/api/v1/erp/currencies', authenticate, ErpController.getCurrencies);
-  app.post('/api/v1/erp/currencies', authenticate, ErpController.createCurrency);
-  app.put('/api/v1/erp/currencies/:id', authenticate, ErpController.updateCurrency);
-  app.delete('/api/v1/erp/currencies/:id', authenticate, ErpController.deleteCurrency);
+  app.post('/api/v1/erp/currencies', authenticate, requireRole(['owner', 'admin']), ErpController.createCurrency);
+  app.put('/api/v1/erp/currencies/:id', authenticate, requireRole(['owner', 'admin']), ErpController.updateCurrency);
+  app.delete('/api/v1/erp/currencies/:id', authenticate, requireRole(['owner', 'admin']), ErpController.deleteCurrency);
 
   // Taxes
   app.get('/api/v1/erp/taxes', authenticate, ErpController.getTaxes);
-  app.post('/api/v1/erp/taxes', authenticate, ErpController.createTax);
-  app.put('/api/v1/erp/taxes/:id', authenticate, ErpController.updateTax);
-  app.delete('/api/v1/erp/taxes/:id', authenticate, ErpController.deleteTax);
+  app.post('/api/v1/erp/taxes', authenticate, requireRole(['owner', 'admin']), ErpController.createTax);
+  app.put('/api/v1/erp/taxes/:id', authenticate, requireRole(['owner', 'admin']), ErpController.updateTax);
+  app.delete('/api/v1/erp/taxes/:id', authenticate, requireRole(['owner', 'admin']), ErpController.deleteTax);
 
   // Number sequences
   app.get('/api/v1/erp/sequences', authenticate, ErpController.getSequences);
-  app.put('/api/v1/erp/sequences/:id', authenticate, ErpController.updateSequence);
+  app.put('/api/v1/erp/sequences/:id', authenticate, requireRole(['owner', 'admin']), ErpController.updateSequence);
 
   // Files
   app.get('/api/v1/erp/files', authenticate, ErpController.getFiles);

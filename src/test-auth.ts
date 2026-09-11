@@ -2,7 +2,9 @@ import { AuthController } from './modules/core_erp/controllers/auth-controller';
 import { PasswordHasher, JwtProvider } from './modules/core_erp/domain/user';
 import { publicDb, getTenantDrizzleClient } from './config/database';
 import { tenants, users, sessions } from './modules/core_erp/infrastructure/db-schemas';
-import { requireRole } from './shared/middleware/auth';
+import { authenticate, requireRole } from './shared/middleware/auth';
+import { createRateLimiter } from './shared/middleware/rate-limiter';
+import { env } from './config/env';
 import { eq } from 'drizzle-orm';
 import crypto from 'crypto';
 
@@ -513,6 +515,136 @@ async function runTests() {
     middleware(reqC, resC, nextC);
     assert(nextErrorC !== null, 'Anonymous requests should be denied by requireRole');
     assert(nextErrorC.statusCode === 401, 'Anonymous requests should yield 401 Unauthorized status');
+  });
+
+  // ----------------------------------------------------
+  // TEST UNIT 10: Tenant Cross-Isolation Verification
+  // ----------------------------------------------------
+  await test('Tenant isolation middleware blocks cross-tenant token usage', async () => {
+    const tenantAToken = JwtProvider.signAccessToken({
+      id: 'user-tenant-a',
+      email: 'user@tenant-a.com',
+      role: 'owner',
+      tenantId: 'tenant-uuid-A',
+    });
+
+    // Request context resolves to Tenant B, but user passes Tenant A token
+    let authError: any = null;
+    const req: any = {
+      headers: {
+        authorization: `Bearer ${tenantAToken}`,
+      },
+      cookies: {},
+      tenantId: 'tenant-uuid-B',
+    };
+    const res: any = {};
+    const next = (err?: any) => {
+      authError = err;
+    };
+
+    authenticate(req, res, next);
+
+    assert(authError !== null, 'Cross-tenant request must be rejected');
+    assert(authError.statusCode === 403, 'Cross-tenant request must yield 403 Forbidden');
+  });
+
+  // ----------------------------------------------------
+  // TEST UNIT 11: Rate Limiting Enforcement
+  // ----------------------------------------------------
+  await test('Rate limiting middleware throttles excessive requests with HTTP 429', async () => {
+    const rateLimiter = createRateLimiter({
+      windowMs: 60 * 1000,
+      maxRequests: 3,
+      message: 'Rate limit test threshold exceeded',
+    });
+
+    let lastStatus = 200;
+    let lastJson: any = null;
+
+    const makeRequest = () => {
+      let status = 200;
+      let json = null;
+      const req: any = {
+        headers: {},
+        socket: { remoteAddress: '127.0.0.99' },
+        path: '/api/v1/auth/login',
+      };
+      const res: any = {
+        setHeader: () => {},
+        status: (code: number) => {
+          status = code;
+          return res;
+        },
+        json: (data: any) => {
+          json = data;
+          return res;
+        },
+      };
+      const next = () => {};
+
+      rateLimiter(req, res, next);
+      lastStatus = status;
+      lastJson = json;
+    };
+
+    // Make 3 allowed requests
+    makeRequest();
+    makeRequest();
+    makeRequest();
+    assert(lastStatus === 200, 'First 3 requests should be permitted');
+
+    // 4th request exceeds threshold (maxRequests = 3)
+    makeRequest();
+    assert(lastStatus === 429, '4th request must be rate limited with HTTP 429');
+    assert(lastJson.error.code === 'TOO_MANY_REQUESTS', 'Rate limit error code must match');
+  });
+
+  // ----------------------------------------------------
+  // TEST UNIT 12: Production Reset Token Suppression
+  // ----------------------------------------------------
+  await test('ForgotPassword suppresses reset token in production mode response payload', async () => {
+    const originalEnv = env.NODE_ENV;
+    (env as any).NODE_ENV = 'production';
+
+    try {
+      const schemaName = `tenant_${testDomain.replace(/-/g, '_')}`;
+      const tenantDbInfo = await getTenantDrizzleClient(schemaName);
+
+      const req: any = {
+        db: tenantDbInfo.db,
+        tenantDomain: testDomain,
+        body: {
+          email: 'ceo@acme-test.com',
+        },
+      };
+
+      let status = 200;
+      let jsonResult: any = null;
+
+      const res: any = {
+        status: (code: number) => {
+          status = code;
+          return res;
+        },
+        json: (data: any) => {
+          jsonResult = data;
+          return res;
+        },
+      };
+
+      const next = (err: any) => {
+        if (err) throw err;
+      };
+
+      await AuthController.forgotPassword(req, res, next);
+      tenantDbInfo.release();
+
+      assert(status === 200, 'Expected status 200');
+      assert(jsonResult.success === true, 'ForgotPassword response must be successful');
+      assert(jsonResult.data?.resetToken === undefined, 'Reset token MUST NOT be present in production response');
+    } finally {
+      (env as any).NODE_ENV = originalEnv;
+    }
   });
 
   // ----------------------------------------------------
