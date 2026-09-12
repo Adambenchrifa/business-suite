@@ -134,8 +134,32 @@ function handleMockQuery(thisClient: { currentSchema?: string }, config: any, va
   let finalRows: any[] = [];
   let commandName = 'UNKNOWN';
 
+  // 0. BEGIN / COMMIT / ROLLBACK Transactions
+  if (/^\s*(BEGIN|START TRANSACTION)\s*$/i.test(sql.trim())) {
+    if ((thisClient as any).transactionSnapshots) {
+      (thisClient as any).transactionSnapshots.push(JSON.parse(JSON.stringify(state)));
+    }
+    finalRows = [];
+    commandName = 'BEGIN';
+  }
+  else if (/^\s*COMMIT\s*$/i.test(sql.trim())) {
+    if ((thisClient as any).transactionSnapshots && (thisClient as any).transactionSnapshots.length > 0) {
+      (thisClient as any).transactionSnapshots.pop();
+    }
+    finalRows = [];
+    commandName = 'COMMIT';
+  }
+  else if (/^\s*ROLLBACK\s*$/i.test(sql.trim())) {
+    if ((thisClient as any).transactionSnapshots && (thisClient as any).transactionSnapshots.length > 0) {
+      state = (thisClient as any).transactionSnapshots.pop()!;
+      saveDb();
+    }
+    finalRows = [];
+    commandName = 'ROLLBACK';
+  }
+
   // 1. SELECT 1 (Healthcheck)
-  if (/^\s*SELECT\s+1\s*$/i.test(sql.trim())) {
+  else if (/^\s*SELECT\s+1\s*$/i.test(sql.trim())) {
     finalRows = [{ '?column?': 1 }];
     commandName = 'SELECT';
   }
@@ -569,8 +593,9 @@ function handleMockQuery(thisClient: { currentSchema?: string }, config: any, va
         const tableName = matchTable[2];
         const openParen1 = sql.indexOf('(');
         const closeParen1 = sql.indexOf(')', openParen1);
-        const openParen2 = sql.indexOf('VALUES', closeParen1);
-        const openParenVal = sql.indexOf('(', openParen2);
+        const valuesMatch = sql.match(/values/i);
+        const openParen2 = valuesMatch ? sql.toLowerCase().indexOf('values', closeParen1) : -1;
+        const openParenVal = openParen2 !== -1 ? sql.indexOf('(', openParen2) : -1;
         const closeParenVal = sql.lastIndexOf(')');
         
         if (openParen1 !== -1 && closeParen1 !== -1 && openParenVal !== -1 && closeParenVal !== -1) {
@@ -878,6 +903,7 @@ function handleMockQuery(thisClient: { currentSchema?: string }, config: any, va
 
 class MockClient extends EventEmitter {
   public currentSchema?: string;
+  public transactionSnapshots: DbState[] = [];
 
   constructor() {
     super();

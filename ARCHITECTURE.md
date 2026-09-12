@@ -382,8 +382,9 @@ Authentication issues highly secure JSON Web Tokens (JWT) signed using asymmetri
 
 ### 9.3 Cryptographic Tenant Isolation Verification
 To completely prevent Cross-Tenant Data Leakage (OWASP Top 10), every database operation must undergo security filtering:
-*   Every SQL statement constructed by Drizzle ORM automatically appends a schema search path prefix or matches the `tenant_id` from the verified JWT payload.
-*   The middleware checks the current tenant ID extracted from the token signature against the database path. If a mismatch is detected, the request is instantly terminated, the session is revoked, and a high-priority security alert is logged in our SIEM stack.
+*   Every SQL statement constructed by Drizzle ORM automatically appends a schema search path prefix (`SET search_path TO "tenant_xyz", public`) matching the verified tenant context.
+*   The `authenticate` and `tenantResolver` middlewares strictly cross-validate the tenant ID from the verified JWT payload (`decoded.tenantId`) against the resolved request tenant ID (`req.tenantId`). If a mismatch, missing key, or suspended tenant is detected, the request is instantly terminated with HTTP 403 Forbidden or 404 Not Found.
+*   Multi-step business operations utilize `InventoryService`, `SalesCrmService`, and `AuditService` with transactional rollbacks and credential-sanitized audit trails.
 
 ---
 
