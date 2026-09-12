@@ -38,6 +38,21 @@ export function errorHandler(
     return;
   }
 
+  // Handle Zod validation errors cleanly
+  if (err && typeof err === 'object' && 'name' in err && (err as any).name === 'ZodError') {
+    const zodErr = err as any;
+    logger.warn('API Validation Error', { ...reqMeta, errors: zodErr.errors });
+    res.status(400).json({
+      success: false,
+      error: {
+        message: 'Invalid request payload parameters',
+        code: 'ValidationError',
+        details: zodErr.errors,
+      },
+    });
+    return;
+  }
+
   // Handle unhandled errors (native errors, database crashes, etc.)
   logger.error('Unhandled System Exception caught', err, reqMeta);
 

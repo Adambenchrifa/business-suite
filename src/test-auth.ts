@@ -1,7 +1,7 @@
 import { AuthController } from './modules/core_erp/controllers/auth-controller';
 import { PasswordHasher, JwtProvider } from './modules/core_erp/domain/user';
 import { publicDb, getTenantDrizzleClient } from './config/database';
-import { tenants, users, sessions } from './modules/core_erp/infrastructure/db-schemas';
+import { tenants, users, sessions, activityLogs, stockMovements } from './modules/core_erp/infrastructure/db-schemas';
 import { authenticate, requireRole } from './shared/middleware/auth';
 import { createRateLimiter } from './shared/middleware/rate-limiter';
 import { env } from './config/env';
@@ -600,7 +600,80 @@ async function runTests() {
   });
 
   // ----------------------------------------------------
-  // TEST UNIT 12: Production Reset Token Suppression
+  // TEST UNIT 12: Audit Log & Credential Sanitization Test
+  // ----------------------------------------------------
+  await test('AuditService redacts sensitive credentials from recorded metadata', async () => {
+    const { AuditService } = await import('./shared/services/audit-service');
+    const schemaName = `tenant_${testDomain.replace(/-/g, '_')}`;
+    const tenantDbInfo = await getTenantDrizzleClient(schemaName);
+
+    const mockReq: any = {
+      user: { id: 'test-user-id', email: 'test@acme-test.com' },
+      ip: '127.0.0.1',
+      headers: {}
+    };
+
+    await AuditService.log(tenantDbInfo.db, mockReq, {
+      action: 'TEST_AUDIT_ACTION',
+      module: 'TestModule',
+      details: 'Audit trail test log execution',
+      metadata: {
+        password: 'SuperSecretPassword123',
+        token: 'eySecretJwtToken123456',
+        publicField: 'VisibleValue'
+      }
+    });
+
+    const logs = await tenantDbInfo.db.select().from(activityLogs).where(eq(activityLogs.action, 'TEST_AUDIT_ACTION'));
+    tenantDbInfo.release();
+
+    assert(logs.length === 1, 'Audit log record should be created in DB');
+    const logDetails = logs[0].details;
+    assert(!logDetails.includes('SuperSecretPassword123'), 'Raw password MUST NOT appear in audit details');
+    assert(!logDetails.includes('eySecretJwtToken123456'), 'Raw token MUST NOT appear in audit details');
+    assert(logDetails.includes('[REDACTED_SECRET]'), 'Redacted marker MUST appear in place of sensitive fields');
+    assert(logDetails.includes('VisibleValue'), 'Public un-redacted field MUST remain intact');
+  });
+
+  // ----------------------------------------------------
+  // TEST UNIT 13: Transaction Rollback on Inventory Service Failure
+  // ----------------------------------------------------
+  await test('Transaction rollback reverts database state on operation failure', async () => {
+    const { InventoryService } = await import('./modules/core_erp/domain/inventory-service');
+    const schemaName = `tenant_${testDomain.replace(/-/g, '_')}`;
+    const tenantDbInfo = await getTenantDrizzleClient(schemaName);
+
+    // Count movements before failed attempt
+    const initialMovements = await tenantDbInfo.db.select().from(stockMovements);
+
+    const mockReq: any = {
+      user: { id: 'test-user-id', email: 'admin@acme.com' },
+      ip: '127.0.0.1'
+    };
+
+    let errorThrown = false;
+    try {
+      // Missing destination warehouse ID for IN movement triggers validation error
+      await InventoryService.processStockMovement(tenantDbInfo.db, mockReq, {
+        type: 'IN',
+        items: []
+      });
+    } catch (err) {
+      errorThrown = true;
+    }
+    tenantDbInfo.release();
+
+    assert(errorThrown === true, 'Validation error should be thrown for invalid stock movement');
+
+    const tenantDbInfoAfter = await getTenantDrizzleClient(schemaName);
+    const finalMovements = await tenantDbInfoAfter.db.select().from(stockMovements);
+    tenantDbInfoAfter.release();
+
+    assert(finalMovements.length === initialMovements.length, 'Database state must be identical after failed transaction attempt');
+  });
+
+  // ----------------------------------------------------
+  // TEST UNIT 14: Production Reset Token Suppression
   // ----------------------------------------------------
   await test('ForgotPassword suppresses reset token in production mode response payload', async () => {
     const originalEnv = env.NODE_ENV;

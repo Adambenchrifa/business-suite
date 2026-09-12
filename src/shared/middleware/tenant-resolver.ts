@@ -76,22 +76,34 @@ export async function tenantResolver(req: Request, res: Response, next: NextFunc
   }
 
   try {
-    // 1. Query the global public registry for tenant metadata
+    // 1. Query the global public registry for tenant metadata (by domain or tenant ID)
     const registeredTenants = await publicDb
       .select()
       .from(tenants)
-      .where(eq(tenants.domain, tenantKey.toLowerCase()))
+      .where(
+        eq(tenants.domain, tenantKey.toLowerCase())
+      )
       .limit(1);
 
-    const activeTenant = registeredTenants[0];
+    let activeTenant = registeredTenants[0];
+
+    if (!activeTenant) {
+      // Check if lookup by ID matches
+      const byId = await publicDb
+        .select()
+        .from(tenants)
+        .where(eq(tenants.id, tenantKey))
+        .limit(1);
+      activeTenant = byId[0];
+    }
 
     if (!activeTenant) {
       next(new NotFoundError('Tenant workspace not found or inaccessible'));
       return;
     }
 
-    if (activeTenant.status === 'suspended') {
-      next(new ForbiddenError('Tenant workspace is suspended'));
+    if (activeTenant.status === 'suspended' || activeTenant.status === 'inactive') {
+      next(new ForbiddenError(`Tenant workspace status is ${activeTenant.status}`));
       return;
     }
 
