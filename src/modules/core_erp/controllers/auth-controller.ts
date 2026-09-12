@@ -84,38 +84,9 @@ export class AuthController {
       const schemaName = `tenant_${sanitizedDomain.replace(/-/g, '_')}`;
       logger.info(`Provisioning workspace [${sanitizedDomain}] inside PostgreSQL schema [${schemaName}]`);
 
-      // 2. Perform Dynamic Schema & Database Provisioning
-      // Run raw PostgreSQL DDL instructions to isolate this tenant physically
-      await publicDb.execute(`CREATE SCHEMA IF NOT EXISTS "${schemaName}"`);
-      
-      // Build tenant-specific users table
-      await publicDb.execute(`
-        CREATE TABLE IF NOT EXISTS "${schemaName}"."users" (
-          "id" uuid PRIMARY KEY DEFAULT gen_random_uuid(),
-          "email" varchar(256) NOT NULL UNIQUE,
-          "password_hash" text NOT NULL,
-          "name" varchar(256) NOT NULL,
-          "role" varchar(64) NOT NULL DEFAULT 'member',
-          "status" varchar(32) NOT NULL DEFAULT 'active',
-          "is_verified" boolean NOT NULL DEFAULT false,
-          "verification_token" varchar(256),
-          "reset_token" varchar(256),
-          "reset_token_expires_at" timestamp,
-          "created_at" timestamp NOT NULL DEFAULT now(),
-          "updated_at" timestamp NOT NULL DEFAULT now()
-        );
-      `);
-
-      // Build tenant-specific session table
-      await publicDb.execute(`
-        CREATE TABLE IF NOT EXISTS "${schemaName}"."sessions" (
-          "id" uuid PRIMARY KEY DEFAULT gen_random_uuid(),
-          "user_id" uuid NOT NULL REFERENCES "${schemaName}"."users"("id") ON DELETE CASCADE,
-          "token" varchar(512) NOT NULL UNIQUE,
-          "expires_at" timestamp NOT NULL,
-          "created_at" timestamp NOT NULL DEFAULT now()
-        );
-      `);
+      // 2. Perform Dynamic Schema & Database Provisioning for ALL ERP tables
+      const { ensureTenantSchema } = await import('../infrastructure/tenant-provisioner');
+      await ensureTenantSchema(schemaName, true);
 
       // 3. Register the tenant workspace metadata in global tenants table
       const [newTenant] = await publicDb
