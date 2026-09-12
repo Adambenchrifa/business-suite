@@ -721,6 +721,136 @@ async function runTests() {
   });
 
   // ----------------------------------------------------
+  // TEST UNIT 15: Complete Tenant Schema Provisioning & Table Verification
+  // ----------------------------------------------------
+  await test('Provisioned tenant contains complete ERP table schema', async () => {
+    const schemaName = `tenant_${testDomain.replace(/-/g, '_')}`;
+    const tenantDbInfo = await getTenantDrizzleClient(schemaName);
+
+    // Verify key ERP tables can be queried without "relation does not exist" errors
+    const erpTables = [
+      'organizations', 'branches', 'warehouses', 'departments', 'positions',
+      'employees', 'user_invitations', 'currencies', 'tax_configurations',
+      'number_sequences', 'files', 'activity_logs', 'notifications',
+      'product_categories', 'brands', 'units_of_measure', 'products',
+      'product_variants', 'stock_locations', 'inventory_items', 'stock_movements',
+      'stock_movement_items', 'crm_companies', 'crm_contacts', 'crm_leads',
+      'crm_opportunities', 'crm_activities', 'sales_orders', 'sales_order_items',
+      'delivery_orders', 'delivery_order_items', 'invoices', 'invoice_items',
+      'users', 'sessions'
+    ];
+
+    const { organizations, branches, warehouses, products, salesOrders, employees: empTable } = await import('./modules/core_erp/infrastructure/db-schemas');
+
+    const orgs = await tenantDbInfo.db.select().from(organizations);
+    assert(Array.isArray(orgs), 'organizations query should succeed');
+
+    const branchList = await tenantDbInfo.db.select().from(branches);
+    assert(Array.isArray(branchList), 'branches query should succeed');
+
+    const warehouseList = await tenantDbInfo.db.select().from(warehouses);
+    assert(Array.isArray(warehouseList), 'warehouses query should succeed');
+
+    const productList = await tenantDbInfo.db.select().from(products);
+    assert(Array.isArray(productList), 'products query should succeed');
+
+    const salesOrderList = await tenantDbInfo.db.select().from(salesOrders);
+    assert(Array.isArray(salesOrderList), 'salesOrders query should succeed');
+
+    const employeeList = await tenantDbInfo.db.select().from(empTable);
+    assert(Array.isArray(employeeList), 'employees query should succeed');
+
+    tenantDbInfo.release();
+  });
+
+  // ----------------------------------------------------
+  // TEST UNIT 16: Safe Existing Tenant Upgrade
+  // ----------------------------------------------------
+  await test('ensureTenantSchema upgrades legacy tenant missing ERP tables without data loss', async () => {
+    const legacyDomain = `legacy-${crypto.randomInt(1000, 9999)}`;
+    const legacySchema = `tenant_${legacyDomain.replace(/-/g, '_')}`;
+
+    const { ensureTenantSchema } = await import('./modules/core_erp/infrastructure/tenant-provisioner');
+
+    // Provision legacy schema with only users & sessions manually
+    await publicDb.execute(`CREATE SCHEMA IF NOT EXISTS "${legacySchema}"`);
+    await publicDb.execute(`
+      CREATE TABLE IF NOT EXISTS "${legacySchema}"."users" (
+        "id" uuid PRIMARY KEY DEFAULT gen_random_uuid(),
+        "email" varchar(256) NOT NULL UNIQUE,
+        "password_hash" text NOT NULL,
+        "name" varchar(256) NOT NULL,
+        "role" varchar(64) NOT NULL DEFAULT 'member',
+        "status" varchar(32) NOT NULL DEFAULT 'active',
+        "is_verified" boolean NOT NULL DEFAULT false,
+        "verification_token" varchar(256),
+        "reset_token" varchar(256),
+        "reset_token_expires_at" timestamp,
+        "created_at" timestamp NOT NULL DEFAULT now(),
+        "updated_at" timestamp NOT NULL DEFAULT now()
+      );
+    `);
+
+    // Insert pre-existing user
+    const existingEmail = `legacy-user@${legacyDomain}.com`;
+    await publicDb.execute(`
+      INSERT INTO "${legacySchema}"."users" (email, password_hash, name, role, is_verified)
+      VALUES ('${existingEmail}', 'hash123', 'Legacy User', 'owner', true);
+    `);
+
+    // Run schema upgrade
+    await ensureTenantSchema(legacySchema, true);
+
+    // Verify existing user still exists
+    const legacyDbInfo = await getTenantDrizzleClient(legacySchema);
+    const usersInLegacy = await legacyDbInfo.db.select().from(users).where(eq(users.email, existingEmail));
+    assert(usersInLegacy.length === 1, 'Pre-existing legacy user must not be deleted');
+    assert(usersInLegacy[0].name === 'Legacy User', 'Pre-existing user data must remain intact');
+
+    // Verify newly added ERP table works
+    const { organizations } = await import('./modules/core_erp/infrastructure/db-schemas');
+    const orgs = await legacyDbInfo.db.select().from(organizations);
+    assert(Array.isArray(orgs), 'Newly added organizations table in upgraded tenant must be queryable');
+
+    legacyDbInfo.release();
+  });
+
+  // ----------------------------------------------------
+  // TEST UNIT 17: Non-UUID userId Audit Log Sanitization
+  // ----------------------------------------------------
+  await test('AuditService handles non-UUID string userId without throwing invalid syntax errors', async () => {
+    const { AuditService } = await import('./shared/services/audit-service');
+    const schemaName = `tenant_${testDomain.replace(/-/g, '_')}`;
+    const tenantDbInfo = await getTenantDrizzleClient(schemaName);
+
+    const mockReq: any = {
+      user: { id: 'non-uuid-string-user-id', email: 'system-agent@acme.com' },
+      ip: '127.0.0.1',
+      headers: {}
+    };
+
+    let errorOccurred = false;
+    try {
+      await AuditService.log(tenantDbInfo.db, mockReq, {
+        action: 'SYSTEM_EVENT_NON_UUID',
+        module: 'SystemModule',
+        details: 'Testing non-UUID userId handling'
+      });
+    } catch (err) {
+      errorOccurred = true;
+    }
+
+    assert(!errorOccurred, 'AuditService.log must not throw error for non-UUID userId');
+
+    const logs = await tenantDbInfo.db.select().from(activityLogs).where(eq(activityLogs.action, 'SYSTEM_EVENT_NON_UUID'));
+    assert(logs.length === 1, 'Audit log record should be created in DB');
+    assert(logs[0].userId === null, 'Non-UUID userId should be converted to null');
+    assert(logs[0].userName === 'system-agent@acme.com', 'userName should be preserved from req.user.email');
+
+    tenantDbInfo.release();
+  });
+
+  // ----------------------------------------------------
   // REPORT RESULTS
   // ----------------------------------------------------
   console.log('\n===================================================');

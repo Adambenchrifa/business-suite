@@ -112,7 +112,11 @@ export async function tenantResolver(req: Request, res: Response, next: NextFunc
     req.tenantDomain = activeTenant.domain;
     req.tenantSchema = activeTenant.schema;
 
-    // 3. Check out connection client bound to tenant schema
+    // 3. Ensure complete tenant schema exists (safely provisions missing ERP tables for existing/legacy tenants)
+    const { ensureTenantSchema } = await import('../../modules/core_erp/infrastructure/tenant-provisioner');
+    await ensureTenantSchema(activeTenant.schema);
+
+    // 4. Check out connection client bound to tenant schema
     const tenantDbInfo = await getTenantDrizzleClient(activeTenant.schema);
     req.db = tenantDbInfo.db;
     req.dbRelease = tenantDbInfo.release;

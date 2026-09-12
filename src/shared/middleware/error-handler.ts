@@ -56,13 +56,18 @@ export function errorHandler(
   // Handle unhandled errors (native errors, database crashes, etc.)
   logger.error('Unhandled System Exception caught', err, reqMeta);
 
-  const isDev = process.env.NODE_ENV === 'development';
+  const isDevOrTest = process.env.NODE_ENV === 'development' || process.env.NODE_ENV === 'test' || !process.env.NODE_ENV;
+  const pgErr = err && typeof err === 'object' ? (err as any) : null;
+
   res.status(500).json({
     success: false,
     error: {
-      message: 'An unexpected internal server error occurred.',
+      message: isDevOrTest && err instanceof Error ? err.message : 'An unexpected internal server error occurred.',
       code: 'InternalServerError',
-      stack: isDev && err instanceof Error ? err.stack : undefined,
+      ...(isDevOrTest && pgErr?.code ? { dbCode: pgErr.code, dbTable: pgErr.table, dbDetail: pgErr.detail } : {}),
+      endpoint: req.originalUrl || req.url,
+      method: req.method,
+      stack: isDevOrTest && err instanceof Error ? err.stack : undefined,
     },
   });
 }

@@ -36,10 +36,16 @@ export class AuditService {
     return sanitized;
   }
 
+  private static isValidUuid(id: string | null | undefined): boolean {
+    if (!id || typeof id !== 'string') return false;
+    return /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i.test(id);
+  }
+
   static async log(db: any, req: Request, ctx: Omit<AuditContext, 'ipAddress'>): Promise<void> {
     try {
-      const userId = ctx.userId || req.user?.id || null;
-      const userName = ctx.userName || req.user?.email || 'System';
+      const rawUserId = ctx.userId || req.user?.id || null;
+      const userId = AuditService.isValidUuid(rawUserId) ? rawUserId : null;
+      const userName = ctx.userName || req.user?.email || (rawUserId && !userId ? `User(${rawUserId})` : 'System');
       const ipAddress = req.ip || (req.headers['x-forwarded-for'] as string) || null;
       const sanitizedMeta = ctx.metadata ? AuditService.sanitizeMetadata(ctx.metadata) : null;
 
