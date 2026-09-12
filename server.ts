@@ -141,11 +141,11 @@ async function bootstrap() {
 
   // Files
   app.get('/api/v1/erp/files', authenticate, ErpController.getFiles);
-  app.post('/api/v1/erp/files', authenticate, ErpController.uploadFile);
-  app.delete('/api/v1/erp/files/:id', authenticate, ErpController.deleteFile);
+  app.post('/api/v1/erp/files', authenticate, requireRole(['owner', 'admin']), ErpController.uploadFile);
+  app.delete('/api/v1/erp/files/:id', authenticate, requireRole(['owner', 'admin']), ErpController.deleteFile);
 
   // Audit Logs
-  app.get('/api/v1/erp/logs', authenticate, ErpController.getActivityLogs);
+  app.get('/api/v1/erp/logs', authenticate, requireRole(['owner', 'admin']), ErpController.getActivityLogs);
 
   // Notifications
   app.get('/api/v1/erp/notifications', authenticate, ErpController.getNotifications);
@@ -155,90 +155,90 @@ async function bootstrap() {
   // 4c. Inventory & Product Management Module endpoints
   // Categories
   app.get('/api/v1/erp/inventory/categories', authenticate, ErpController.getCategories);
-  app.post('/api/v1/erp/inventory/categories', authenticate, ErpController.createCategory);
-  app.put('/api/v1/erp/inventory/categories/:id', authenticate, ErpController.updateCategory);
-  app.delete('/api/v1/erp/inventory/categories/:id', authenticate, ErpController.deleteCategory);
+  app.post('/api/v1/erp/inventory/categories', authenticate, requireRole(['owner', 'admin']), ErpController.createCategory);
+  app.put('/api/v1/erp/inventory/categories/:id', authenticate, requireRole(['owner', 'admin']), ErpController.updateCategory);
+  app.delete('/api/v1/erp/inventory/categories/:id', authenticate, requireRole(['owner', 'admin']), ErpController.deleteCategory);
 
   // Brands
   app.get('/api/v1/erp/inventory/brands', authenticate, ErpController.getBrands);
-  app.post('/api/v1/erp/inventory/brands', authenticate, ErpController.createBrand);
-  app.put('/api/v1/erp/inventory/brands/:id', authenticate, ErpController.updateBrand);
-  app.delete('/api/v1/erp/inventory/brands/:id', authenticate, ErpController.deleteBrand);
+  app.post('/api/v1/erp/inventory/brands', authenticate, requireRole(['owner', 'admin']), ErpController.createBrand);
+  app.put('/api/v1/erp/inventory/brands/:id', authenticate, requireRole(['owner', 'admin']), ErpController.updateBrand);
+  app.delete('/api/v1/erp/inventory/brands/:id', authenticate, requireRole(['owner', 'admin']), ErpController.deleteBrand);
 
   // Units of Measure (UoM)
   app.get('/api/v1/erp/inventory/uoms', authenticate, ErpController.getUoms);
-  app.post('/api/v1/erp/inventory/uoms', authenticate, ErpController.createUom);
-  app.put('/api/v1/erp/inventory/uoms/:id', authenticate, ErpController.updateUom);
-  app.delete('/api/v1/erp/inventory/uoms/:id', authenticate, ErpController.deleteUom);
+  app.post('/api/v1/erp/inventory/uoms', authenticate, requireRole(['owner', 'admin']), ErpController.createUom);
+  app.put('/api/v1/erp/inventory/uoms/:id', authenticate, requireRole(['owner', 'admin']), ErpController.updateUom);
+  app.delete('/api/v1/erp/inventory/uoms/:id', authenticate, requireRole(['owner', 'admin']), ErpController.deleteUom);
 
   // Products
   app.get('/api/v1/erp/inventory/products', authenticate, ErpController.getProducts);
-  app.post('/api/v1/erp/inventory/products', authenticate, ErpController.createProduct);
-  app.put('/api/v1/erp/inventory/products/:id', authenticate, ErpController.updateProduct);
-  app.delete('/api/v1/erp/inventory/products/:id', authenticate, ErpController.deleteProduct);
+  app.post('/api/v1/erp/inventory/products', authenticate, requireRole(['owner', 'admin']), ErpController.createProduct);
+  app.put('/api/v1/erp/inventory/products/:id', authenticate, requireRole(['owner', 'admin']), ErpController.updateProduct);
+  app.delete('/api/v1/erp/inventory/products/:id', authenticate, requireRole(['owner', 'admin']), ErpController.deleteProduct);
 
   // Product Variants
   app.get('/api/v1/erp/inventory/products/:productId/variants', authenticate, ErpController.getProductVariants);
-  app.post('/api/v1/erp/inventory/products/:productId/variants', authenticate, ErpController.createProductVariant);
-  app.delete('/api/v1/erp/inventory/products/variants/:id', authenticate, ErpController.deleteProductVariant);
+  app.post('/api/v1/erp/inventory/products/:productId/variants', authenticate, requireRole(['owner', 'admin']), ErpController.createProductVariant);
+  app.delete('/api/v1/erp/inventory/products/variants/:id', authenticate, requireRole(['owner', 'admin']), ErpController.deleteProductVariant);
 
   // Stock Locations
   app.get('/api/v1/erp/inventory/locations', authenticate, ErpController.getLocations);
-  app.post('/api/v1/erp/inventory/locations', authenticate, ErpController.createLocation);
-  app.put('/api/v1/erp/inventory/locations/:id', authenticate, ErpController.updateLocation);
-  app.delete('/api/v1/erp/inventory/locations/:id', authenticate, ErpController.deleteLocation);
+  app.post('/api/v1/erp/inventory/locations', authenticate, requireRole(['owner', 'admin']), ErpController.createLocation);
+  app.put('/api/v1/erp/inventory/locations/:id', authenticate, requireRole(['owner', 'admin']), ErpController.updateLocation);
+  app.delete('/api/v1/erp/inventory/locations/:id', authenticate, requireRole(['owner', 'admin']), ErpController.deleteLocation);
 
   // Stock levels, alerts, movements & valuation
   app.get('/api/v1/erp/inventory/stock-levels', authenticate, ErpController.getStockLevels);
   app.get('/api/v1/erp/inventory/movements', authenticate, ErpController.getMovements);
-  app.post('/api/v1/erp/inventory/movements', authenticate, ErpController.createMovement);
+  app.post('/api/v1/erp/inventory/movements', authenticate, requireRole(['owner', 'admin']), ErpController.createMovement);
   app.get('/api/v1/erp/inventory/valuation', authenticate, ErpController.getStockValuation);
   app.get('/api/v1/erp/inventory/dashboard', authenticate, ErpController.getInventoryDashboard);
 
   // 4d. Sales & CRM Module endpoints
   // CRM Companies (Accounts)
   app.get('/api/v1/erp/crm/companies', authenticate, SalesCrmController.getCompanies);
-  app.post('/api/v1/erp/crm/companies', authenticate, SalesCrmController.createCompany);
-  app.put('/api/v1/erp/crm/companies/:id', authenticate, SalesCrmController.updateCompany);
-  app.delete('/api/v1/erp/crm/companies/:id', authenticate, SalesCrmController.deleteCompany);
+  app.post('/api/v1/erp/crm/companies', authenticate, requireRole(['owner', 'admin']), SalesCrmController.createCompany);
+  app.put('/api/v1/erp/crm/companies/:id', authenticate, requireRole(['owner', 'admin']), SalesCrmController.updateCompany);
+  app.delete('/api/v1/erp/crm/companies/:id', authenticate, requireRole(['owner', 'admin']), SalesCrmController.deleteCompany);
 
   // CRM Contacts
   app.get('/api/v1/erp/crm/contacts', authenticate, SalesCrmController.getContacts);
-  app.post('/api/v1/erp/crm/contacts', authenticate, SalesCrmController.createContact);
-  app.put('/api/v1/erp/crm/contacts/:id', authenticate, SalesCrmController.updateContact);
-  app.delete('/api/v1/erp/crm/contacts/:id', authenticate, SalesCrmController.deleteContact);
+  app.post('/api/v1/erp/crm/contacts', authenticate, requireRole(['owner', 'admin']), SalesCrmController.createContact);
+  app.put('/api/v1/erp/crm/contacts/:id', authenticate, requireRole(['owner', 'admin']), SalesCrmController.updateContact);
+  app.delete('/api/v1/erp/crm/contacts/:id', authenticate, requireRole(['owner', 'admin']), SalesCrmController.deleteContact);
 
   // CRM Leads
   app.get('/api/v1/erp/crm/leads', authenticate, SalesCrmController.getLeads);
-  app.post('/api/v1/erp/crm/leads', authenticate, SalesCrmController.createLead);
-  app.put('/api/v1/erp/crm/leads/:id', authenticate, SalesCrmController.updateLead);
-  app.delete('/api/v1/erp/crm/leads/:id', authenticate, SalesCrmController.deleteLead);
+  app.post('/api/v1/erp/crm/leads', authenticate, requireRole(['owner', 'admin']), SalesCrmController.createLead);
+  app.put('/api/v1/erp/crm/leads/:id', authenticate, requireRole(['owner', 'admin']), SalesCrmController.updateLead);
+  app.delete('/api/v1/erp/crm/leads/:id', authenticate, requireRole(['owner', 'admin']), SalesCrmController.deleteLead);
 
   // CRM Opportunities (Pipelines)
   app.get('/api/v1/erp/crm/opportunities', authenticate, SalesCrmController.getOpportunities);
-  app.post('/api/v1/erp/crm/opportunities', authenticate, SalesCrmController.createOpportunity);
-  app.put('/api/v1/erp/crm/opportunities/:id', authenticate, SalesCrmController.updateOpportunity);
-  app.delete('/api/v1/erp/crm/opportunities/:id', authenticate, SalesCrmController.deleteOpportunity);
+  app.post('/api/v1/erp/crm/opportunities', authenticate, requireRole(['owner', 'admin']), SalesCrmController.createOpportunity);
+  app.put('/api/v1/erp/crm/opportunities/:id', authenticate, requireRole(['owner', 'admin']), SalesCrmController.updateOpportunity);
+  app.delete('/api/v1/erp/crm/opportunities/:id', authenticate, requireRole(['owner', 'admin']), SalesCrmController.deleteOpportunity);
 
   // CRM Activities (Calls, Emails, Tasks, notes, meetings)
   app.get('/api/v1/erp/crm/activities', authenticate, SalesCrmController.getActivities);
-  app.post('/api/v1/erp/crm/activities', authenticate, SalesCrmController.createActivity);
-  app.delete('/api/v1/erp/crm/activities/:id', authenticate, SalesCrmController.deleteActivity);
+  app.post('/api/v1/erp/crm/activities', authenticate, requireRole(['owner', 'admin']), SalesCrmController.createActivity);
+  app.delete('/api/v1/erp/crm/activities/:id', authenticate, requireRole(['owner', 'admin']), SalesCrmController.deleteActivity);
 
   // Sales Orders & Quotations (Multi-currency, Product inventory integration, Automatic Stock reservation)
   app.get('/api/v1/erp/sales/orders', authenticate, SalesCrmController.getSalesOrders);
-  app.post('/api/v1/erp/sales/orders', authenticate, SalesCrmController.createSalesOrder);
-  app.put('/api/v1/erp/sales/orders/:id/status', authenticate, SalesCrmController.updateOrderStatus);
-  app.delete('/api/v1/erp/sales/orders/:id', authenticate, SalesCrmController.deleteSalesOrder);
+  app.post('/api/v1/erp/sales/orders', authenticate, requireRole(['owner', 'admin']), SalesCrmController.createSalesOrder);
+  app.put('/api/v1/erp/sales/orders/:id/status', authenticate, requireRole(['owner', 'admin']), SalesCrmController.updateOrderStatus);
+  app.delete('/api/v1/erp/sales/orders/:id', authenticate, requireRole(['owner', 'admin']), SalesCrmController.deleteSalesOrder);
 
   // Delivery Orders (Shipment processing)
   app.get('/api/v1/erp/sales/deliveries', authenticate, SalesCrmController.getDeliveryOrders);
-  app.post('/api/v1/erp/sales/deliveries', authenticate, SalesCrmController.createDeliveryOrder);
+  app.post('/api/v1/erp/sales/deliveries', authenticate, requireRole(['owner', 'admin']), SalesCrmController.createDeliveryOrder);
 
   // Invoices (Billing preparation & multi-currency/payment terms)
   app.get('/api/v1/erp/sales/invoices', authenticate, SalesCrmController.getInvoices);
-  app.post('/api/v1/erp/sales/invoices', authenticate, SalesCrmController.createInvoice);
-  app.put('/api/v1/erp/sales/invoices/:id/status', authenticate, SalesCrmController.updateInvoiceStatus);
+  app.post('/api/v1/erp/sales/invoices', authenticate, requireRole(['owner', 'admin']), SalesCrmController.createInvoice);
+  app.put('/api/v1/erp/sales/invoices/:id/status', authenticate, requireRole(['owner', 'admin']), SalesCrmController.updateInvoiceStatus);
 
   // Sales & CRM Dashboard Analytical KPI Reports
   app.get('/api/v1/erp/sales/dashboard', authenticate, SalesCrmController.getDashboard);

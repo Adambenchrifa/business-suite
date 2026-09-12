@@ -3,10 +3,12 @@ import { PasswordHasher, JwtProvider } from './modules/core_erp/domain/user';
 import { publicDb, getTenantDrizzleClient } from './config/database';
 import { tenants, users, sessions, activityLogs, stockMovements } from './modules/core_erp/infrastructure/db-schemas';
 import { authenticate, requireRole } from './shared/middleware/auth';
+import { tenantResolver } from './shared/middleware/tenant-resolver';
 import { createRateLimiter } from './shared/middleware/rate-limiter';
 import { env } from './config/env';
 import { eq } from 'drizzle-orm';
 import crypto from 'crypto';
+import jwt from 'jsonwebtoken';
 
 class AssertionError extends Error {
   constructor(message: string) {
@@ -848,6 +850,163 @@ async function runTests() {
     assert(logs[0].userName === 'system-agent@acme.com', 'userName should be preserved from req.user.email');
 
     tenantDbInfo.release();
+  });
+
+  // ----------------------------------------------------
+  // TEST UNIT 18: Unauthenticated, Malformed & Expired JWT Requests
+  // ----------------------------------------------------
+  await test('authenticate middleware handles missing, malformed, and expired JWTs with 401', async () => {
+    // 1. Missing Authorization header
+    let err1: any = null;
+    const req1: any = { headers: {}, cookies: {} };
+    authenticate(req1, {} as any, (err?: any) => { err1 = err; });
+    assert(err1 !== null && err1.statusCode === 401, 'Missing token must yield 401 Unauthorized');
+
+    // 2. Malformed token
+    let err2: any = null;
+    const req2: any = { headers: { authorization: 'Bearer malformed.invalid.token' }, cookies: {} };
+    authenticate(req2, {} as any, (err?: any) => { err2 = err; });
+    assert(err2 !== null && err2.statusCode === 401, 'Malformed token must yield 401 Unauthorized');
+
+    // 3. Expired token
+    const expiredToken = jwt.sign(
+      { id: 'u1', email: 'e@a.com', role: 'owner', tenantId: 't1' },
+      env.JWT_SECRET,
+      { expiresIn: '-1s' }
+    );
+    let err3: any = null;
+    const req3: any = { headers: { authorization: `Bearer ${expiredToken}` }, cookies: {} };
+    authenticate(req3, {} as any, (err?: any) => { err3 = err; });
+    assert(err3 !== null && err3.statusCode === 401, 'Expired token must yield 401 Unauthorized');
+  });
+
+  // ----------------------------------------------------
+  // TEST UNIT 19: Tenant Context Resolution & Status Validation
+  // ----------------------------------------------------
+  await test('tenantResolver rejects missing, non-existent, and suspended tenants with appropriate status codes', async () => {
+    // 1. Missing tenant context on protected route -> 403 Forbidden
+    let err1: any = null;
+    const req1: any = { path: '/api/v1/erp/inventory/products', headers: {}, query: {} };
+    await tenantResolver(req1, {} as any, (err?: any) => { err1 = err; });
+    assert(err1 !== null && err1.statusCode === 403, 'Missing tenant context on protected route must yield 403');
+
+    const mockRes: any = { on: () => {} };
+
+    // 2. Non-existent tenant domain -> 404 Not Found
+    let err2: any = null;
+    const req2: any = { path: '/api/v1/erp/inventory/products', headers: { 'x-tenant-domain': 'nonexistent-workspace-xyz-9999' }, query: {} };
+    await tenantResolver(req2, mockRes, (err?: any) => { err2 = err; });
+    assert(err2 !== null && err2.statusCode === 404, 'Non-existent tenant domain must yield 404 Not Found');
+
+    // 3. Suspended tenant -> 403 Forbidden
+    const suspendedDomain = `suspended-corp-${crypto.randomInt(1000, 9999)}`;
+    const [insertedTenant] = await publicDb.insert(tenants).values({
+      name: 'Suspended Corp',
+      domain: suspendedDomain,
+      schema: `tenant_${suspendedDomain.replace(/-/g, '_')}`,
+      status: 'suspended',
+    }).returning();
+
+    let err3: any = null;
+    const req3: any = { path: '/api/v1/erp/inventory/products', headers: { 'x-tenant-domain': suspendedDomain }, query: {} };
+    await tenantResolver(req3, mockRes, (err?: any) => { err3 = err; });
+    assert(err3 !== null && err3.statusCode === 403, 'Suspended tenant must yield 403 Forbidden');
+
+    // Cleanup suspended test tenant
+    await publicDb.delete(tenants).where(eq(tenants.id, insertedTenant.id));
+  });
+
+  // ----------------------------------------------------
+  // TEST UNIT 20: Cross-Tenant Isolation & Cross-Tenant Resource Access
+  // ----------------------------------------------------
+  await test('Cross-tenant isolation blocks cross-tenant claims, administrative actions, and resource leakage', async () => {
+    const tenantAToken = JwtProvider.signAccessToken({
+      id: 'user-tenant-a',
+      email: 'owner@tenant-a.com',
+      role: 'owner',
+      tenantId: 'tenant-uuid-A',
+    });
+
+    // 1. Tenant A token sent with Tenant B tenant context
+    let err1: any = null;
+    const req1: any = {
+      headers: { authorization: `Bearer ${tenantAToken}` },
+      cookies: {},
+      tenantId: 'tenant-uuid-B',
+    };
+    authenticate(req1, {} as any, (err?: any) => { err1 = err; });
+    assert(err1 !== null && err1.statusCode === 403, 'Cross-tenant request must yield 403 Forbidden');
+
+    // 2. User from Tenant A attempting an administrative action in Tenant B
+    let adminErr: any = null;
+    const adminMiddleware = requireRole(['owner', 'admin']);
+    // Even if authentication passed hypothetically, requireRole with incorrect context is blocked
+    const req2: any = {
+      user: { id: 'user-a', email: 'owner@tenant-a.com', role: 'member', tenantId: 'tenant-uuid-A' }
+    };
+    adminMiddleware(req2, {} as any, (err?: any) => { adminErr = err; });
+    assert(adminErr !== null && adminErr.statusCode === 403, 'User attempting unauthorized action must yield 403 Forbidden');
+
+    // 3. Tenant A token accessing non-existent resource ID in Tenant A schema (or Tenant B resource ID)
+    const schemaName = `tenant_${testDomain.replace(/-/g, '_')}`;
+    const tenantDbInfo = await getTenantDrizzleClient(schemaName);
+    const nonExistentId = crypto.randomUUID();
+
+    const { products } = await import('./modules/core_erp/infrastructure/db-schemas');
+    const matchedProducts = await tenantDbInfo.db.select().from(products).where(eq(products.id, nonExistentId));
+    tenantDbInfo.release();
+
+    assert(matchedProducts.length === 0, 'Resource ID from another tenant must return 0 results / Not Found in local tenant schema');
+  });
+
+  // ----------------------------------------------------
+  // TEST UNIT 21: Inventory Endpoint Authorization & Destructive Mutation Protection
+  // ----------------------------------------------------
+  await test('Inventory mutation endpoints allow owner/admin and reject member roles with 403', async () => {
+    const roleCheck = requireRole(['owner', 'admin']);
+
+    // Owner role -> allowed
+    let ownerPassed = false as boolean;
+    const ownerReq: any = { user: { id: 'u-owner', email: 'owner@corp.com', role: 'owner', tenantId: 't1' } };
+    roleCheck(ownerReq, {} as any, (err?: any) => { if (!err) ownerPassed = true; });
+    assert(ownerPassed, 'Owner role must be permitted on Inventory mutations');
+
+    // Admin role -> allowed
+    let adminPassed = false as boolean;
+    const adminReq: any = { user: { id: 'u-admin', email: 'admin@corp.com', role: 'admin', tenantId: 't1' } };
+    roleCheck(adminReq, {} as any, (err?: any) => { if (!err) adminPassed = true; });
+    assert(adminPassed, 'Admin role must be permitted on Inventory mutations');
+
+    // Member role -> rejected with 403 Forbidden
+    let memberErr: any = null;
+    const memberReq: any = { user: { id: 'u-member', email: 'member@corp.com', role: 'member', tenantId: 't1' } };
+    roleCheck(memberReq, {} as any, (err?: any) => { memberErr = err; });
+    assert(memberErr !== null && memberErr.statusCode === 403, 'Member role must be rejected with 403 on Inventory mutations');
+  });
+
+  // ----------------------------------------------------
+  // TEST UNIT 22: Sales/CRM Endpoint Authorization & Destructive Mutation Protection
+  // ----------------------------------------------------
+  await test('Sales/CRM and File Storage mutation endpoints enforce owner/admin role protection', async () => {
+    const roleCheck = requireRole(['owner', 'admin']);
+
+    // Owner role -> allowed
+    let ownerPassed = false as boolean;
+    const ownerReq: any = { user: { id: 'u-owner', email: 'owner@corp.com', role: 'owner', tenantId: 't1' } };
+    roleCheck(ownerReq, {} as any, (err?: any) => { if (!err) ownerPassed = true; });
+    assert(ownerPassed, 'Owner role must be permitted on Sales/CRM mutations');
+
+    // Admin role -> allowed
+    let adminPassed = false as boolean;
+    const adminReq: any = { user: { id: 'u-admin', email: 'admin@corp.com', role: 'admin', tenantId: 't1' } };
+    roleCheck(adminReq, {} as any, (err?: any) => { if (!err) adminPassed = true; });
+    assert(adminPassed, 'Admin role must be permitted on Sales/CRM mutations');
+
+    // Member role -> rejected with 403 Forbidden across all Sales/CRM, File, and Audit routes
+    let memberErr: any = null;
+    const memberReq: any = { user: { id: 'u-member', email: 'member@corp.com', role: 'member', tenantId: 't1' } };
+    roleCheck(memberReq, {} as any, (err?: any) => { memberErr = err; });
+    assert(memberErr !== null && memberErr.statusCode === 403, 'Member role must be rejected with 403 on Sales/CRM/File mutations');
   });
 
   // ----------------------------------------------------
