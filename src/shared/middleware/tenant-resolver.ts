@@ -88,13 +88,16 @@ export async function tenantResolver(req: Request, res: Response, next: NextFunc
     let activeTenant = registeredTenants[0];
 
     if (!activeTenant) {
-      // Check if lookup by ID matches
-      const byId = await publicDb
-        .select()
-        .from(tenants)
-        .where(eq(tenants.id, tenantKey))
-        .limit(1);
-      activeTenant = byId[0];
+      // Check if lookup by ID matches (only if key is valid UUID format)
+      const isUuid = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i.test(tenantKey);
+      if (isUuid) {
+        const byId = await publicDb
+          .select()
+          .from(tenants)
+          .where(eq(tenants.id, tenantKey))
+          .limit(1);
+        activeTenant = byId[0];
+      }
     }
 
     if (!activeTenant) {
