@@ -133,10 +133,21 @@ async function runTests() {
     assert(jsonResult.data.tenant.domain === testDomain, 'Domain should match input');
     assert(jsonResult.data.user.email === 'ceo@acme-test.com', 'User email should match');
     assert(jsonResult.data.user.isVerified === false, 'Seeded user should start as unverified');
-    assert(typeof jsonResult.data.user.verificationToken === 'string', 'Verification token should be generated');
+    assert(jsonResult.data.user.verificationToken === undefined, 'Verification token must NOT be exposed in response payload');
 
     registeredUser = jsonResult.data.user;
-    verificationToken = jsonResult.data.user.verificationToken;
+
+    // Retrieve verification token directly from database since it is no longer leaked in register API response
+    const schemaName = `tenant_${testDomain.replace(/-/g, '_')}`;
+    const tenantDbInfo = await getTenantDrizzleClient(schemaName);
+    const usersInDb = await tenantDbInfo.db
+      .select()
+      .from(users)
+      .where(eq(users.id, registeredUser.id));
+    tenantDbInfo.release();
+
+    assert(usersInDb.length === 1 && typeof usersInDb[0].verificationToken === 'string', 'Verification token should be stored in DB');
+    verificationToken = usersInDb[0].verificationToken!;
     activeAccessToken = jsonResult.token;
     activeRefreshToken = jsonResult.refreshToken;
 

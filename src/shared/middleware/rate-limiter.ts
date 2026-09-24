@@ -85,3 +85,7 @@ export function createRateLimiter(options?: {
 }
 
 export const authRateLimiter = createRateLimiter();
+export const apiRateLimiter = createRateLimiter({
+  maxRequests: 300,
+  windowMs: env.RATE_LIMIT_WINDOW_MS,
+});
