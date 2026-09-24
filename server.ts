@@ -4,7 +4,7 @@ import { createServer as createViteServer } from 'vite';
 import { env } from './src/config/env';
 import { tenantResolver } from './src/shared/middleware/tenant-resolver';
 import { authenticate, requireRole } from './src/shared/middleware/auth';
-import { authRateLimiter } from './src/shared/middleware/rate-limiter';
+import { authRateLimiter, apiRateLimiter } from './src/shared/middleware/rate-limiter';
 import { securityHeadersMiddleware } from './src/shared/middleware/security-headers';
 import { AuthController } from './src/modules/core_erp/controllers/auth-controller';
 import { ErpController } from './src/modules/core_erp/controllers/erp-controller';
@@ -72,6 +72,9 @@ async function bootstrap() {
 
   // 3. Multi-Tenant schema routing middleware
   app.use('/api/v1', tenantResolver);
+
+  // Apply permissive rate limiter for all ERP resources
+  app.use('/api/v1/erp', apiRateLimiter);
 
   // 4. Core Authentication endpoints
   app.post('/api/v1/auth/register', authRateLimiter, AuthController.register);

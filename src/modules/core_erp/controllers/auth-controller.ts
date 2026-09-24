@@ -149,6 +149,7 @@ export class AuthController {
 
       logger.info(`Successfully provisioned tenant workspace [${companyName}] with admin user [${ownerEmail}]`);
 
+      // TODO: verificationToken must be sent out via email service instead of being exposed/returned
       res.status(201).json({
         success: true,
         message: 'Tenant workspace successfully provisioned and configured. Email verification token dispatched.',
@@ -164,7 +165,6 @@ export class AuthController {
             name: createdOwner.name,
             role: createdOwner.role,
             isVerified: createdOwner.is_verified,
-            verificationToken: createdOwner.verification_token,
           },
           token: accessToken,
           refreshToken,
@@ -211,7 +211,7 @@ export class AuthController {
 
       // Enforce email verification check for secure production access
       if (!activeUser.isVerified) {
-        next(new UnauthorizedError('Please verify your email address before logging in.'));
+        next(new UnauthorizedError('Invalid email credentials or account is suspended'));
         return;
       }
 
