@@ -250,7 +250,7 @@ export class ErpController {
       const search = req.query.search ? String(req.query.search) : '';
       const status = req.query.status ? String(req.query.status) : '';
       
-      let allBranches = await db.select().from(branches).order(desc(branches.createdAt));
+      let allBranches = await db.select().from(branches).orderBy(desc(branches.createdAt));
       
       if (search) {
         allBranches = allBranches.filter((b: any) => 
@@ -349,7 +349,7 @@ export class ErpController {
       const search = req.query.search ? String(req.query.search) : '';
       const branchId = req.query.branchId ? String(req.query.branchId) : '';
       
-      let list = await db.select().from(warehouses).order(desc(warehouses.createdAt));
+      let list = await db.select().from(warehouses).orderBy(desc(warehouses.createdAt));
       
       if (search) {
         list = list.filter((w: any) => 
@@ -446,7 +446,7 @@ export class ErpController {
       const db = req.db;
       const search = req.query.search ? String(req.query.search) : '';
       
-      let list = await db.select().from(departments).order(desc(departments.createdAt));
+      let list = await db.select().from(departments).orderBy(desc(departments.createdAt));
       
       if (search) {
         list = list.filter((d: any) => 
@@ -539,7 +539,7 @@ export class ErpController {
       const search = req.query.search ? String(req.query.search) : '';
       const departmentId = req.query.departmentId ? String(req.query.departmentId) : '';
       
-      let list = await db.select().from(positions).order(desc(positions.createdAt));
+      let list = await db.select().from(positions).orderBy(desc(positions.createdAt));
       
       if (search) {
         list = list.filter((p: any) => p.title.toLowerCase().includes(search.toLowerCase()));
@@ -634,7 +634,7 @@ export class ErpController {
       const departmentId = req.query.departmentId ? String(req.query.departmentId) : '';
       const status = req.query.status ? String(req.query.status) : '';
       
-      let list = await db.select().from(employees).order(desc(employees.createdAt));
+      let list = await db.select().from(employees).orderBy(desc(employees.createdAt));
       
       if (search) {
         list = list.filter((e: any) => 
@@ -748,7 +748,7 @@ export class ErpController {
       const search = req.query.search ? String(req.query.search) : '';
       const status = req.query.status ? String(req.query.status) : '';
       
-      let list = await db.select().from(userInvitations).order(desc(userInvitations.createdAt));
+      let list = await db.select().from(userInvitations).orderBy(desc(userInvitations.createdAt));
       
       if (search) {
         list = list.filter((i: any) => 
@@ -834,7 +834,7 @@ export class ErpController {
       const db = req.db;
       const search = req.query.search ? String(req.query.search) : '';
       
-      let list = await db.select().from(currencies).order(desc(currencies.isBase));
+      let list = await db.select().from(currencies).orderBy(desc(currencies.isBase));
       
       if (search) {
         list = list.filter((c: any) => 
@@ -932,7 +932,7 @@ export class ErpController {
   static async getTaxes(req: Request, res: Response, next: NextFunction): Promise<void> {
     try {
       const db = req.db;
-      const list = await db.select().from(taxConfigurations).order(desc(taxConfigurations.createdAt));
+      const list = await db.select().from(taxConfigurations).orderBy(desc(taxConfigurations.createdAt));
       res.status(200).json({ success: true, data: list });
     } catch (err) {
       next(err);
@@ -1000,7 +1000,7 @@ export class ErpController {
   static async getSequences(req: Request, res: Response, next: NextFunction): Promise<void> {
     try {
       const db = req.db;
-      let list = await db.select().from(numberSequences).order(desc(numberSequences.createdAt));
+      let list = await db.select().from(numberSequences).orderBy(desc(numberSequences.createdAt));
       
       if (list.length === 0) {
         // Seed default document prefixes
@@ -1014,7 +1014,7 @@ export class ErpController {
         for (const item of seedItems) {
           await db.insert(numberSequences).values(item);
         }
-        list = await db.select().from(numberSequences).order(desc(numberSequences.createdAt));
+        list = await db.select().from(numberSequences).orderBy(desc(numberSequences.createdAt));
       }
       
       res.status(200).json({ success: true, data: list });
@@ -1052,7 +1052,7 @@ export class ErpController {
   static async getFiles(req: Request, res: Response, next: NextFunction): Promise<void> {
     try {
       const db = req.db;
-      const list = await db.select().from(files).order(desc(files.createdAt));
+      const list = await db.select().from(files).orderBy(desc(files.createdAt));
       res.status(200).json({ success: true, data: list });
     } catch (err) {
       next(err);
@@ -1110,7 +1110,7 @@ export class ErpController {
       const db = req.db;
       const moduleFilter = req.query.module ? String(req.query.module) : '';
       
-      let list = await db.select().from(activityLogs).order(desc(activityLogs.createdAt));
+      let list = await db.select().from(activityLogs).orderBy(desc(activityLogs.createdAt));
       
       if (moduleFilter) {
         list = list.filter((l: any) => l.module.toLowerCase() === moduleFilter.toLowerCase());
@@ -1142,7 +1142,7 @@ export class ErpController {
   static async getNotifications(req: Request, res: Response, next: NextFunction): Promise<void> {
     try {
       const db = req.db;
-      const list = await db.select().from(notifications).order(desc(notifications.createdAt));
+      const list = await db.select().from(notifications).orderBy(desc(notifications.createdAt));
       res.status(200).json({ success: true, data: list });
     } catch (err) {
       next(err);
@@ -1191,7 +1191,7 @@ export class ErpController {
   static async getCategories(req: Request, res: Response, next: NextFunction): Promise<void> {
     try {
       const db = req.db;
-      const list = await db.select().from(productCategories).order(desc(productCategories.createdAt));
+      const list = await db.select().from(productCategories).orderBy(desc(productCategories.createdAt));
       res.status(200).json({ success: true, data: list });
     } catch (err) {
       next(err);
@@ -1275,7 +1275,7 @@ export class ErpController {
   static async getBrands(req: Request, res: Response, next: NextFunction): Promise<void> {
     try {
       const db = req.db;
-      const list = await db.select().from(brands).order(desc(brands.createdAt));
+      const list = await db.select().from(brands).orderBy(desc(brands.createdAt));
       res.status(200).json({ success: true, data: list });
     } catch (err) {
       next(err);
@@ -1359,7 +1359,7 @@ export class ErpController {
   static async getUoms(req: Request, res: Response, next: NextFunction): Promise<void> {
     try {
       const db = req.db;
-      const list = await db.select().from(unitsOfMeasure).order(desc(unitsOfMeasure.createdAt));
+      const list = await db.select().from(unitsOfMeasure).orderBy(desc(unitsOfMeasure.createdAt));
       res.status(200).json({ success: true, data: list });
     } catch (err) {
       next(err);
@@ -1443,7 +1443,7 @@ export class ErpController {
   static async getProducts(req: Request, res: Response, next: NextFunction): Promise<void> {
     try {
       const db = req.db;
-      const list = await db.select().from(products).order(desc(products.createdAt));
+      const list = await db.select().from(products).orderBy(desc(products.createdAt));
       
       // Let's also retrieve categories, brands, and UoMs to assemble in memory for safety
       const cats = await db.select().from(productCategories);
@@ -1679,7 +1679,7 @@ export class ErpController {
   static async getLocations(req: Request, res: Response, next: NextFunction): Promise<void> {
     try {
       const db = req.db;
-      const list = await db.select().from(stockLocations).order(desc(stockLocations.createdAt));
+      const list = await db.select().from(stockLocations).orderBy(desc(stockLocations.createdAt));
       res.status(200).json({ success: true, data: list });
     } catch (err) {
       next(err);
@@ -1784,7 +1784,7 @@ export class ErpController {
   static async getMovements(req: Request, res: Response, next: NextFunction): Promise<void> {
     try {
       const db = req.db;
-      const list = await db.select().from(stockMovements).order(desc(stockMovements.createdAt));
+      const list = await db.select().from(stockMovements).orderBy(desc(stockMovements.createdAt));
       
       const prods = await db.select().from(products);
       const whs = await db.select().from(warehouses);
@@ -2095,7 +2095,7 @@ export class ErpController {
       const catList = await db.select().from(productCategories);
       const whList = await db.select().from(warehouses);
       const stockList = await db.select().from(inventoryItems);
-      const movementList = await db.select().from(stockMovements).order(desc(stockMovements.createdAt));
+      const movementList = await db.select().from(stockMovements).orderBy(desc(stockMovements.createdAt));
 
       // 1. Valuation summary
       let totalCost = 0;

@@ -198,7 +198,7 @@ export class SalesCrmController {
   static async getCompanies(req: Request, res: Response, next: NextFunction): Promise<void> {
     try {
       const db = req.db;
-      const data = await db.select().from(crmCompanies).order(desc(crmCompanies.createdAt));
+      const data = await db.select().from(crmCompanies).orderBy(desc(crmCompanies.createdAt));
       res.json({ success: true, data });
     } catch (err) {
       next(err);
@@ -266,7 +266,7 @@ export class SalesCrmController {
   static async getContacts(req: Request, res: Response, next: NextFunction): Promise<void> {
     try {
       const db = req.db;
-      const contacts = await db.select().from(crmContacts).order(desc(crmContacts.createdAt));
+      const contacts = await db.select().from(crmContacts).orderBy(desc(crmContacts.createdAt));
       const companies = await db.select().from(crmCompanies);
 
       const data = contacts.map((c: any) => {
@@ -344,7 +344,7 @@ export class SalesCrmController {
   static async getLeads(req: Request, res: Response, next: NextFunction): Promise<void> {
     try {
       const db = req.db;
-      const leads = await db.select().from(crmLeads).order(desc(crmLeads.createdAt));
+      const leads = await db.select().from(crmLeads).orderBy(desc(crmLeads.createdAt));
       const companies = await db.select().from(crmCompanies);
       const contacts = await db.select().from(crmContacts);
       const userList = await db.select().from(users);
@@ -429,7 +429,7 @@ export class SalesCrmController {
   static async getOpportunities(req: Request, res: Response, next: NextFunction): Promise<void> {
     try {
       const db = req.db;
-      const opps = await db.select().from(crmOpportunities).order(desc(crmOpportunities.createdAt));
+      const opps = await db.select().from(crmOpportunities).orderBy(desc(crmOpportunities.createdAt));
       const companies = await db.select().from(crmCompanies);
       const contacts = await db.select().from(crmContacts);
       const userList = await db.select().from(users);
@@ -525,7 +525,7 @@ export class SalesCrmController {
           )
         );
       }
-      const activities = await query.order(desc(crmActivities.createdAt));
+      const activities = await query.orderBy(desc(crmActivities.createdAt));
       const userList = await db.select().from(users);
 
       const data = activities.map((act: any) => {
@@ -577,7 +577,7 @@ export class SalesCrmController {
   static async getSalesOrders(req: Request, res: Response, next: NextFunction): Promise<void> {
     try {
       const db = req.db;
-      const orders = await db.select().from(salesOrders).order(desc(salesOrders.createdAt));
+      const orders = await db.select().from(salesOrders).orderBy(desc(salesOrders.createdAt));
       const companies = await db.select().from(crmCompanies);
       const contacts = await db.select().from(crmContacts);
       const orderItems = await db.select().from(salesOrderItems);
@@ -795,7 +795,7 @@ export class SalesCrmController {
   static async getDeliveryOrders(req: Request, res: Response, next: NextFunction): Promise<void> {
     try {
       const db = req.db;
-      const deliveries = await db.select().from(deliveryOrders).order(desc(deliveryOrders.createdAt));
+      const deliveries = await db.select().from(deliveryOrders).orderBy(desc(deliveryOrders.createdAt));
       const orders = await db.select().from(salesOrders);
       const companies = await db.select().from(crmCompanies);
       const deliveryItems = await db.select().from(deliveryOrderItems);
@@ -870,7 +870,7 @@ export class SalesCrmController {
   static async getInvoices(req: Request, res: Response, next: NextFunction): Promise<void> {
     try {
       const db = req.db;
-      const invoiceList = await db.select().from(invoices).order(desc(invoices.createdAt));
+      const invoiceList = await db.select().from(invoices).orderBy(desc(invoices.createdAt));
       const orders = await db.select().from(salesOrders);
       const companies = await db.select().from(crmCompanies);
       const items = await db.select().from(invoiceItems);
